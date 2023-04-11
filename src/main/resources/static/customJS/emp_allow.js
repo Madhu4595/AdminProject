@@ -410,63 +410,63 @@ function subseq_depoValidation() {
 
 // Validation for Name and Class of Child1:
 
-function ceaname1Validation() {
-
-	name = document.getElementById('ceaname0').value;
-	// alert(1);
-	var format = /[!@#$%^&*()+\-=\[\]{};:\\|,<>\/?]/;
-	// alert(2);
-	if (name == null) {
-		alert(null);
-		document.getElementById('ceaname0').value = "";
-		return false;
-	} else if (name !== '') {
-		// alert(22);
-		if (name.match(format)) {
-			alert('Name and Class of Child1 must not contain any symbols');
-			document.getElementById('ceaname0').value = "";
-			return false;
-		} else if (name.length < 3) {
-			alert("Name and Class of Child1 must contain at least 3 characters");
-			document.getElementById('ceaname0').value = "";
-			return false;
-		} else if (name.length > 20) {
-			alert("Name and Class of Child1 must not exceed 20 characters");
-			document.getElementById('ceaname0').value = "";
-			return false;
-		} else {
-			return true;
-		}
-	}
-}
+//function ceaname1Validation() {
+//
+//	name = document.getElementById('ceaname0').value;
+//	// alert(1);
+//	var format = /[!@#$%^&*()+\-=\[\]{};:\\|,<>\/?]/;
+//	// alert(2);
+//	if (name == null) {
+//		alert(null);
+//		document.getElementById('ceaname0').value = "";
+//		return false;
+//	} else if (name !== '') {
+//		// alert(22);
+//		if (name.match(format)) {
+//			alert('Name and Class of Child1 must not contain any symbols');
+//			document.getElementById('ceaname0').value = "";
+//			return false;
+//		} else if (name.length < 3) {
+//			alert("Name and Class of Child1 must contain at least 3 characters");
+//			document.getElementById('ceaname0').value = "";
+//			return false;
+//		} else if (name.length > 20) {
+//			alert("Name and Class of Child1 must not exceed 20 characters");
+//			document.getElementById('ceaname0').value = "";
+//			return false;
+//		} else {
+//			return true;
+//		}
+//	}
+//}
 
 // Validation for Name and Class of Child2:
 
-function ceaname2Validation() {
-	name = document.getElementById('ceaname1').value;
-	var format = /[!@#$%^&*()+\-=\[\]{};:\\|,<>\/?]/;
-	if (name == '') {
-		alert(null);
-		document.getElementById('ceaname1').value = "";
-		return false;
-	} else if (name !== '') {
-		if (name.match(format)) {
-			alert('Name and Class of Child2 must not contain any symbols');
-			document.getElementById('ceaname1').value = "";
-			return false;
-		} else if (name.length < 3) {
-			alert("Name and Class of Child2 must contain at least 3 characters");
-			document.getElementById('ceaname1').value = "";
-			return false;
-		} else if (name.length > 20) {
-			alert("Name and Class of Child2 must not exceed 20 characters");
-			document.getElementById('ceaname1').value = "";
-			return false;
-		} else {
-			return true;
-		}
-	}
-}
+//function ceaname2Validation() {
+//	name = document.getElementById('ceaname1').value;
+//	var format = /[!@#$%^&*()+\-=\[\]{};:\\|,<>\/?]/;
+//	if (name == '') {
+//		alert(null);
+//		document.getElementById('ceaname1').value = "";
+//		return false;
+//	} else if (name !== '') {
+//		if (name.match(format)) {
+//			alert('Name and Class of Child2 must not contain any symbols');
+//			document.getElementById('ceaname1').value = "";
+//			return false;
+//		} else if (name.length < 3) {
+//			alert("Name and Class of Child2 must contain at least 3 characters");
+//			document.getElementById('ceaname1').value = "";
+//			return false;
+//		} else if (name.length > 20) {
+//			alert("Name and Class of Child2 must not exceed 20 characters");
+//			document.getElementById('ceaname1').value = "";
+//			return false;
+//		} else {
+//			return true;
+//		}
+//	}
+//}
 
 // Validation for Period of Claim for child1:
 function p_claimValidation() {

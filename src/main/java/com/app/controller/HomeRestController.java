@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.entity.Employee;
 import com.app.entity.Employee_Family;
 import com.app.entity.Employee_allowance;
+import com.app.entity.GEM;
 import com.app.entity.LTC;
+import com.app.entity.Medical_Bills_upload;
 import com.app.repo.Employee_Family_Repo;
 import com.app.repo.Employee_allowanceRepo;
 import com.app.repo.LTCRepo;
+import com.app.repo.Medical_Bills_uploadRepo;
+import com.app.service.GEM_Service;
 import com.app.service.IEmployeeService;
 import com.app.service.LTCService;
 
@@ -30,6 +34,10 @@ public class HomeRestController {
 	private IEmployeeService employeeService;
 	@Autowired
 	private LTCRepo lTCRepo;
+	@Autowired
+	private GEM_Service gemService;
+	@Autowired
+	private Medical_Bills_uploadRepo medical_Bills_uploadRepo;
 	
 
 	@GetMapping("/getFamilyDetails")
@@ -67,6 +75,11 @@ public class HomeRestController {
 			if(soltc == null) { find = 404; }
 			else { find =200; }
 			
+			Medical_Bills_upload mbu = medical_Bills_uploadRepo.findBySO(siodate);
+			if(mbu == null) { find = 404; }
+			else { find =200; }
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,9 +97,22 @@ public class HomeRestController {
 		nameanddesg = nameanddesg + ", "+emp.getDesignation();
 		return nameanddesg;
 	}
+	
 	@GetMapping("/getAllLtcs")
 	public List<LTC> getAllLtcs(){
 		return ltcService.getAll();
+	}
+	
+	@GetMapping("/getAllGEMs")
+	public List<GEM> getAllGEMs(){
+		return gemService.getAllGEMs();
+	}
+	
+	@GetMapping("/getGEMbycode")
+	public GEM getGEMbycode(@RequestParam String requestno) {
+		System.out.println("getGEMbycode=> requestno=> " + requestno);
+		GEM gem = gemService.getGEMById(requestno);
+		return gem;
 	}
 
 }

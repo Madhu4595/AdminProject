@@ -7,13 +7,39 @@
 <%
 
 Medical_Bills_upload empAllow = (Medical_Bills_upload) request.getAttribute("medical_Bills_upload");
-String words = empAllow.getTotAmountApproved().toString();
+String amount = empAllow.getTotAmountApproved();
+System.out.println("words=> "+amount);
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Medical Bills</title>
+ <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	
+<script>
+$(document).ready(function(){
+	  	var num = '<%=amount%>';
+	 	var a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
+	 	var b = ['', '', 'Twenty','Thirty','Fourty','Fifty', 'Sixty','Seventy','Eighty','Ninety'];
+
+	 	    if ((num = num.toString()).length > 9) return 'overflow';
+		    
+	 	    n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+	 	    if (!n) return; var str = '';
+	 	    str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'Crore ' : '';
+	 	    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
+	 	    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
+	 	    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
+	 	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+	 	    document.getElementById("words").innerHTML = str;
+	});
+
+</script>
 <style>
 #header{ text-align: center; font-weight: bolder; }
 #topline{ text-align: center; }
@@ -23,23 +49,6 @@ String words = empAllow.getTotAmountApproved().toString();
 #para1, #para2, #para3{ font-size:  large; text-align: justify; }
 td{  padding: 15px; }
 </style>
-<script>
-function myFunction() {
-	var num = '<%=words%>';
-	var a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
-	var b = ['', '', 'Twenty','Thirty','Fourty','Fifty', 'Sixty','Seventy','Eighty','Ninety'];
-
-	    if ((num = num.toString()).length > 9) return 'overflow';
-	    n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-	    if (!n) return; var str = '';
-	    str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'Crore ' : '';
-	    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
-	    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
-	    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
-	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
-	    document.getElementById("words").innerHTML = str;
-}
-</script>
 </head>
 <body>
 	<div id="header">
@@ -60,7 +69,7 @@ National Informatics Centre,<br>
 New Delhi - 110 003.<br><br><br>
 
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Subject: -</b> Reimbursement of medical expense in r/o <b>${employee.callSign} ${employee.name }, ${designation.name } (Emp. Code: ${medical_Bills_upload.emp_code }), 
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Subject: -</b> Reimbursement of medical expense in r/o <b>${employee.callSign} ${employee.name }, ${employee.designation } (Emp. Code: ${medical_Bills_upload.emp_code }), 
 	National Informatics Centre, APSC, Vijayawada.</b>
 	<br><br>
 	
@@ -69,10 +78,10 @@ New Delhi - 110 003.<br><br><br>
 	<div id="para1">
 	1. I am directed to convey the sanction of the Director General, National Informatics Centre under the powers delegated to him vide 
 	O.M.No.M-11017/1/2014-MS (O&M) dated 17.7.2014 of Ministry of Information Technology to the incurring of an expenditure for 
-	<b>Rs.  ${medical_Bills_upload.totAmountApproved }/- ( Rupees <span id="words" ></span> Only )</b> towards medical expense of <b>${employee.callSign} ${employee.name }, ${designation.name }</b>
+	<b>Rs.  ${medical_Bills_upload.totAmountApproved }/- (Rupees <span id="words" ></span>)</b> towards medical expense of <b>${employee.callSign} ${employee.name }, ${employee.designation }</b>
 	of National Informatics Centre, APSC, Vijayawada being the charges for treatment/investigation. Prescription and original receipts are enclosed herewith.
 	<br><br>
-	Sanction is also conveyed to the drawal of said amount through cheque/cash and payment thereof to <b>${employee.callSign} ${employee.name }, ${designation.name } (Emp. Code: ${medical_Bills_upload.emp_code })</b>
+	Sanction is also conveyed to the drawal of said amount through cheque/cash and payment thereof to <b>${employee.callSign} ${employee.name }, ${employee.designation } (Emp. Code: ${medical_Bills_upload.emp_code })</b>
 	<br>
 	</div><br>
 	<div id="para2">

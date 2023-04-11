@@ -214,8 +214,20 @@
 											<li> <a href="ltcAdvanceEnacachmentedit">Modify</a> </li>
 										</ul>
 									</li>
+									<li class="dropdown">
+									<a class="dropdown-toggle" href="#"
+										id="navbarDropdown" role="button" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">GEM-Vehicle
+									</a>
+										<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+											<li> <a href="gemVehicleForm">New</a> </li>
+											<li> <a href="gemVehicleEditForm">Modify</a> </li>
+										</ul>
+									</li>
 									
-								</ul></li>
+								</ul>
+								
+								</li>
 							
 							<li class="dropdown"><a class="dropdown-toggle" href="#"
 								id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -225,6 +237,7 @@
 									<li><a href="allowance_approve">Employee</a></li>
 									<li><a href="medical_approve">Medical</a></li>
 									<li><a href="ltcElEnacachmentNotesheet">LTC- EL Enacachment</a></li>
+									<li><a href="gemVehicleNoteSheet">GEM-Vehicle NoteSheet</a></li>
 
 								</ul>
 								</li>
@@ -244,7 +257,7 @@
 							
 							
 							<li>
-<!-- 							<a href="employee_insert">Employee Details</a> -->
+							<a href="employee_insert">Employee Details</a>
 							</li>
 							<li>
 							<a href="vendor_insert">Vendor Details</a>
@@ -261,7 +274,6 @@
 			</div>
 		</div>
 	</div>
-</section>
 
 <br>
 </html>

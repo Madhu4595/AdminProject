@@ -187,6 +187,9 @@ function addRequestNo(a){
 	padding: 3px;
 	width: 50%;
 }
+table{
+	overflow-y: auto;
+}
 </style>
 </head>
 <body>

@@ -13,5 +13,6 @@ public interface IEmployee_Family_Service {
 	public Employee_Family getEmployee_Family(Integer emp_code);
 	public List<Employee_Family> getAllEmpcode(String emp_code);
 	
+	
 
 }

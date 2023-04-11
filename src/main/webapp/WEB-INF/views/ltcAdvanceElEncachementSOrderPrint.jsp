@@ -6,6 +6,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 Date date = new Date();
@@ -13,6 +14,13 @@ String todaydate = formatter.format(date);
 
 LTC ltc = (LTC) request.getAttribute("ltc");
 String words = ltc.getAmountadvance();
+String[] claims= ltc.getClaimedfor().split(",");
+System.out.println("claims==> "+claims.length);
+
+
+
+
+int sno =1;
 %>
 <!DOCTYPE html>
 <html>
@@ -62,8 +70,7 @@ td {
 </style>
 <script>
 function myFunction() {
-	var num = '<%=words%>
-	';
+	var num = '<%=words%>';
 		var a = [ '', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ',
 				'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ',
 				'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ',
@@ -154,7 +161,17 @@ function myFunction() {
 							</tr>
 						</thead>
 						<tbody>
-
+							 
+						<c:forEach var="list" items="${list}">
+							<tr>
+								<td>${list.sno } </td>
+								<td>${list.per_name } </td>
+								<td>${list.age } </td>
+								<td>${list.relation } </td>
+							</tr>
+						</c:forEach>
+							
+							 
 						</tbody>
 					</table>
 					<br> <br>

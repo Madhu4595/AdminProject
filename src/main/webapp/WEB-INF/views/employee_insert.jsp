@@ -167,8 +167,8 @@ function searchempno(){
 	           	 document.getElementById("basic_pay").value =response[2];
 	         	 document.getElementById("dob").value =response[3];  	         
 	       		 //document.getElementById("bank_acno").value =response[4];
-	     		// document.getElementById("ifsc_code").value =response[5];
-	     		 document.getElementById("egst").value =response[6];
+	     		 document.getElementById("egst").value =response[4];
+	     		 document.getElementById("place").value =response[5];
 	   		 	//$("#egst option[value="+response[6]+"]").prop('selected', true);
 		 });
   		 
@@ -229,7 +229,7 @@ function searchempno(){
 						<tr>
 							<td>Designation:</td>
 							<td>
-							<input type="text" name="edesignation" id="edesignation" style="width: 170px; height: 26px;"/>
+							<input type="text" name="edesignation" id="edesignation" style="width: 300px; height: 26px;"/>
 <!-- 							<select name="edesignation" id="edesignation" -->
 <!-- 								style="width: 170px; height: 26px;"> -->
 <!-- 									<option value="">-select-</option> -->
@@ -244,12 +244,12 @@ function searchempno(){
 							<td>Basic Pay:</td>
 							<td><form:input path="basic_pay" id="basic_pay" maxlength="6"
 								onkeypress="return isNumberKey(event)"
-								onchange="return rupeeformat(this.value) "/><br>
+								onchange="return rupeeformat(this.value) " style="width: 300px; height: 26px;"/><br>
 						</tr>
 						<!-- 	<tr><td>Date of Birth:</td><td><input type="date" name="dob" id="dob"><br></tr> -->
 						<tr>
 							<td>Date of Birth:</td>
-							<td><form:input path="dob" id="dob"  /><br>
+							<td><form:input path="dob" id="dob" style="width: 300px; height: 26px;" /><br>
 						</tr>
 <!-- 						<tr> -->
 <!-- 							<td>Bank Account Number:</td> -->
@@ -264,21 +264,23 @@ function searchempno(){
 						<tr>
 							<td>Pay Scale/Level:</td>
 							<td>
-								<!-- 	<input type="text" name="egst" id="egst"> --> <select
-								name="egst" id="egst" style="width: 100px; height: 26px;">
-									<c:forEach items="${pscalelist}" var="list">
-										<option value="${list.id}">${list.name}</option>
-									</c:forEach>
+									<input type="text" name="egst" id="egst" style="width: 300px; height: 26px;"> 
+<!-- 								<select -->
+<!-- 								name="egst" id="egst" style="width: 100px; height: 26px;"> -->
+<%-- 									<c:forEach items="${pscalelist}" var="list"> --%>
+<%-- 										<option value="${list.id}">${list.name}</option> --%>
+<%-- 									</c:forEach> --%>
 
-							</select> <br>
+<!-- 							</select>  -->
+							<br>
 						</tr>
 
 						<tr>
 							<td>State / Dist Employee</td>
 							<td>
-							<input type="text" name="stateordist" id="stateordist" style="width: 500px;" />
+							<input type="text" name="place" id="place" style="width: 500px;" />
 							
-<!-- 								<select name="stateordist" id="stateordist" > -->
+<!-- 								<select name="place" id="place" > -->
 <!-- 									<option value="">-select-</option> -->
 <!-- 									<option value="state">State</option> -->
 <!-- 									<option value="district">District</option> -->

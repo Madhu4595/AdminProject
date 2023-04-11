@@ -54,7 +54,7 @@ public class HomeController {
 
 			String designation = request.getParameter("edesignation");
 			String payscale = request.getParameter("egst");
-			String stateordist = request.getParameter("stateordist");
+			//String stateordist = request.getParameter("stateordist");
 
 			System.out.println("designation=====" + designation);
 			System.out.println("payscale=====" + payscale);
@@ -70,6 +70,7 @@ public class HomeController {
 				saveEmployee.setBasic_pay(employee.getBasic_pay());
 				saveEmployee.setDob(employee.getDob());
 				saveEmployee.setPayscale(payscale);
+				saveEmployee.setPlace(employee.getPlace());
 
 				employee_Family_Repo.deleteAllFamilyDetailsByEmpCode(employee.getCode());
 
@@ -146,6 +147,7 @@ public class HomeController {
 		empDetails.add(empBasicPay); // 2
 		empDetails.add(empDob.toString()); // 3
 		empDetails.add(ps); // 4
+		empDetails.add(emp.getPlace()); //5
 
 		return ResponseEntity.ok(empDetails);
 	}

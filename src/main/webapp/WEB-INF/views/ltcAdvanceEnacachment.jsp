@@ -76,6 +76,8 @@
 					// 				alert("response=> "+JSON.stringify(response));
 					document.getElementById("namespan").innerHTML = response;
 					document.getElementById("empcode").readOnly = true;
+					
+					getFamilyDetails(empcode);
 
 					$("#blockyearlable").show();
 					$("#blockyear").show();
@@ -115,6 +117,32 @@
 			$("#empcode").val('');
 			$("#empcode").focus();
 		}
+	}
+	function getFamilyDetails(empcode){
+		//alert("emp_code=> "+empcode);
+		//alert("matched");
+		$.ajax({
+			type : "get",
+			url : "./getFamilyDetails",
+			data : "emp_code=" + empcode,
+			cache : false,
+			success : function(data) {
+				 	//alert("response=> "+data);
+				 	//alert("response=> "+JSON.stringify(data));
+				 	
+				 	//claimedfor
+				 	
+				 	$("#claimedfor").append('<option value="self">-self-</option>');
+					for(var i = 0; i < data.length; i++){
+						var fdata = data[i];
+						$("#claimedfor").append('<option value="'+fdata.per_name+'">'+fdata.per_name+'</option>');
+					}
+				
+			},
+			error : function(response) {
+				alert("Employee Family Details are Not Found");
+			}
+		});
 	}
 </script>
 
@@ -185,8 +213,9 @@
 						Claimed:</label>
 				</div>
 				<div class="col-auto">
-					<input type="text" name="claimedfor" id="claimedfor"
-						class="form-control" />
+				<select name="claimedfor" style="width: 200px;" id="claimedfor"  class="form-control" multiple="multiple"> </select>
+<!-- 					<input type="text" name="claimedfor" id="claimedfor" -->
+<!-- 						class="form-control" /> -->
 				</div>
 			</div>
 

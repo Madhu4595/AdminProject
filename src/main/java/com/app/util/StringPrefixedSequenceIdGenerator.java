@@ -12,10 +12,6 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.LongType;
 import org.hibernate.type.Type;
 
-
-
-
-
 public class StringPrefixedSequenceIdGenerator extends SequenceStyleGenerator {
  
     public static final String VALUE_PREFIX_PARAMETER = "valuePrefix";

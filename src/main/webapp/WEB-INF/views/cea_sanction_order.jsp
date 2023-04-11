@@ -25,6 +25,7 @@ td{  padding: 15px; }
 
 <script>
 function myFunction() {
+	alert("asdfasdfasdfasdfasdf");
 	var num = '<%=words%>';
 	var a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
 	var b = ['', '', 'Twenty','Thirty','Fourty','Fifty', 'Sixty','Seventy','Eighty','Ninety'];
@@ -42,7 +43,7 @@ function myFunction() {
 </script>
  
 </head>
-<body>
+<body  onload="myFunction();">
 	
 	<div id="topline">No.1 (18) / NIC-APSC/2019/Admn.</div>
 	<div id="header">

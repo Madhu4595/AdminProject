@@ -15,4 +15,7 @@ public interface Medical_Bills_uploadRepo extends JpaRepository<Medical_Bills_up
 	
 	@Query(value="SELECT * FROM public.medical_bills_upload", nativeQuery = true)
 	public List<Medical_Bills_upload> helprequestnosearch();
+	
+	@Query(value="SELECT * FROM public.medical_bills_upload where siodate = :siodate", nativeQuery = true)
+	public Medical_Bills_upload findBySO(String siodate);
 }

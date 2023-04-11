@@ -119,8 +119,10 @@ public class SactionOrderGenerationController {
 			if (allowance_type.equalsIgnoreCase("CGHS") || allowance_type.equalsIgnoreCase("AMA")) {
 				System.out.println("allowance type AMA or CGHS");
 
-				Medical_Bills_upload medical_Bills_upload = medical_Bills_uploadService
+				Medical_Bills_upload medical_Bills = medical_Bills_uploadService
 						.getById(Integer.parseInt(request_no));
+				medical_Bills.setSiodate(siodate);
+				Medical_Bills_upload medical_Bills_upload = medical_Bills_uploadService.saveMedical_Bills_upload(medical_Bills);
 				System.out.println("medical_Bills_upload" + medical_Bills_upload.toString());
 				Employee employee = employeeService.getById(medical_Bills_upload.getEmp_code());
 

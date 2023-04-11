@@ -40,6 +40,9 @@ public class Employee_Family_Service_Impl implements IEmployee_Family_Service{
 		return repo.getAllByEmpcode(emp_code);
 	}
 
+
+	 
+
 	 
 
 }

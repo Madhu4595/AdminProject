@@ -100,7 +100,8 @@ h4{
   					alert("sanction order number is already available"); 
   					$("#sio_date").val(''); $("#sio_date").focus();
   				}else{
-  				genersanction(request_no, allowance_type, sio_date);}
+  				genersanction(request_no, allowance_type, sio_date);
+  				}
   			}
   		});
   		

@@ -11,7 +11,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 Medical_Bills_upload upload = (Medical_Bills_upload)request.getAttribute("medical_Bills_upload3");
-String words = MyUtil.convert(Long.valueOf(upload.getTotAmountApproved()));
+//String words = MyUtil.convert(Long.valueOf(upload.getTotAmountApproved()));
+String words = String.valueOf(request.getAttribute("tot_amount"));
+System.out.println("words==========> "+words);
 %>
 
 <!DOCTYPE html>
@@ -86,7 +88,13 @@ function myFunction() {
   </tr>
   <tr>
   <td >4.Name of the patient & relationship With the Government Servant</td>
-  <td>:	${medical_Bills_upload3.patient_name } (${relation.relation})</td>
+  <td>:	
+  <% if(upload.getPatient_name().equalsIgnoreCase("self")){ %>
+  	${medical_Bills_upload3.patient_name }
+  <%} else{%>
+  ${medical_Bills_upload3.patient_name } (${relation.relation})
+  <%} %>
+  </td>
   </tr>
   <tr>
   <td>5. Pay in Pay Band (Without Grade Pay)</td>
@@ -183,7 +191,7 @@ facility from NIC (in case of spouse is serving)
 5. The actual paid amount has been verified where CGHS / AIIMS rate are not available.<br>
 6.In case treatment taken in emergency and cover under emergency as per CGHS / CSMA rules (Emergency certificate enclosed).<br><br>
 
-Above-said claim is in order/not in order. As per the delegation of power issued vide office
+Above-said claim is in order. As per the delegation of power issued vide office
 order No. M -11017/2014 - MS (O&M) Dt. 17/07/2014. Head of State NIC Centre being the
 authority competent if the claim admissible not exceeds Rupees Two Lakhs may kindly
 approve the reimbursement of admissible amount for <b>&#8377;  ${tot_amount }/- ( Rupees <span id="words" ></span> Only ). </b>
