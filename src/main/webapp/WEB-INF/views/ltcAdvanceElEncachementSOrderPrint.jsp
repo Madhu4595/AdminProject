@@ -103,7 +103,7 @@ function myFunction() {
 <body onload="myFunction();">
 
 
-	<section class="container mt-5 pt-2">
+	<section class="container mt-5 pt-2 border">
 		<div class="row">
 			<div class="col-md-12">
 				<div>
@@ -143,7 +143,7 @@ function myFunction() {
 						amended from time to time and read with O.M. No. M-11019/1/99-MS
 						(O&M) dated 04.01.2000 of M/o Information Technology is hereby
 						conveyed to the grant of an advance of <b>Rs.
-							${ltc.amountadvance }/- (Rupees <%=words%> only)
+							${ltc.amountadvance }/- (Rupees <span id="words"></span>)
 						</b> to <b>${emp.callSign } ${emp.name } (Emp. Code No. 2385),</b>
 						NIC, APSC, Vijayawada to meet the expenses in connection with LTC
 						(${ltc.location}) for the Block year 2020-2021 of 2018-2021 to

@@ -225,36 +225,100 @@
 										</ul>
 									</li>
 									
+									<li class="dropdown">
+									<a class="dropdown-toggle" href="#"
+										id="navbarDropdown" role="button" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">GEM-OutSourcing
+									</a>
+										<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+											<li> <a href="gemOutsourceForm">New</a> </li>
+											<li> <a href="gemOutsourceEditForm">Modify</a> </li>
+										</ul>
+									</li>
+									
+									<li class="dropdown">
+									<a class="dropdown-toggle" href="#"
+										id="navbarDropdown" role="button" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">GPF-WithDraw
+									</a>
+										<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+											<li> <a href="gpfWithDrawForm">New</a> </li>
+											<li> <a href="gpfWithDrawEditForm">Modify</a> </li>
+										</ul>
+									</li>
+									
 								</ul>
 								
 								</li>
 							
-							<li class="dropdown"><a class="dropdown-toggle" href="#"
+							<li class="dropdown">
+								<a class="dropdown-toggle" href="#"
 								id="navbarDropdown" role="button" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">Approval Details</a>
+								aria-haspopup="true" aria-expanded="false">
+								Approval Details
+								</a>
+								
 								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
+									
 									<li><a href="allowance_approve">Employee</a></li>
-									<li><a href="medical_approve">Medical</a></li>
+									<li><a href="empNSForm">Employee New</a></li>
+<!-- 									<li><a href="medical_approve">Medical</a></li> -->
+									<li><a href="medicalNoteSheetForm">Medical</a></li>
 									<li><a href="ltcElEnacachmentNotesheet">LTC- EL Enacachment</a></li>
-									<li><a href="gemVehicleNoteSheet">GEM-Vehicle NoteSheet</a></li>
+									
+									<li class="dropdown">
+									<a class="dropdown-toggle" href="#"
+										id="navbarDropdown" role="button" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">GEM
+									</a>
+										<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+											<li> <a href="gemVehicleNoteSheet">Vehicle NoteSheet</a> </li>
+											<li> <a href="gemOutsourcingNoteSheet">Outsourcing NoteSheet</a> </li>
+										</ul>
+									</li>
+									
+									<li class="dropdown">
+									<a class="dropdown-toggle" href="#"
+										id="navbarDropdown" role="button" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">GPF-WithDraw
+									</a>
+										<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+											<li> <a href="gpfWithDrawNSForm">WithDraw</a> </li>
+										</ul>
+									</li>
 
 								</ul>
 								</li>
-							<li class="dropdown"><a class="dropdown-toggle" href="#"
+							<li class="dropdown">
+							<a class="dropdown-toggle" href="#"
 								id="navbarDropdown" role="button" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">Sanction Order Generation</a>
+								
 								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
 									<li> <a href="sanction_approve">Employee & Medical</a> </li>
+									<li><a href="medicalSOForm">Medical</a></li>
 									<li><a href="ltcElEnacachmentNotesheet">LTC- EL Enacachment</a></li>
 									
+									<li class="dropdown">
+										<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">GEM</a>
+											<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+												<li><a href="gemVehicleSOForm">Vehicle Sanction Order</a></li>
+												<li><a href="gemOutsourcingSOForm">Outsourcing Sanction Order</a></li>
+											</ul>
+									</li>
+									<li class="dropdown">
+										<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">GPF</a>
+											<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+												<li><a href="gpfWithdrawSOForm">Withdraw</a></li>
+<!-- 												<li><a href=""></a></li> -->
+											</ul>
+										
+									</li>
+									
 								</ul>
+								
 								</li>
-								
-								
-							
-							
 							
 							<li>
 							<a href="employee_insert">Employee Details</a>

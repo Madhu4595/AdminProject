@@ -12,11 +12,16 @@ public class AdminProjectApplication extends SpringBootServletInitializer{
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		// TODO Auto-generated method stub
 		return builder.sources(AdminProjectApplication.class);
+		
+		
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(AdminProjectApplication.class, args);
 		
+		
+		
 	}
+	
 
 }

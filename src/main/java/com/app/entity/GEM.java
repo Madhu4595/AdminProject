@@ -33,6 +33,8 @@ public class GEM {
 	private String amount;
 	
 	private String record_status;
+	private String SONum;
+	private String type;
 
 	public GEM() {
 		super();
@@ -40,7 +42,7 @@ public class GEM {
 	}
 
 	public GEM(String requestno, String monthYear, String period, String billno, String billdate, String amount,
-			String record_status) {
+			String record_status, String sONum, String type) {
 		super();
 		this.requestno = requestno;
 		this.monthYear = monthYear;
@@ -49,6 +51,8 @@ public class GEM {
 		this.billdate = billdate;
 		this.amount = amount;
 		this.record_status = record_status;
+		SONum = sONum;
+		this.type = type;
 	}
 
 	public String getRequestno() {
@@ -107,11 +111,32 @@ public class GEM {
 		this.record_status = record_status;
 	}
 
+	public String getSONum() {
+		return SONum;
+	}
+
+	public void setSONum(String sONum) {
+		SONum = sONum;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
 		return "GEM [requestno=" + requestno + ", monthYear=" + monthYear + ", period=" + period + ", billno=" + billno
-				+ ", billdate=" + billdate + ", amount=" + amount + ", record_status=" + record_status + "]";
+				+ ", billdate=" + billdate + ", amount=" + amount + ", record_status=" + record_status + ", SONum="
+				+ SONum + ", type=" + type + "]";
 	}
+
+	
+
+	 
 	
 	
 

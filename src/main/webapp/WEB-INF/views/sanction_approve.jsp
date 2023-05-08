@@ -100,7 +100,10 @@ h4{
   					alert("sanction order number is already available"); 
   					$("#sio_date").val(''); $("#sio_date").focus();
   				}else{
-  				genersanction(request_no, allowance_type, sio_date);
+  					//genersanction(request_no, allowance_type, sio_date);
+  					
+  					document.location.href = './generate_sanction_data?request_no='+request_no+'&allowance_type='+allowance_type+'&siodate='+sio_date;
+  					
   				}
   			}
   		});
@@ -111,25 +114,25 @@ h4{
  
   	
   }
-  function genersanction(request_no, allowance_type, sio_date){
-	  $.ajax({
-			type: "get",
-		    url: "./generate_sanction_data",
-		    data: "request_no=" + request_no+"&allowance_type="+allowance_type+"&siodate="+sio_date,
-		    cache: false,
-		    success: function(html)
-		    {
-		    	$("#maindata").hide();	
-		     	$("#navbarhide").hide();	
-		     	$("#navbanner").hide();	
-		    	$("#allowance_response1").html(html);
+//   function genersanction(request_no, allowance_type, sio_date){
+// 	  $.ajax({
+// 			type: "get",
+// 		    url: "./generate_sanction_data",
+// 		    data: "request_no=" + request_no+"&allowance_type="+allowance_type+"&siodate="+sio_date,
+// 		    cache: false,
+// 		    success: function(html)
+// 		    {
+// 		    	$("#maindata").hide();	
+// 		     	$("#navbarhide").hide();	
+// 		     	$("#navbanner").hide();	
+// 		    	$("#allowance_response1").html(html);
 		    	
-	       }
-		});
-  }
+// 	       }
+// 		});
+//   }
   
 function form_submit(){
-	document.so_form.action="generate_sanction_data";
+	document.so_form.action="./generate_sanction_data";
 	document.so_form.submit();
 	document.so_form.target="_blank";
 	
@@ -156,6 +159,7 @@ function form_submit(){
     			<h4 align="center" >Approval of Sanction Generation Module</h4>
     			</div>
     		</div>
+    		
 			<div align="center" style="padding-left:50px;" class="form-group">
 				<table>
 					<tr>
@@ -165,6 +169,7 @@ function form_submit(){
      				<input type="text" name="approval_to" id="approval_to" style="width:100px;" onchange="approvalsearch();">
 					</tr>
 				</table>
+				<span style="text-align: center; font-weight: bolder;" >${msg }</span>
 				<br><br>
 			</div>
 			<input type="hidden" name="req_id" id="req_id"><input type="hidden" name="num_tab" id="num_tab"> 

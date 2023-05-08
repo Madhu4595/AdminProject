@@ -106,6 +106,7 @@ public class Approval_Details_Controller {
 			@RequestMapping("/allowanceapprove")
 			public String allowanceapprove(HttpServletRequest request, Model model) {
 				System.out.println("=======allowanceapprove===========");
+				
 				String request_no = request.getParameter("request_no");
 				String amount_approve1 = request.getParameter("amount_approve1");
 				String amount_approve2 = request.getParameter("amount_approve2");
@@ -138,7 +139,7 @@ public class Approval_Details_Controller {
 										model.addAttribute("employee_allowance2", employee_allowance2);
 										Employee employee = employeeService.getById(employee_allowance2.getCode()); 
 										model.addAttribute("employee", employee);
-										return "cea_notesheet";
+										return "NSs/cea_notesheet";
 								}
 								if(noofchilds.equals("2")) {
 										System.out.println("noofchilds => 2");
@@ -153,7 +154,7 @@ public class Approval_Details_Controller {
 										Employee employee = employeeService.getById(employee_allowance2.getCode()); 
 										model.addAttribute("employee", employee);
 										model.addAttribute("amount_approve1", amount_approve1);
-										return "cea_notesheet";
+										return "NSs/cea_notesheet";
 									
 								}
 								
@@ -171,7 +172,7 @@ public class Approval_Details_Controller {
 								model.addAttribute("allowance_type", allowance_type);
 								model.addAttribute("employee", employee);
 								
-								return "briefcaseapprovalnotesheet";
+								return "NSs/briefcaseapprovalnotesheet";
 							}
 							
 						 
@@ -217,6 +218,8 @@ public class Approval_Details_Controller {
 				String[] bill_no=medical_Bills_upload.getBill_no().split(",");
 				String[] amount_claimed =  medical_Bills_upload.getAmount_claimed().split(",");
 				String[] bill_date = medical_Bills_upload.getBill_date().split(",");
+				
+				model.addAttribute("noofbills",  bill_no.length);
 				
 				for(int i=0;i<bill_no.length;i++) {
 					Medical_Bills_upload medical_Bills_upload1=new Medical_Bills_upload();
@@ -304,6 +307,6 @@ public class Approval_Details_Controller {
 					model.addAttribute("msg", "Something Went Wrong");
 					return "home";
 				}
-				return "medicalbills_notesheet";
+				return "NSs/medicalbills_notesheet";
 			}
 }

@@ -10,5 +10,6 @@ public interface EmployeeRepo extends JpaRepository<Employee, String>{
 	
 	@Query(value="SELECT * FROM public.employee_master where code = :code", nativeQuery = true)
 	public Employee getNamewithDesg(String code);
+	
 
 }

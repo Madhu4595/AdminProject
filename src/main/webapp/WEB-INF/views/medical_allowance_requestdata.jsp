@@ -380,7 +380,7 @@ font-stretch: 20px;
 						<th width="100px;">Add/Delete</th>
 					</tr>
 
-					<c:forEach var="mbu" items="${mbu}">
+					<c:forEach var="mbu" items="${listBills}">
 						<tr>
 							<td style="width: 400px;">
 							<input type="text" name="bill_no" maxlength="50" value="${mbu.bill_no }" />
@@ -401,6 +401,27 @@ font-stretch: 20px;
 							</td>
 						</tr>
 					</c:forEach>
+<%-- 					<c:forEach var="mbu" items="${mbu}"> --%>
+<!-- 						<tr> -->
+<!-- 							<td style="width: 400px;"> -->
+<%-- 							<input type="text" name="bill_no" maxlength="50" value="${mbu.bill_no }" /> --%>
+<!-- 							</td> -->
+<!-- 							<td style="width: 400px;"> -->
+<%-- 							<input type="date" name="bill_date" maxlength="50" value="${mbu.bill_date }" /> --%>
+<!-- 							</td> -->
+<!-- 							<td style="width: 400px;"> -->
+<%-- 							<input type="text" name="amount_claimed" maxlength="10" value="${mbu.amount_claimed }" /> --%>
+<!-- 							</td> -->
+<!-- 							<td style="width: 400px;"> -->
+<%-- 							<input type="text" name="lab_name" maxlength="10" value="${mbu.lab_name }" /> --%>
+<!-- 							</td> -->
+<!-- 										<td  style="width:400px;"><input type="button" style="" class="buttoncolor"   name="add" value="Add" onclick="addOwner(this)" /></td> -->
+							
+<!-- 							<td style="width: 400px;"> -->
+<!-- 							<input type="button" style="" class="buttoncolor" name="remove" value="Remove" onclick="removeOwner(this)" /> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<%-- 					</c:forEach> --%>
 
 
 				</table>

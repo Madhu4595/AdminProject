@@ -21,33 +21,33 @@
 <script>
   
   //amount_approve1 Validation
-    function amount_approve1Validation()
-  {   	  
-	    amount_approve1=document.getElementById('amount_approve1').value;
-      if ($('#cea_amount_child1').text() < amount_approve1){   
+//     function amount_approve1Validation()
+//   {   	  
+// 	    amount_approve1=document.getElementById('amount_approve1').value;
+//       if ($('#cea_amount_child1').text() < amount_approve1){   
     	  
-    	  alert('Amount approved for child1 is more than Amount claimed');
-    	  document.getElementById('amount_approve1').value = "";
-          return false;
-      }
-      else {    
-              return true;
-          }
-      }
+//     	  alert('Amount approved for child1 is more than Amount claimed');
+//     	  document.getElementById('amount_approve1').value = "";
+//           return false;
+//       }
+//       else {    
+//               return true;
+//           }
+//       }
    
   //amount_approve2 Validation
-   function amount_approve2Validation()
-  {   	  	 
-	    amount_approve2=document.getElementById('amount_approve2').value;
-      if ($('#cea_amount_child2').text() < amount_approve2){   	           
-    	  alert('Amount approved for child2 is more than Amount claimed');
-    	  document.getElementById('amount_approve2').value = "";
-          return false;
-      }
-      else {    
-              return true;
-          }
-      }	 
+//    function amount_approve2Validation()
+//   {   	  	 
+// 	    amount_approve2=document.getElementById('amount_approve2').value;
+//       if ($('#cea_amount_child2').text() < amount_approve2){   	           
+//     	  alert('Amount approved for child2 is more than Amount claimed');
+//     	  document.getElementById('amount_approve2').value = "";
+//           return false;
+//       }
+//       else {    
+//               return true;
+//           }
+//       }	 
   
 //   //amount_approve validation
    function amount_approveValidation()

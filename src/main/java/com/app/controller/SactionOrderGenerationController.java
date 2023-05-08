@@ -38,6 +38,8 @@ public class SactionOrderGenerationController {
 	 
 	@Autowired
 	private IMedical_Bills_uploadService medical_Bills_uploadService;
+	@Autowired
+	private HomeRestController homeRestController;
 
 	@RequestMapping("/sanction_approve")
 	public String sanction_approve() {
@@ -80,8 +82,17 @@ public class SactionOrderGenerationController {
 			Date date = new Date();
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			String todaydate = formatter.format(date);
+			
+			boolean find = homeRestController.checkSO(siodate);
+			System.out.println("/generate_sanction_data===> finddddddddd=> "+find);
+			
+			if(find) {
+				model.addAttribute("msg", "Sanction Order Number is ALREADY ALLOCATED!!!");
+				return "sanction_approve";
+			}
 
 			if (allowance_type.equalsIgnoreCase("CEA")) {
+				
 				System.out.println("allowance type CEA");
 				Employee_allowance employee_allowance = employee_allowanceService
 						.getByReqNo(Integer.parseInt(request_no));
@@ -96,7 +107,7 @@ public class SactionOrderGenerationController {
 				model.addAttribute("employee", employee);
 				model.addAttribute("employee_allowance", employee_allowance);
 
-				return "cea_sanction_order";
+				return "SOs/cea_sanction_order";
 			}
 			if (allowance_type.equalsIgnoreCase("BRIEF CASE")) {
 				System.out.println("allowance type BRIEF CASE");
@@ -113,7 +124,7 @@ public class SactionOrderGenerationController {
 				model.addAttribute("allowance_type", allowance_type);
 
 				System.out.println("=======BRIEF CASE employee_allowance Updated Successfully");
-				return "briefcase_approve";
+				return "SOs/briefcase_approve";
 			}
 
 			if (allowance_type.equalsIgnoreCase("CGHS") || allowance_type.equalsIgnoreCase("AMA")) {
@@ -131,7 +142,7 @@ public class SactionOrderGenerationController {
 				model.addAttribute("todaydate", todaydate);
 				model.addAttribute("employee", employee);
 
-				return "medical_sanction_order";
+				return "SOs/medical_sanction_order";
 			}
 
 		} catch (Exception e) {

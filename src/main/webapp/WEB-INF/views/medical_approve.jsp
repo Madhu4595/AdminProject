@@ -206,12 +206,20 @@
 	}
 	function validate(){
 		//alert("Asdfasdfasdf"); 
-		var amount_approve = document.getElementById("amount_approve").value;
-		var remarks = document.getElementById("remarks").value;
-		//alert("remarks=> "+remarks);
+ 		var noofbills = $("#noofbills").val();
+ 		alert("noofbills==> "+noofbills);
 		
-		if(amount_approve === "" || amount_approve === null){ alert("Please Enter the Amount Approved"); return false; }
-		if(remarks === "" || remarks === null){ alert("Please Enter Remarks"); return false; }
+		for(var i = 1; i <= noofbills; i++){
+			var a = $("#amount_approve"+i).val();
+			var b = $("#remarks"+i).val();
+			
+			if(a === null || a === ""){
+				alert("Amount Approved is Required, Fill that"); return false;
+			}
+			if(b === null || b === ""){
+				alert("Remarks is Required, Fill that"); return false;
+			}
+		}
 		
 		return true;
 	}

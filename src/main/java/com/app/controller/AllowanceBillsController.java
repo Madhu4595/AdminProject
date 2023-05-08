@@ -2,6 +2,7 @@ package com.app.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.app.entity.Bills_Upload;
 import com.app.entity.Employee;
 import com.app.entity.Employee_allowance;
-import com.app.entity.Medical_Bills_upload;
 import com.app.entity.Transactions;
 import com.app.repo.Employee_allowanceRepo;
 import com.app.repo.Medical_Bills_uploadRepo;
@@ -44,14 +43,7 @@ public class AllowanceBillsController {
 	private IEmployee_allowanceService employee_allowanceService;
 	@Autowired
 	private Employee_allowanceRepo employee_allowanceRepo;
-	@Autowired
-	private IMedical_Bills_uploadService medical_Bills_uploadService;
-	@Autowired
-	private IBills_UploadService bills_UploadService;
-	@Autowired
-	private ITransactionsService transactionsService;
-	@Autowired
-	private Medical_Bills_uploadRepo medical_Bills_uploadRepo;
+	@Autowired private ITransactionsService transactionsService;
 
 	// Allowance / Bills
 	// Employee
@@ -70,6 +62,7 @@ public class AllowanceBillsController {
 		System.out.println("in Employee_allowance");
 		
 		try {
+		employee_allowance.setEntryDate(LocalDateTime.now());
 		employee_allowanceService.saveEmpAllowance(employee_allowance);
 		System.out.println("Employee_allowance saved successfully!");
 		model.addAttribute("msg", "New Employee Allowance Inserted Succesfully");
@@ -202,7 +195,8 @@ try {
 				emp_allowance.setCea_amount_child1(empAllowance.getCea_amount_child1());
 				emp_allowance.setAmount_claimed(empAllowance.getAmount_claimed());
 				emp_allowance.setRemarks(empAllowance.getRemarks());
-
+				emp_allowance.setEditDate(LocalDateTime.now());
+				
 				employee_allowanceService.saveEmpAllowance(emp_allowance);
 				System.out.println("emp allowance inserted");
 				model.addAttribute("msg", "EMPLOYEE ALLOWANCE UPDATED SUCCESSFULLY!");
@@ -224,6 +218,7 @@ try {
 
 				emp_allowance.setAmount_claimed(empAllowance.getAmount_claimed());
 				emp_allowance.setRemarks(empAllowance.getRemarks());
+				emp_allowance.setEditDate(LocalDateTime.now());
 
 				employee_allowanceService.saveEmpAllowance(emp_allowance);
 				System.out.println("emp allowance inserted");
@@ -282,137 +277,7 @@ try {
 		return "home";
 	}
 
-	// Medical
-	// New
-	@RequestMapping("/billsupload2")
-	public String billsupload2(Medical_Bills_upload medical_Bills_upload, Model model) throws SQLException {
-		int hit_count = MyUtil.hit_counter();
-		model.addAttribute("hit_count", hit_count);
-		return "billsupload2";
-	}
-
-	@RequestMapping("/billsupload")
-	public String saveBills_upload(@ModelAttribute("medical_Bills_upload") Medical_Bills_upload medical_Bills_upload,
-			Model model, HttpServletRequest request) {
-
-		System.out.println("patient_name=> " + request.getParameter("patient_name"));
-		System.out.println("/billsupload=> " + medical_Bills_upload.toString());
-	try {
-
-		String[] totAmountClaimedArray = medical_Bills_upload.getAmount_claimed().split(",");
-		Integer totAmountClaimed = 0;
-
-		Bills_Upload b_upload = new Bills_Upload();
-		b_upload.setEmp_code(medical_Bills_upload.getEmp_code());
-		b_upload.setType(medical_Bills_upload.getType());
-		b_upload.setCard_no(medical_Bills_upload.getCard_no());
-		b_upload.setDoctor_name(medical_Bills_upload.getDoctor_name());
-		b_upload.setDisease_name(medical_Bills_upload.getDisease_name());
-		b_upload.setHospital_name(medical_Bills_upload.getHospital_name());
-		b_upload.setPatient_name(medical_Bills_upload.getPatient_name());
-		b_upload.setBill_no(medical_Bills_upload.getBill_no());
-		b_upload.setBill_date(medical_Bills_upload.getBill_date());
-		b_upload.setAmount_claimed(medical_Bills_upload.getAmount_claimed());
-		b_upload.setLab_name(medical_Bills_upload.getLab_name());
-		b_upload.setPeriod_of_treatment(medical_Bills_upload.getPeriod_of_treatment());
-		b_upload.setRequest_no(medical_Bills_upload.getRequest_no());
-		b_upload.setRemarks(medical_Bills_upload.getRemarks());
-
-		for (int i = 0; i < totAmountClaimedArray.length; i++) {
-			totAmountClaimed = totAmountClaimed + Integer.parseInt(totAmountClaimedArray[i]);
-			System.out.println("totAmountClaimed=> " + totAmountClaimed);
-		}
-		medical_Bills_upload.setTotAmountClaimed(totAmountClaimed.toString());
-
-		bills_UploadService.saveBills_Upload(b_upload);
-		medical_Bills_uploadService.saveMedical_Bills_upload(medical_Bills_upload);
-
-		model.addAttribute("msg", "MEDICAL BILLS UPLOAD Saved Successfully");
-		System.out.println("bills upload saved successfully");
-		
-	}catch(Exception e) {
-		e.printStackTrace();
-		model.addAttribute("msg", "Something Went Wrong while Uploading data, Please try Again");
-	}
-	return "home";
-	}
-
-	// Modify
-	@RequestMapping("/billsupload_edit")
-	public String billsupload_edit(Bills_Upload bills_Upload) throws SQLException {
-		return "billsupload_edit";
-	}
-
-	@RequestMapping("/medicalreqnosearch")
-	public String medicalreqnosearch(@RequestParam("request_no") Integer request_no, Model model) {
-		System.out.println("medicalreqnosearch======>" + request_no);
-		Medical_Bills_upload medical_Bills_upload = medical_Bills_uploadService.getById(request_no);
-
-		String[] billno = medical_Bills_upload.getBill_no().split(",");
-		String[] billdate = medical_Bills_upload.getBill_date().split(",");
-		// String[] amount = medical_Bills_upload.getAmount_approved().split(",");
-		String[] labname = medical_Bills_upload.getLab_name().split(",");
-		String[] amount_claimed = medical_Bills_upload.getAmount_claimed().split(",");
-		List<Medical_Bills_upload> mbu = new ArrayList<Medical_Bills_upload>();
-
-		for (int i = 0; i < billno.length; i++) {
-			Medical_Bills_upload mb = new Medical_Bills_upload();
-			mb.setBill_no(billno[i]);
-			mb.setBill_date(billdate[i]);
-			// mb.setAmount_approved(amount[i]);
-			mb.setLab_name(labname[i]);
-			mb.setAmount_claimed(amount_claimed[i]);
-			mbu.add(mb);
-		}
-		System.out.println("medical_Bills_upload===> " + medical_Bills_upload.toString());
-		model.addAttribute("medical_Bills_upload", medical_Bills_upload);
-		model.addAttribute("mbu", mbu);
-
-		return "medical_allowance_requestdata";
-	}
-
-	@RequestMapping("/billsuploadeditsave")
-	public String billsuploadedit(@ModelAttribute("bills_Upload") Medical_Bills_upload upload,
-			HttpServletRequest request, Model model) {
-		System.out.println("====billsupload======" + upload.toString());
-		System.out.println("====billsuploadedit======" + request.getParameter("request_no"));
-		System.out.println("====updatetype======" + request.getParameter("updatetype"));
-		System.out.println("====updatepatient_name======" + request.getParameter("updatepatient_name"));
-	try {
-
-		Medical_Bills_upload medical_Bills_upload = medical_Bills_uploadService
-				.getById(Integer.parseInt(request.getParameter("request_no")));
-		medical_Bills_upload.setType(request.getParameter("updatetype"));
-		medical_Bills_upload.setDoctor_name(upload.getDoctor_name());
-		medical_Bills_upload.setPeriod_of_treatment(upload.getPeriod_of_treatment());
-		medical_Bills_upload.setPatient_name(request.getParameter("updatepatient_name"));
-		medical_Bills_upload.setCard_no(upload.getCard_no());
-		medical_Bills_upload.setDisease_name(upload.getDisease_name());
-		medical_Bills_upload.setHospital_name(upload.getHospital_name());
-		medical_Bills_upload.setBill_no(upload.getBill_no());
-		medical_Bills_upload.setBill_date(upload.getBill_date());
-		medical_Bills_upload.setAmount_approved(upload.getAmount_approved());
-		medical_Bills_upload.setLab_name(upload.getLab_name());
-		medical_Bills_upload.setAmount_claimed(upload.getAmount_claimed());
-
-		medical_Bills_uploadService.saveMedical_Bills_upload(medical_Bills_upload);
-
-		model.addAttribute("msg", "Medical Bill Updated Successfully");
-	}catch(Exception e) {
-		e.printStackTrace();
-		model.addAttribute("msg", "Something went Wrong while updating Medical Bill Please Try Again");
-	}
-		return "home";
-	}
-
-	@RequestMapping("/medicalrequestnos")
-	public String medicalrequestnos(Model model) {
-		System.out.println("=medicalrequestnos=");
-		List<Medical_Bills_upload> medical_Bills_upload = medical_Bills_uploadRepo.helprequestnosearch();
-		model.addAttribute("medical_Bills_upload", medical_Bills_upload);
-		System.out.println("=medicalrequestnos=" + medical_Bills_upload.size());
-		return "medicalrequestnos";
-	}
+	
 
 	@RequestMapping("/home")
 	public String vendor_searchsd(Transactions transactions, Model model) throws SQLException {

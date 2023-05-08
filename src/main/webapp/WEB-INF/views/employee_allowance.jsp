@@ -57,7 +57,8 @@
 					</div>
 					<div class="col-4">
 						<form:input path="request_no" value="${hit_count}"
-							readonly="readonly" />
+							readonly="readonly"  
+							 />
 					</div>
 				</div>
 
@@ -67,7 +68,7 @@
 							Code:</label>
 					</div>
 					<div class="col-4">
-						<form:input path="code" id="eno" onChange="return employeesearch()" maxlength="5" />
+						<form:input path="code" id="eno" onChange="return employeesearch()" placeholder="Ex: 1001" maxlength="5" />
 					</div>
 					<div class="col-5" id="empname"></div>
 				</div>
@@ -108,13 +109,15 @@
 						<label for="requestno" class="col-form-label">Name and Class of Child1:</label>
 					</div>
 					<div class="col-3" id="ceanameinputc1">
-						<form:input path="name_class_of_child1" id="ceaname0" onChange="return ceaname1Validation()" />
+						<form:input path="name_class_of_child1" id="ceaname0" 
+						placeholder="Ex: Madhu and Class IV" onChange="return ceaname1Validation()" />
 					</div>
 					<div class="col-3" id="ceanamelabelc2">
 						<label for="requestno" class="col-form-label">Name and Class of Child2:</label>
 					</div>
 					<div class="col-3" id="ceanameinputc2">
-						<form:input path="name_class_of_child2" id="ceaname1" onChange="return ceaname2Validation()" />
+						<form:input path="name_class_of_child2" id="ceaname1" 
+						placeholder="Ex: Pavan and Class X" onChange="return ceaname2Validation()" />
 					</div>
 				</div>
 
@@ -196,7 +199,7 @@
 					</div>
 					<div class="col-3" id="acc1input">
 						<form:input path="cea_amount_child1" id="cea_amount_child1"
-							onchange="return cea_amount_child1Validation()" />
+							placeholder="Ex: 25000" onchange="return cea_amount_child1Validation()" />
 					</div>
 					<div class="col-3" id="acc2label">
 						<label for="requestno" class="col-form-label">Amount
@@ -204,7 +207,7 @@
 					</div>
 					<div class="col-3" id="acc2input">
 						<form:input path="cea_amount_child2" id="cea_amount_child2"
-							onchange="cea_amount_child2Validation();" />
+							placeholder="Ex: 25000" onchange="cea_amount_child2Validation();" />
 					</div>
 				</div>
 

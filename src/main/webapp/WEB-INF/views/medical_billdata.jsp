@@ -16,9 +16,10 @@
 </head>
 <body>
 	<div id="details">
-			<label>Employee Code: </label><span> ${list.emp_code }</span>&nbsp;&nbsp;&nbsp;
+			<label>Employee Code: </label><span> ${list.emp_code } </span>&nbsp;&nbsp;&nbsp;
 			<label>Patient Name:</label><span> ${list.patient_name }</span>&nbsp;&nbsp;&nbsp;
 			<label>Doctor Name:</label><span> ${list.doctor_name }</span>
+			<input type="hidden" name="noofbills" id="noofbills" value="${noofbills }"/>
 	</div>			
 			
 	<table width="900px;">
@@ -30,7 +31,9 @@
 			<th>Remarks </th>
 		</tr>
 		<tbody>
+		<c:set var = "count" value="0" scope="page"/>
 		<c:forEach var="list1" items="${list1}">
+		<c:set var = "count" value="${count +1 }" scope="page"/>
 				<tr>
 					 		    		
 					<td id="billno">
@@ -43,11 +46,10 @@
 					<input type="hidden" name="amount_claimed" value="${list1.amount_claimed}" />
 					${list1.amount_claimed} </td>
     				<td>
-    					<input type="text"  name="amount_approved" id="amount_approve" />
-<%--     			    <input type="text" name="amount_approve" onchange="amountcheck('<s:property value="amount_cla"/>',this.value)"> --%>
+    					<input type="text"  name="amount_approved" id="amount_approve${count}" />
     				</td>
 					<td>
-						<input type="text"  name="remarks" id="remarks" />
+						<input type="text"  name="remarks" id="remarks${count}" />
 					</td>
 					
 				</tr>

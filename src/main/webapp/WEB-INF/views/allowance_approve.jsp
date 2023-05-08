@@ -143,20 +143,20 @@ h6 {
 
 	function requestnosearch() {
 		document.getElementById("request_no").readonly = true;
-		
+
 		var modal1 = document.getElementById("myModal1");
-	    var span = document.getElementsByClassName("close1")[0];
-	    modal1.style.display = "block";
-	    span.onclick = function () {
-	        modal1.style.display = "none";
-	    };
+		var span = document.getElementsByClassName("close1")[0];
+		modal1.style.display = "block";
+		span.onclick = function() {
+			modal1.style.display = "none";
+		};
 
 		$.ajax({
 			type : "get",
 			url : "./getrequestnos",
 			cache : false,
 			success : function(html) {
-				
+
 				$("#content").html(html);
 				$("#myModal1").show();
 			}
@@ -165,6 +165,37 @@ h6 {
 	function myFunction() {
 		$('#myModal').modal('hide');
 	}
+	
+	function validate(){
+		
+		var noofchilds = $('#noofchilds').val();
+		//alert("validate=>noofchilds=> "+noofchilds);
+		
+		if(noofchilds === '1'){
+			var amount_approve1 = $('#amount_approve1').val();
+			//alert("validate=>noofchilds=>1=>if=> amount_approve1=> "+amount_approve1);
+			
+			if(amount_approve1 === null || amount_approve1 === ""){
+				alert("Please Enter Amount Approved!!!"); return false;
+			}
+		}
+		
+		if(noofchilds === '2'){
+			var amount_approve1 = $('#amount_approve1').val();
+			var amount_approve2 = $('#amount_approve2').val();
+			//alert("validate=>noofchilds=>2=>if=> amount_approve1=> "+amount_approve1);
+			//alert("validate=>noofchilds=>2=>if=> amount_approve2=> "+amount_approve2);
+			
+			if(amount_approve1 === null || amount_approve1 === ""){
+				alert("Please Enter Amount Approved for Child 1"); return false;
+			}
+			if(amount_approve2 === null || amount_approve2 === ""){
+				alert("Please Enter Amount Approved for Child 2"); return false;
+			}
+			
+		}
+		return true;
+	}
 </script>
 
 </head>
@@ -172,7 +203,7 @@ h6 {
 	<%@include file="banner.jsp"%>
 	<%@include file="navbar.jsp"%>
 	<form:form action="./allowanceapprove" method="post" name="requestno"
-		target="_blank">
+		target="_blank" onsubmit="return validate()">
 
 		<section class="container mt-5 shadow py-5 " id="section">
 			<h6 align="center">EMPLOYEE ALLOWANCE APPROVE</h6>
@@ -195,19 +226,21 @@ h6 {
 				class="btn btn-success px-3" value="Generate Note Sheet" />
 
 
-			<div id="myModal1" class="modal1">
-				<div class="modal-content1">
-					<span class="close1" style="color: red; font-weight: bold;">&#9746;</span>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<center>
-						<div id="scrollbar">
-							<div id="content"></div>
-						</div>
-					</center>
-				</div>
-			</div>
+
 		</section>
 	</form:form>
+
+	<div id="myModal1" class="modal1">
+		<div class="modal-content1">
+			<span class="close1" style="color: red; font-weight: bold;">&#9746;</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<center>
+				<div id="scrollbar">
+					<div id="content"></div>
+				</div>
+			</center>
+		</div>
+	</div>
 
 </body>
 </html>

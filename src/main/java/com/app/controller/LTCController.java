@@ -145,7 +145,7 @@ public class LTCController {
 				model.addAttribute("ltc", ltc);
 				model.addAttribute("emp", emp);
 
-				return "ltcElEncachementNotesheetPrint";
+				return "NSs/ltcElEncachementNotesheetPrint";
 
 			}
 
@@ -168,7 +168,7 @@ public class LTCController {
 					model.addAttribute("da", Integer.parseInt(request.getParameter("da")));
 					
 					if(ltc.getTotalfare() == null) {
-						return "ltcElEncachementSanctionOrderPrint";
+						return "SOs/ltcElEncachementSanctionOrderPrint";
 					}else {
 						//model.addAttribute("empFamily", employee_Family_Service.getAllEmpcode(ltc.getEmpcode()));
 						List<LtcAdvanceTableFamilyDetails> list = new ArrayList<LtcAdvanceTableFamilyDetails>();

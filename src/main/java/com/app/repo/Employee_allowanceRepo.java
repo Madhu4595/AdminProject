@@ -26,5 +26,9 @@ public interface Employee_allowanceRepo extends JpaRepository<Employee_allowance
 	@Query(value="SELECT * FROM public.emp_allowance where siodate = :siodate", nativeQuery = true)
 	public Employee_allowance findBySO(String siodate);
 	
+	//notesheet
+	@Query(value="SELECT * FROM public.emp_allowance order by code", nativeQuery = true)
+	public List<Employee_allowance> getAllAllowancesForNS();
+	
 
 }
