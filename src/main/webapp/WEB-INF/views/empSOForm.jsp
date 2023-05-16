@@ -116,7 +116,8 @@
 										+'<td><input type="hidden" name="name_class_of_child1" id="name_class_of_child'+count+'" value="'+allowances.name_class_of_child1+'"/>'+allowances.name_class_of_child1+'</td>'
 										+'<td><input type="hidden" name="allowance_type" id="allowance_type'+count+'" value="'+allowances.allowance_type+'"/>'+typeprint+'</td>'
 										+'<td><input type="hidden" name="amount_claimed" id="amount_claimed'+count+'" value="'+allowances.amount_claimed+'"/>'+allowances.amount_claimed+'</td>'
-										+'<td><input type="text" name="amount_approved" id="amount_approved'+count+'" /></td></td>'
+										+'<td><input type="hidden" name="amount_approved" id="amount_approved'+count+'" />'+allowances.amount_approved+'</td></td>'
+										+'<td><input type="text" name="so_no" id="so_no'+count+'" /></td></td>'
 										+'</tr>');
 								 
 							}
@@ -130,7 +131,8 @@
 										+'<td><input type="hidden" name="name_class_of_child1" id="name_class_of_child'+count+'" value="'+allowances.name_class_of_child1+'"/>'+allowances.name_class_of_child1+'</td>'
 										+'<td><input type="hidden" name="allowance_type" id="allowance_type'+count+'" value="'+allowances.allowance_type+'"/>'+typeprint+'</td>'
 										+'<td><input type="hidden" name="cea_amount_child1" id="amount_claimed'+count+'" value="'+allowances.cea_amount_child1+'"/>'+allowances.cea_amount_child1+'</td>'
-										+'<td><input type="text" name="amount_approved" id="amount_approved'+count+'" /></td></td>'
+										+'<td><input type="hidden" name="amount_approve1" id="amount_approve1'+count+'" />'+allowances.amount_approve1+'</td> '
+										+'<td><input type="text" name="so_no" id="so_no'+count+'" /></td> '
 										+'</tr>');
 								count = count + 1;
 								$("#tbody").append('<tr>'
@@ -140,7 +142,8 @@
 										+'<td><input type="hidden" name="name_class_of_child2" id="name_class_of_child'+count+'" value="'+allowances.name_class_of_child2+'"/>'+allowances.name_class_of_child2+'</td>'
 										+'<td><input type="hidden" name="allowance_type" id="allowance_type'+count+'" value="'+allowances.allowance_type+'"/>'+typeprint+'</td>'
 										+'<td><input type="hidden" name="cea_amount_child2" id="amount_claimed'+count+'" value="'+allowances.cea_amount_child2+'"/>'+allowances.cea_amount_child2+'</td>'
-										+'<td><input type="text" name="amount_approved" id="amount_approved'+count+'" /></td></td>'
+										+'<td><input type="hidden" name="amount_approve2" id="amount_approve2'+count+'" />'+allowances.amount_approve2+'</td></td>'
+										+'<td><input type="text" name="so_no" id="so_no'+count+'" /></td></td>'
 										+'</tr>');
 							}
 							
@@ -195,31 +198,36 @@ function checkVal() {
         }
     }
 	function submitClosure() {
-		var request_noList = "", codeList = ""; name_class_of_childList = "", amount_claimedList = "", amount_approvedList = "";
+		var request_noList = "", codeList = ""; name_class_of_childList = "", amount_claimedList = "", amount_approvedList = "", so_noList = "";
 		
 		for (j = 1; j <= document.getElementById("param").value; j++)
         {
 			//alert("j is--->"+j)
             if ((document.getElementById("checkboxId" + j).checked) === true)
             {
-            	if(document.getElementById("amount_approved" + j).value === "" || document.getElementById("amount_approved" + j).value === null){
-            		alert("Please Enter Amount Approved for All Checked Bills"); return false;
-            	}else{
-            		amount_approvedList = amount_approvedList + document.getElementById("amount_approved" + j).value + ",";
-            	}
             	
+            	if(document.getElementById("so_no" + j).value === "" || document.getElementById("so_no" + j).value === null){
+            		alert("Please Enter Sanction Order Number for All Checked Bills"); return false;
+            	}else{
+            		so_noList = so_noList + document.getElementById("so_no" + j).value + ",";
+            		//alert("so_noList=> "+so_noList);
+            	}
+            	//amount_approvedList = amount_approvedList + document.getElementById("amount_approved" + j).value + ",";
+            	//alert("amount_approvedList=> "+amount_approvedList);
             	request_noList = request_noList + document.getElementById("reqno" + j).value + ",";
-            	codeList = codeList + document.getElementById("code" + j).value + ",";
-            	name_class_of_childList = name_class_of_childList + document.getElementById("name_class_of_child" + j).value + ",";
-            	amount_claimedList = amount_claimedList + document.getElementById("amount_claimed" + j).value + ",";
+            	//alert("request_noList=> "+request_noList);
+            	//codeList = codeList + document.getElementById("code" + j).value + ",";
+            	//name_class_of_childList = name_class_of_childList + document.getElementById("name_class_of_child" + j).value + ",";
+            	//amount_claimedList = amount_claimedList + document.getElementById("amount_claimed" + j).value + ",";
             }
             
          }
 			document.getElementById("requestno").value = request_noList;
-			document.getElementById("code").value = codeList;
-			document.getElementById("name_class_of_childList").value = name_class_of_childList;
-			document.getElementById("amount_claimedList").value = amount_claimedList;
-			document.getElementById("amount_approvedList").value = amount_approvedList;
+			//document.getElementById("code").value = codeList;
+			//document.getElementById("name_class_of_childList").value = name_class_of_childList;
+			//document.getElementById("amount_claimedList").value = amount_claimedList;
+			//document.getElementById("amount_approvedList").value = amount_approvedList;
+			document.getElementById("so_noList").value = so_noList;
 	}
 	 $(document).ready(function () {
          $("#checkedAll").change(function () { 
@@ -260,7 +268,7 @@ function checkVal() {
 	<%@include file="navbar.jsp"%>
 
 	<div align="center">
-		<h3 class="h5 font-weight-bolder">EMPLOYEE ALLOWANCES NOTESHEET FORM</h3>
+		<h3 class="h5 font-weight-bolder">EMPLOYEE ALLOWANCES SANCTION ORDER FORM</h3>
 	</div>
 	
 
@@ -306,7 +314,7 @@ function checkVal() {
 		</h4>
 		<p id="demo"></p>
 	</center>
-	<form:form action="./empNSPrint" method="post" target="_blank;">
+	<form:form action="./empSOPrint" method="post" target="_blank;">
 <div id="scrollbar"> 
 <div id="content">
 	
@@ -319,6 +327,7 @@ function checkVal() {
 			<th>Bill Type</th>
 			<th>Amount Claimed</th>
 			<th>Amount Approved</th>
+			<th>Sanction Order No</th>
 		</thead>
 		<tbody id="tbody"></tbody>
 
@@ -338,10 +347,11 @@ function checkVal() {
 	</div>	
 	
 	<input type="hidden" id="requestno" name="requestno">
-	<input type="hidden" id="code" name="codeList">
-	<input type="hidden" id="name_class_of_childList" name="name_class_of_childList">
-	<input type="hidden" id="amount_claimedList" name="amount_claimedList">
-	<input type="hidden" id="amount_approvedList" name="amount_approvedList">
+<!-- 	<input type="hidden" id="code" name="codeList"> -->
+<!-- 	<input type="hidden" id="name_class_of_childList" name="name_class_of_childList"> -->
+<!-- 	<input type="hidden" id="amount_claimedList" name="amount_claimedList"> -->
+<!-- 	<input type="hidden" id="amount_approvedList" name="amount_approvedList"> -->
+	<input type="hidden" id="so_noList" name="so_noList">
 	
 	<input type="hidden" name="param" id="param"  />
 	

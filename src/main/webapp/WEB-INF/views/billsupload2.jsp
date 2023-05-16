@@ -349,7 +349,7 @@ $(document).ready(function(){
 	
 	function getFamilyDetails(){
 		var emp_code = $("#eno").val();
-		
+		$("#patient_name").empty();
 		$.ajax({
 	        type: "GET",
 	        contentType: "application/json",

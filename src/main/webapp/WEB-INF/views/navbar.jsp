@@ -297,6 +297,7 @@
 								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
 									<li> <a href="sanction_approve">Employee & Medical</a> </li>
+									<li> <a href="empSOForm">Employee New</a> </li>
 									<li><a href="medicalSOForm">Medical</a></li>
 									<li><a href="ltcElEnacachmentNotesheet">LTC- EL Enacachment</a></li>
 									

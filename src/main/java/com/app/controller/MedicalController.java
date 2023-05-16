@@ -63,7 +63,7 @@ public class MedicalController {
 			String[] bill_date = medical_Bills_upload.getBill_date().split(",");
 			String[] amount_claimed = medical_Bills_upload.getAmount_claimed().split(",");
 			String[] lab_name = medical_Bills_upload.getLab_name().split(",");
-			String[] remarks = medical_Bills_upload.getRemarks().split(",");
+			//String[] remarks = medical_Bills_upload.getRemarks().split(",");
 			
 			Medical_Bills medicalBills = null;
 			for(int i = 0; i < bill_no.length; i++) {
@@ -76,7 +76,7 @@ public class MedicalController {
 				medicalBills.setBill_date(bill_date[i]);
 				medicalBills.setAmount_claimed(amount_claimed[i]);
 				medicalBills.setLab_name(lab_name[i]);
-				medicalBills.setRemarks(remarks[i]);
+				//medicalBills.setRemarks(remarks[i]);
 				
 				medical_BillsRepo.save(medicalBills);
 			}
@@ -95,7 +95,7 @@ public class MedicalController {
 			b_upload.setLab_name(medical_Bills_upload.getLab_name());
 			b_upload.setPeriod_of_treatment(medical_Bills_upload.getPeriod_of_treatment());
 			b_upload.setRequest_no(medical_Bills_upload.getRequest_no());
-			b_upload.setRemarks(medical_Bills_upload.getRemarks());
+			//b_upload.setRemarks(medical_Bills_upload.getRemarks());
 
 			for (int i = 0; i < totAmountClaimedArray.length; i++) {
 				totAmountClaimed = totAmountClaimed + Integer.parseInt(totAmountClaimedArray[i]);

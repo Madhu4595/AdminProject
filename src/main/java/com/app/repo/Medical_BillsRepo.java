@@ -33,7 +33,8 @@ public interface Medical_BillsRepo extends JpaRepository<Medical_Bills, Long>{
 	@Query(value="select * from medic_bills where request_no=:request_no and note_status=false order by request_no", nativeQuery = true)
 	public List<Medical_Bills> getByReqNoNS(Integer request_no);
 	
-	@Query(value="select * from medic_bills where emp_code=:emp_code and note_status=false order by request_no", nativeQuery = true)
+	//@Query(value="select * from medic_bills where emp_code=:emp_code and note_status=false order by request_no", nativeQuery = true)
+	@Query(value="select * from medic_bills where emp_code=:emp_code order by request_no", nativeQuery = true)
 	public List<Medical_Bills> getByEmpcodeNS(String emp_code);
 	
 	@Query(value="select * from medic_bills where  cast(request_no as character varying)=:request_no and emp_code=:emp_code and note_status=false order by request_no", nativeQuery = true)
