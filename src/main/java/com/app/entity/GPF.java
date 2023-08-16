@@ -1,5 +1,7 @@
 package com.app.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +22,7 @@ public class GPF {
         strategy = "com.app.util.StringPrefixedSequenceIdGenerator", 
         parameters = {
             @Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-            @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "GPF_"),
+            @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "GPF"),
             @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%04d") })
 	private String requestNo;
 	
@@ -31,22 +33,27 @@ public class GPF {
 	private String netBalance;
 	
 	private String type;
-	private String recordStatus;
 	
-	private String NSDate;
-	private String SODate;
+	private LocalDateTime entryDate;
+	private LocalDateTime editDate;
 	
-	private String soNum;
+	private LocalDateTime nsDate;
+	private LocalDateTime soDate;
 	
+	private Boolean noteStatus;
+	private Boolean sanctionStatus;
+	
+	private String sanctionNumber;
+	private Integer noteNumber;
 
 	public GPF() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public GPF(String requestNo, String empCode, String gpfNo, String purpose, String withDrawAmt, String netBalance,
-			String type, String recordStatus, String nSDate, String sODate, String soNum) {
+			String type, LocalDateTime entryDate, LocalDateTime editDate, LocalDateTime nsDate, LocalDateTime soDate,
+			Boolean noteStatus, Boolean sanctionStatus, String sanctionNumber, Integer noteNumber) {
 		super();
 		this.requestNo = requestNo;
 		this.empCode = empCode;
@@ -55,129 +62,147 @@ public class GPF {
 		this.withDrawAmt = withDrawAmt;
 		this.netBalance = netBalance;
 		this.type = type;
-		this.recordStatus = recordStatus;
-		NSDate = nSDate;
-		SODate = sODate;
-		this.soNum = soNum;
+		this.entryDate = entryDate;
+		this.editDate = editDate;
+		this.nsDate = nsDate;
+		this.soDate = soDate;
+		this.noteStatus = noteStatus;
+		this.sanctionStatus = sanctionStatus;
+		this.sanctionNumber = sanctionNumber;
+		this.noteNumber = noteNumber;
 	}
-
 
 	public String getRequestNo() {
 		return requestNo;
 	}
 
-
 	public void setRequestNo(String requestNo) {
 		this.requestNo = requestNo;
 	}
-
 
 	public String getEmpCode() {
 		return empCode;
 	}
 
-
 	public void setEmpCode(String empCode) {
 		this.empCode = empCode;
 	}
-
 
 	public String getGpfNo() {
 		return gpfNo;
 	}
 
-
 	public void setGpfNo(String gpfNo) {
 		this.gpfNo = gpfNo;
 	}
-
 
 	public String getPurpose() {
 		return purpose;
 	}
 
-
 	public void setPurpose(String purpose) {
 		this.purpose = purpose;
 	}
-
 
 	public String getWithDrawAmt() {
 		return withDrawAmt;
 	}
 
-
 	public void setWithDrawAmt(String withDrawAmt) {
 		this.withDrawAmt = withDrawAmt;
 	}
-
 
 	public String getNetBalance() {
 		return netBalance;
 	}
 
-
 	public void setNetBalance(String netBalance) {
 		this.netBalance = netBalance;
 	}
-
 
 	public String getType() {
 		return type;
 	}
 
-
 	public void setType(String type) {
 		this.type = type;
 	}
 
-
-	public String getRecordStatus() {
-		return recordStatus;
+	public LocalDateTime getEntryDate() {
+		return entryDate;
 	}
 
-
-	public void setRecordStatus(String recordStatus) {
-		this.recordStatus = recordStatus;
+	public void setEntryDate(LocalDateTime entryDate) {
+		this.entryDate = entryDate;
 	}
 
-
-	public String getNSDate() {
-		return NSDate;
+	public LocalDateTime getEditDate() {
+		return editDate;
 	}
 
-
-	public void setNSDate(String nSDate) {
-		NSDate = nSDate;
+	public void setEditDate(LocalDateTime editDate) {
+		this.editDate = editDate;
 	}
 
-
-	public String getSODate() {
-		return SODate;
+	public LocalDateTime getNsDate() {
+		return nsDate;
 	}
 
-
-	public void setSODate(String sODate) {
-		SODate = sODate;
+	public void setNsDate(LocalDateTime nsDate) {
+		this.nsDate = nsDate;
 	}
 
-
-	public String getSoNum() {
-		return soNum;
+	public LocalDateTime getSoDate() {
+		return soDate;
 	}
 
-
-	public void setSoNum(String soNum) {
-		this.soNum = soNum;
+	public void setSoDate(LocalDateTime soDate) {
+		this.soDate = soDate;
 	}
 
+	public Boolean getNoteStatus() {
+		return noteStatus;
+	}
+
+	public void setNoteStatus(Boolean noteStatus) {
+		this.noteStatus = noteStatus;
+	}
+
+	public Boolean getSanctionStatus() {
+		return sanctionStatus;
+	}
+
+	public void setSanctionStatus(Boolean sanctionStatus) {
+		this.sanctionStatus = sanctionStatus;
+	}
+
+	public String getSanctionNumber() {
+		return sanctionNumber;
+	}
+
+	public void setSanctionNumber(String sanctionNumber) {
+		this.sanctionNumber = sanctionNumber;
+	}
+
+	public Integer getNoteNumber() {
+		return noteNumber;
+	}
+
+	public void setNoteNumber(Integer noteNumber) {
+		this.noteNumber = noteNumber;
+	}
 
 	@Override
 	public String toString() {
 		return "GPF [requestNo=" + requestNo + ", empCode=" + empCode + ", gpfNo=" + gpfNo + ", purpose=" + purpose
-				+ ", withDrawAmt=" + withDrawAmt + ", netBalance=" + netBalance + ", type=" + type + ", recordStatus="
-				+ recordStatus + ", NSDate=" + NSDate + ", SODate=" + SODate + ", soNum=" + soNum + "]";
+				+ ", withDrawAmt=" + withDrawAmt + ", netBalance=" + netBalance + ", type=" + type + ", entryDate="
+				+ entryDate + ", editDate=" + editDate + ", nsDate=" + nsDate + ", soDate=" + soDate + ", noteStatus="
+				+ noteStatus + ", sanctionStatus=" + sanctionStatus + ", sanctionNumber=" + sanctionNumber
+				+ ", noteNumber=" + noteNumber + "]";
 	}
+
+
+	 
 
 
 }

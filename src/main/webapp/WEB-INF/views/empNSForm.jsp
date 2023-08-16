@@ -73,7 +73,67 @@
 			if(request_no == "" || request_no == null){
 				alert("Anyone Value either Employee Code or Request Number is Required for Getting Bills Data"); return false;
 			}else{
-				
+				//alert("in if")
+				$("#tbody").empty();
+				let count = 0;
+				for(var i=0; i<allAllowances.length;i++){
+					
+					var allowances = allAllowances[i];
+					
+					//alert("allowance looop=> "+allowances.request_no)
+					
+					if(allowances.request_no === parseInt(request_no)){
+						//alert("allowances.request_no=>")
+						var typeprint="";
+						if(allowances.allowance_type === "1"){ typeprint = "CEA"; }
+						if(allowances.allowance_type === "2"){ typeprint = "GPF-withdrawal"; }
+						if(allowances.allowance_type === "3"){ typeprint = "GPF-advance"; }
+						if(allowances.allowance_type === "4"){ typeprint = "BRIEF CASE"; }
+						if(allowances.allowance_type === "5"){ typeprint = "Vehicle Hiring"; }
+						
+						//alert("noofchilds==> "+allowances.noofchilds);
+						
+						if(allowances.noofchilds === "1"){
+							//alert("1111111111111111111");
+							count = count + 1;
+							$("#tbody").append('<tr>'
+									+'<td><input type="checkbox" class="checkSingle" name="checkClosureAlloc" value="'+count+'"  id="checkboxId'+count+'" /></td>'
+									+'<td><input type="hidden" name="reqno" id="reqno'+count+'" value="'+allowances.request_no+'"/>'+allowances.request_no+'</td>'
+									+'<td><input type="hidden" name="code" id="code'+count+'" value="'+allowances.code+'"/>'+allowances.code+'</td>'
+									+'<td><input type="hidden" name="name_class_of_child1" id="name_class_of_child'+count+'" value="'+allowances.name_class_of_child1+'"/>'+allowances.name_class_of_child1+'</td>'
+									+'<td><input type="hidden" name="allowance_type" id="allowance_type'+count+'" value="'+allowances.allowance_type+'"/>'+typeprint+'</td>'
+									+'<td><input type="hidden" name="amount_claimed" id="amount_claimed'+count+'" value="'+allowances.amount_claimed+'"/>'+allowances.amount_claimed+'</td>'
+									+'<td><input type="text" name="amount_approved" id="amount_approved'+count+'" /></td></td>'
+									+'</tr>');
+							 
+						}
+						if(allowances.noofchilds === "2"){
+							//alert("22222222222222222222");
+							count = count + 1;
+							$("#tbody").append('<tr>'
+									+'<td><input type="checkbox" class="checkSingle" name="checkClosureAlloc" value="'+count+'"  id="checkboxId'+count+'" /></td>'
+									+'<td><input type="hidden" name="reqno" id="reqno'+count+'" value="'+allowances.request_no+'"/>'+allowances.request_no+'</td>'
+									+'<td><input type="hidden" name="code" id="code'+count+'" value="'+allowances.code+'"/>'+allowances.code+'</td>'
+									+'<td><input type="hidden" name="name_class_of_child1" id="name_class_of_child'+count+'" value="'+allowances.name_class_of_child1+'"/>'+allowances.name_class_of_child1+'</td>'
+									+'<td><input type="hidden" name="allowance_type" id="allowance_type'+count+'" value="'+allowances.allowance_type+'"/>'+typeprint+'</td>'
+									+'<td><input type="hidden" name="cea_amount_child1" id="amount_claimed'+count+'" value="'+allowances.cea_amount_child1+'"/>'+allowances.cea_amount_child1+'</td>'
+									+'<td><input type="text" name="amount_approved" id="amount_approved'+count+'" /></td></td>'
+									+'</tr>');
+							count = count + 1;
+							$("#tbody").append('<tr>'
+									+'<td><input type="checkbox" class="checkSingle" name="checkClosureAlloc" value="'+count+'"  id="checkboxId'+count+'" /></td>'
+									+'<td><input type="hidden" name="reqno" id="reqno'+count+'" value="'+allowances.request_no+'"/>'+allowances.request_no+'</td>'
+									+'<td><input type="hidden" name="code" id="code'+count+'" value="'+allowances.code+'"/>'+allowances.code+'</td>'
+									+'<td><input type="hidden" name="name_class_of_child2" id="name_class_of_child'+count+'" value="'+allowances.name_class_of_child2+'"/>'+allowances.name_class_of_child2+'</td>'
+									+'<td><input type="hidden" name="allowance_type" id="allowance_type'+count+'" value="'+allowances.allowance_type+'"/>'+typeprint+'</td>'
+									+'<td><input type="hidden" name="cea_amount_child2" id="amount_claimed'+count+'" value="'+allowances.cea_amount_child2+'"/>'+allowances.cea_amount_child2+'</td>'
+									+'<td><input type="text" name="amount_approved" id="amount_approved'+count+'" /></td></td>'
+									+'</tr>');
+						}
+						
+					}
+				}
+				document.getElementById("param").value=count;
 			}
 		
 		} else{

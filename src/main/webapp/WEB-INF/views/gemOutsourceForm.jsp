@@ -8,22 +8,42 @@
 <meta charset="ISO-8859-1">
 <title>GEM-Vehicle</title>
 <script src="./js/jquery-3.3.1.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+function validate(){
+	//alert("validate");
+	
+	var monthYear = $("#monthYear").val();
+	var period = $("#period").val();
+	var billno = $("#billno").val();
+	var billdate = $("#billdate").val();
+	var amount = $("#amount").val();
+	
+	if(monthYear === null || monthYear === ""){ alert("Month & Year is required"); $("#monthYear").focus(); return false; }
+	if(period === null || period === ""){ alert("Period is required"); $("#period").focus(); return false; }
+	if(billno === null || billno === ""){ alert("Bill Number is required"); $("#billno").focus(); return false; }
+	if(billdate === null || billdate === ""){ alert("Bill Date is required"); $("#billdate").focus(); return false; }
+	if(amount === null || amount === ""){ alert("Amount is required"); $("#amount").focus(); return false; }
+	
+	return true;
+}
+</script>
 </head>
 <body>
 	<%@include file="banner.jsp"%>
 	<%@include file="navbar.jsp"%>
 
 	<div align="center">
-		<h3 class="h3 font-weight-bolder">GEM - Outsourcing Entry Form</h3>
+		<h6 class="h6 font-weight-bolder text-primary">GEM - Outsourcing Entry Form</h6>
 	</div>
-	<center style="color: red;">
-		<h3>
-			<b> ${msg} </b>
-		</h3>
-	</center>
-	<div class="container mt-4 border font-weight-bolder"
+	<div align="center">
+		<h3 class="h3 font-weight-bolder" style="color: red;">${msg}</h3>
+	</div>
+	 
+	<div class="container mt-2 border font-weight-bolder"
 		style="background-color: #e6ffff;">
-		<form:form action="./saveGemOutsourcing" method="post" modelAttribute="gem">
+		
+		<form:form action="./saveGemOutsourcing" method="post" modelAttribute="gem" onsubmit="return validate()">
 			<div class="row align-items-center m-2">
 				<div class="col-2"></div>
 				<div class="col-4">

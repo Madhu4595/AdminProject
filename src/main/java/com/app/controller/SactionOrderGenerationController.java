@@ -83,10 +83,10 @@ public class SactionOrderGenerationController {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			String todaydate = formatter.format(date);
 			
-			boolean find = homeRestController.checkSO(siodate);
+			String find = homeRestController.checkSO(siodate);
 			System.out.println("/generate_sanction_data===> finddddddddd=> "+find);
 			
-			if(find) {
+			if(find.equalsIgnoreCase("200")) {
 				model.addAttribute("msg", "Sanction Order Number is ALREADY ALLOCATED!!!");
 				return "sanction_approve";
 			}

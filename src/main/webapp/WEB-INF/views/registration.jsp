@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +26,7 @@
 		</div>
 		
 		<h1>Registration</h1>
-		<form action="registration" method="post" >
+		<form:form action="./registration" method="post" modelAttribute="user">
 			<div class="form-group">
 				<label class="control-label" for="firstName">First Name</label>
 				<input id="firstName"  class="form-control" name="firstName" required autofocus="autofocus" />
@@ -45,7 +47,7 @@
 				<button type="submit" class="btn btn-success">Register</button>
 				<span>Already Registered? <a href="/login">Login here</a></span>
 			</div>
-		</form>
+		</form:form>
 	</div>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<%@page import="com.app.entity.Employee"%>
 <%@page import="com.app.entity.Employee_allowance"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -105,13 +106,16 @@ function myFunction() {
 									<th>Period of Claim</th>
 									<th>Claimed Amount</th>
 									<th>Admissible Amount</th>
+									<th>Total Amount</th>
 								</tr>
 							</thead>
 							<tbody>
 							<%
 							List<Employee_allowance> list = (List<Employee_allowance>)request.getAttribute("listEmpAllowances");
 							System.out.println("listttttttttttttttttttttttttt=> "+list.size());
-							Integer totAmt = 0;
+							 List<Employee> empsList = (List<Employee>)request.getAttribute("empsList");
+							Integer totAmt1 = 0;
+							Integer totAmt2 = 0;
 							for(Employee_allowance bean: list){
 								 
 								System.out.println("aaaaaaaaaaaaaaaaaaaaa"+bean.getRequest_no());
@@ -120,18 +124,23 @@ function myFunction() {
 									 
 									System.out.println("asdfasfasdfasdf");
 									String code = bean.getCode();
+									String empNameandDesg = "";
+									for(Employee emp:empsList){
+										empNameandDesg = emp.getName()+", "+emp.getDesignation();
+									}
 									String name_class_of_child1 = bean.getName_class_of_child1();
 									String period_of_claim_child1 = bean.getPeriod_of_claim_child1();
 									String amount_claimed = bean.getAmount_claimed().toString();
 									String amount_approve = bean.getAmount_approve().toString();
-									totAmt = totAmt + Integer.parseInt(amount_approve);
+									totAmt1 = totAmt1 + Integer.parseInt(amount_approve);
 									%>
 									<tr>
 									<td rowspan="2"><%=i++ %></td>
-									<td rowspan="2">1child<%=code %> </td>
+									<td rowspan="2"><%=empNameandDesg %> </td>
 									<td><%=name_class_of_child1 %> </td>
 									<td><%=period_of_claim_child1 %> </td>
 									<td><%=amount_claimed %> </td>
+									<td><%=amount_approve %> </td>
 									<td><%=amount_approve %> </td>
 								 </tr>
 								 <tr> </tr>
@@ -140,7 +149,10 @@ function myFunction() {
 								if(bean.getNoofchilds().equalsIgnoreCase("2")){
 									System.out.println("asdfasfasdfasdf");
 									String code = bean.getCode();
-									
+									String empNameandDesg = "";
+									for(Employee emp:empsList){
+										empNameandDesg = emp.getName()+", "+emp.getDesignation();
+									}
 									String name_class_of_child1 = bean.getName_class_of_child1();
 									String name_class_of_child2 = bean.getName_class_of_child2();
 									
@@ -151,17 +163,18 @@ function myFunction() {
 									String cea_amount_child2 = bean.getCea_amount_child2().toString();
 									
 									String amount_approve1 = bean.getAmount_approve1().toString();
-									totAmt = totAmt + Integer.parseInt(amount_approve1);
+									totAmt2 = totAmt2 + Integer.parseInt(amount_approve1);
 									String amount_approve2 = bean.getAmount_approve2().toString();
-									totAmt = totAmt + Integer.parseInt(amount_approve2);
+									totAmt2 = totAmt2 + Integer.parseInt(amount_approve2);
 									%>
 									<tr>
 									 <td rowspan="2"><%=i++ %></td>
-									 <td rowspan="2">2child<%=code %></td>
+									 <td rowspan="2"><%=empNameandDesg %></td>
 									 <td><%=name_class_of_child1 %></td>
 									 <td><%=period_of_claim_child1 %></td>
 									 <td><%=cea_amount_child1 %></td>
 									 <td><%=amount_approve1 %></td>
+									 <td rowspan="2"><%=totAmt2 %></td>
 									</tr>
 									
 									<tr>
@@ -175,9 +188,12 @@ function myFunction() {
 							}
 							%>
 							<tr> </tr>
+							<%
+							Integer totAmt = totAmt1 + totAmt2;
+							%>
 								<tr>
-									 <td colspan="5" align="right"><b>Total Amount: (Rupees <span id="words" ></span> Only) </b></td>
-									 <td><b>&#8377;${totAmt }/-</b></td>
+									 <td colspan="6" align="right"><b>Total Amount: (Rupees <span id="words" ></span> Only) </b></td>
+									 <td><b>&#8377;<%=totAmt %>/-</b></td>
 									 
 									</tr>
 							 

@@ -84,7 +84,7 @@ String words = gpf.getWithDrawAmt();
 					</h6>
 
 					<div>
-						<b>Sanction Order No: ${gpf.soNum }</b><span style="margin-left: 70%">Date: <%=todaydate%></span>
+						<b>Sanction Order No: ${gpf.sanctionNumber }</b><span style="margin-left: 70%">Date: <%=todaydate%></span>
 					</div>
 					<br>
 					

@@ -90,6 +90,29 @@ function empSearch(){
 		$("#empcode").val(''); $("#empcode").focus();
 	}
 }
+
+function validate(){
+	//alert("validate")
+	var blockyear = $("#blockyear").val();
+	var location = $("#location").val();
+	var visitplace = $("#visitplace").val();
+	var claimedfor = $("#claimedfor").val();
+	var visitperiod = $("#visitperiod").val();
+	var leavedetails = $("#leavedetails").val();
+	var encashment = $("#encashment").val();
+	var amountadvance = $("#amountadvance").val();
+	
+	if(blockyear === null || blockyear === ""){ alert("Block Year is Required"); $("#blockyear").focus(); return false; }
+	if(location === null || location === ""){ alert("Any Where in India is Required"); $("#location").focus(); return false; }
+	if(visitplace === null || visitplace === ""){ alert("Place of Visit is Required"); $("#visitplace").focus(); return false; }
+	if(claimedfor === null || claimedfor === ""){ alert("To whom Claimed is Required"); $("#claimedfor").focus(); return false; }
+	if(visitperiod === null || visitperiod === ""){ alert("Period of Visit is Required"); $("#visitperiod").focus(); return false; }
+	if(leavedetails === null || leavedetails === ""){ alert("Leave Details is Required"); $("#leavedetails").focus(); return false; }
+	if(encashment === null || encashment === ""){ alert("Encashment availed for as on date is Required"); $("#encashment").focus(); return false; }
+	if(amountadvance === null || amountadvance === ""){ alert("Amount of advance is Required"); $("#amountadvance").focus(); return false; }
+	
+	return true;
+}
 </script>
 
 </head>
@@ -99,12 +122,11 @@ function empSearch(){
 
 	<center><b>${saveltcEnacachmentMsg }</b></center>
 	<div align="center">
-		<h3 class="h3 font-weight-bolder">LTC-EL Enacachement Form</h3>
+		<h6 class="h6 font-weight-bolder text-primary">LTC-EL Enacachement Form</h6>
 	</div>
 	<div class="container border p-4 font-weight-bolder"
 		style="background-color: #e6ffff;">
-		<form:form action="./saveltcEnacachment" method="post"
-			modelAttribute="ltcEnacachment">
+		<form:form action="./saveltcEnacachment" method="post" modelAttribute="ltcEnacachment" >
 
 			<div class="row align-items-center m-2">
 				<div class="col-auto" style="width: 200px;" id="empcodelable">
@@ -124,7 +146,7 @@ function empSearch(){
 				</div>
 				<div class="col-auto">
 					<input type="text" name="blockyear" id="blockyear"
-						class="form-control" />
+						class="form-control" placeholder="Ex: 2022-23" />
 				</div>
 
 				<div class="col-auto" style="width: 200px;" id="locationlable">
@@ -148,7 +170,7 @@ function empSearch(){
 				</div>
 				<div class="col-auto">
 					<input type="text" name="visitplace" id="visitplace"
-						class="form-control" />
+						class="form-control" placeholder="Ex: Tiruchirappalli (Tamil Nadu)" />
 				</div>
 
 				<div class="col-auto" style="width: 200px;" id="claimedforlable">
@@ -157,7 +179,7 @@ function empSearch(){
 				</div>
 				<div class="col-auto">
 					<input type="text" name="claimedfor" id="claimedfor"
-						class="form-control" />
+						class="form-control" placeholder="Ex: Self & Wife" />
 				</div>
 			</div>
 
@@ -168,16 +190,16 @@ function empSearch(){
 				</div>
 				<div class="col-auto">
 					<input type="text" name="visitperiod" id="visitperiod"
-						class="form-control" />
+						class="form-control"  placeholder="Ex: 24.05.2023 to 28.05.2023"/>
 				</div>
 
 				<div class="col-auto" style="width: 200px;" id="leavedetailslable">
 					<label for="leavedetails" class="col-form-label">Leave
 						Details:</label>
 				</div>
-				<div class="col-auto">
+				<div class="col-auto" style="width: 400px;">
 					<input type="text" name="leavedetails" id="leavedetails"
-						class="form-control" />
+						class="form-control" placeholder="Ex: EL from 24.05.2023 to 26.05.2023" />
 				</div>
 			</div>
 
@@ -188,7 +210,7 @@ function empSearch(){
 				</div>
 				<div class="col-auto">
 					<input type="text" name="encashment" id="encashment"
-						class="form-control" />
+						class="form-control" placeholder="Ex: 10 (50 more left)" />
 				</div>
 
 				<div class="col-auto" style="width: 200px;" id="amountadvancelable">
@@ -197,14 +219,12 @@ function empSearch(){
 				</div>
 				<div class="col-auto">
 					<input type="text" name="amountadvance" id="amountadvance"
-						class="form-control" />
+						class="form-control" placeholder="Ex: NIL" />
 				</div>
 			</div>
 
 			<div class="row g-3 align-items-center m-2" id="submitbtn">
-				<input type="submit" value="Submit"
-					class="form-control font-weight-bolder bg-info text-white w-25"
-					style="margin-left: 38%;" />
+				<input type="submit" value="Submit" class="form-control font-weight-bolder bg-info text-white w-25" style="margin-left: 38%;" onclick="return validate()" />
 			</div>
 		</form:form>
 	</div>

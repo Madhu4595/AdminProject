@@ -3,8 +3,8 @@ package com.app.controller;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +27,7 @@ import com.app.repo.Medical_Bills_uploadRepo;
 import com.app.service.IBills_UploadService;
 import com.app.service.IEmployeeService;
 import com.app.service.IMedical_Bills_uploadService;
+import com.app.service.SequenceService;
 import com.app.util.MyUtil;
 @Controller
 public class MedicalController {
@@ -36,6 +37,7 @@ public class MedicalController {
 	@Autowired private Medical_Bills_uploadRepo medical_Bills_uploadRepo;
 	@Autowired private Medical_BillsRepo medical_BillsRepo;
 	@Autowired private IEmployeeService empService;
+	@Autowired private SequenceService sequenceService;
 	
 	// Medical
 		// New
@@ -63,20 +65,23 @@ public class MedicalController {
 			String[] bill_date = medical_Bills_upload.getBill_date().split(",");
 			String[] amount_claimed = medical_Bills_upload.getAmount_claimed().split(",");
 			String[] lab_name = medical_Bills_upload.getLab_name().split(",");
-			//String[] remarks = medical_Bills_upload.getRemarks().split(",");
 			
 			Medical_Bills medicalBills = null;
 			for(int i = 0; i < bill_no.length; i++) {
 				medicalBills = new Medical_Bills();
+				
 				medicalBills.setRequest_no(medical_Bills_upload.getRequest_no());
 				medicalBills.setEmp_code(medical_Bills_upload.getEmp_code());
-				medicalBills.setEntryDate(LocalDateTime.now());
 				
 				medicalBills.setBill_no(bill_no[i]);
 				medicalBills.setBill_date(bill_date[i]);
 				medicalBills.setAmount_claimed(amount_claimed[i]);
 				medicalBills.setLab_name(lab_name[i]);
-				//medicalBills.setRemarks(remarks[i]);
+				medicalBills.setPatient_name(medical_Bills_upload.getPatient_name());
+				
+				medicalBills.setEntryDate(LocalDateTime.now());
+				medicalBills.setNoteStatus(false);
+				medicalBills.setSanctionStatus(false);
 				
 				medical_BillsRepo.save(medicalBills);
 			}
@@ -95,7 +100,6 @@ public class MedicalController {
 			b_upload.setLab_name(medical_Bills_upload.getLab_name());
 			b_upload.setPeriod_of_treatment(medical_Bills_upload.getPeriod_of_treatment());
 			b_upload.setRequest_no(medical_Bills_upload.getRequest_no());
-			//b_upload.setRemarks(medical_Bills_upload.getRemarks());
 
 			for (int i = 0; i < totAmountClaimedArray.length; i++) {
 				totAmountClaimed = totAmountClaimed + Integer.parseInt(totAmountClaimedArray[i]);
@@ -258,7 +262,7 @@ public class MedicalController {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
 			String todaydate=formatter.format(date);
 			model.addAttribute("todaydate", todaydate);
-			
+			Long NsNumber =sequenceService.getNextValueFromSequence();
 			try {
 			List<Medical_Bills> listBills = new ArrayList<Medical_Bills>();
 			for(int i = 0; i < requestNo.length; i++) {
@@ -268,6 +272,7 @@ public class MedicalController {
 					mBills.setAmount_approved(amountApproved[i]);
 					mBills.setNoteStatus(true);
 					mBills.setNsDate(LocalDateTime.now());
+					mBills.setNsNumber(String.valueOf(NsNumber));
 					
 					medical_BillsRepo.save(mBills);
 					
@@ -365,6 +370,119 @@ public class MedicalController {
 			return "SOs/medicalSOPrint";
 		}
 		
+		@RequestMapping("/medicalNSPrintsForm")
+		public String medicalNSPrints(Model model) {
+			model.addAttribute("medicalNsprintList", medical_BillsRepo.getMedicBillsForNSPrint());
 		
-
+			return "NSsPrintForms/medicalNSPrintsForm";
+		}
+		@RequestMapping("/generateMedicalNSPrints")
+		public String generateMedicalNSPrints(@RequestParam String ns_number,Model model) {
+			System.out.println("note_number=>"+ns_number);
+			
+			Integer totAmountApproved = 0;
+			Integer totAmountClaimed = 0;
+			
+		 
+			try {
+				
+				List<Medical_Bills> listobjects = medical_BillsRepo.getMedicBillsByNotenumber(ns_number);
+				model.addAttribute("listobjects", listobjects);
+				System.out.println("listobjects=>"+listobjects.size());
+				
+				model.addAttribute("medical_Bills_upload4", listobjects);
+				
+				String reqnos="";
+				String nsDates ="";
+				
+				for(Medical_Bills bean: listobjects) {
+					totAmountApproved = totAmountApproved + Integer.parseInt(bean.getAmount_approved());
+					totAmountClaimed = totAmountClaimed + Integer.parseInt(bean.getAmount_claimed());
+					reqnos = reqnos + bean.getRequest_no()+",";
+					nsDates = nsDates + bean.getNsDate() + ",";
+				}
+				String[] strarray = reqnos.split(",");
+				String[] nsDatesarray = nsDates.split(",");
+				
+				System.out.println("nsDatesarray=>"+nsDatesarray[0]); 
+				
+			    LocalDateTime dateTime = LocalDateTime.parse(nsDatesarray[0], DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+			    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			    String formatDateTime = "";
+			    formatDateTime = dateTime.format(format);  
+			    System.out.println("After Formatting: " + formatDateTime);  
+			    model.addAttribute("nsDate", formatDateTime);
+ 
+				System.out.println("totAmountApproved=>"+totAmountApproved);
+				model.addAttribute("totAmountApproved", totAmountApproved);
+				model.addAttribute("totAmountClaimed", totAmountClaimed);
+				
+				Optional<Medical_Bills_upload> medical_Bills_upload3 = medical_Bills_uploadRepo.findById(Integer.parseInt(strarray[0]));
+				if(medical_Bills_upload3.isPresent()) {
+					model.addAttribute("medical_Bills_upload3", medical_Bills_upload3.get());
+				}else {
+					model.addAttribute("msg", "Medical Bills Upload is not found with Given Request Number");
+					return "medicalNoteSheetForm";
+				}
+				
+				Employee employee = empService.getById(medical_Bills_upload3.get().getEmp_code());
+				model.addAttribute("employee", employee);
+				 
+				
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+			
+			return "NSsPrints/generateMedicalNSPrints";
+		}
+		
+		
+		
+		//Sanction Order Print
+		@RequestMapping("/medicalSOPrintsForms")
+		public String medicalSOPrintsForms(Model model) {
+			model.addAttribute("medicalSOprintList", medical_BillsRepo.getMedicBillsForSOPrint());
+			return "NSsPrintForms/medicalSOPrintsForms";
+		}
+		@RequestMapping("/generateMedicalSOPrints")
+		public String generateMedicalSOPrints(@RequestParam String so_number,Model model) {
+			System.out.println("so_number=>"+so_number);
+			
+			try {
+				List<Medical_Bills> list = medical_BillsRepo.getMedicBillsForSOPrintbySoNumber(so_number);
+				
+				Integer totAmountApproved = 0;
+				String emp_code = "";
+				String soDates ="";
+				
+				for(Medical_Bills bean:list) {
+					totAmountApproved = totAmountApproved + Integer.parseInt(bean.getAmount_approved());
+					emp_code = bean.getEmp_code();
+					soDates = soDates + bean.getSanctionorderDate() + ",";
+				}
+				
+				String[] soDatesarray = soDates.split(",");
+				 LocalDateTime dateTime = LocalDateTime.parse(soDatesarray[0], DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+				 DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				 String formatDateTime = "";
+				 formatDateTime = dateTime.format(format); 
+				 
+				 
+				 System.out.println("siodate: " + formatDateTime);  
+				 System.out.println("totAmountApproved: " + totAmountApproved);  
+				 
+				model.addAttribute("siodate", formatDateTime);
+				model.addAttribute("totAmountApproved", totAmountApproved);
+				model.addAttribute("employee", empService.getById(emp_code));
+				model.addAttribute("so_number", so_number);
+				
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
+			 
+		
+			return "NSsPrints/medicalSOPrints";
+		}
 }

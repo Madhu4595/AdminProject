@@ -144,6 +144,31 @@
 			}
 		});
 	}
+	
+	function validate(){
+		//alert("validate");
+		
+		var blockyear = $("#blockyear").val();
+		var location = $("#location").val();
+		var visitplace = $("#visitplace").val();
+		var claimedfor = $("#claimedfor").val(); 
+		var visitperiod = $("#visitperiod").val();
+		var leavedetails = $("#leavedetails").val();
+		var totalfare = $("#totalfare").val();
+		var amountadvance = $("#amountadvance").val();
+		
+		if(blockyear === "" || blockyear === null){ alert("Block Year is required"); $("#blockyear").focus(); return false; }
+		if(location === "" || location === null){ alert("Anywhere in India is required"); $("#location").focus(); return false; }
+		if(visitplace === "" || visitplace === null){ alert("Place of Visit is required"); $("#visitplace").focus(); return false; }
+		if(claimedfor === "" || claimedfor === null){ alert("To whom Claimed is required"); $("#claimedfor").focus(); return false; }
+		if(visitperiod === "" || visitperiod === null){ alert("Period of Visit is required"); $("#visitperiod").focus(); return false; }
+		if(leavedetails === "" || leavedetails === null){ alert("Leave Details is required"); $("#leavedetails").focus(); return false; }
+		if(totalfare === "" || totalfare === null){ alert("Total Fare is required"); $("#totalfare").focus(); return false; }
+		if(amountadvance === "" || amountadvance === null){ alert("Amount of advance is required"); $("#amountadvance").focus(); return false; }
+		
+		
+		return true;
+	}
 </script>
 
 </head>
@@ -155,12 +180,12 @@
 		<b>${msg }</b>
 	</center>
 	<div align="center">
-		<h3 class="h3 font-weight-bolder">LTC-Advance Enacachement Form</h3>
+		<h6 class="h6 font-weight-bolder text-primary">LTC-Advance Enacachement Form</h6>
 	</div>
 	<div class="container border p-4 font-weight-bolder"
 		style="background-color: #e6ffff;">
 		<form:form action="./saveltcadvanceEnacachment" method="post"
-			modelAttribute="ltcEnacachment">
+			modelAttribute="ltcEnacachment" onsubmit="return validate()">
 
 			<div class="row align-items-center m-2">
 				<div class="col-auto" style="width: 200px;" id="empcodelable">
@@ -181,7 +206,7 @@
 				</div>
 				<div class="col-auto">
 					<input type="text" name="blockyear" id="blockyear"
-						class="form-control" />
+						class="form-control" placeholder="Ex: 2022-23 of 2022-25" />
 				</div>
 
 				<div class="col-auto" style="width: 200px;" id="locationlable">
@@ -205,7 +230,7 @@
 				</div>
 				<div class="col-auto">
 					<input type="text" name="visitplace" id="visitplace"
-						class="form-control" />
+						class="form-control" placeholder="Ex: Bangalore (Karnataka)" />
 				</div>
 
 				<div class="col-auto" style="width: 200px;" id="claimedforlable">
@@ -214,8 +239,6 @@
 				</div>
 				<div class="col-auto">
 				<select name="claimedfor" style="width: 200px;" id="claimedfor"  class="form-control" multiple="multiple"> </select>
-<!-- 					<input type="text" name="claimedfor" id="claimedfor" -->
-<!-- 						class="form-control" /> -->
 				</div>
 			</div>
 
@@ -226,7 +249,7 @@
 				</div>
 				<div class="col-auto">
 					<input type="text" name="visitperiod" id="visitperiod"
-						class="form-control" />
+						class="form-control" placeholder="Ex: 24.05.2023 to 28.05.2023" />
 				</div>
 
 				<div class="col-auto" style="width: 200px;" id="leavedetailslable">
@@ -235,7 +258,7 @@
 				</div>
 				<div class="col-auto">
 					<input type="text" name="leavedetails" id="leavedetails"
-						class="form-control" />
+						class="form-control" placeholder="Ex: EL from 24.05.2023 to 26.05.2023" />
 				</div>
 			</div>
 
@@ -246,7 +269,7 @@
 				</div>
 				<div class="col-auto">
 					<input type="text" name="totalfare" id="totalfare"
-						class="form-control" />
+						class="form-control" placeholder="Ex: 29406" />
 				</div>
 
 				<div class="col-auto" style="width: 200px;" id="amountadvancelable">
@@ -255,7 +278,7 @@
 				</div>
 				<div class="col-auto">
 					<input type="text" name="amountadvance" id="amountadvance"
-						class="form-control" />
+						class="form-control" placeholder="Ex: 26000" />
 				</div>
 			</div>
 

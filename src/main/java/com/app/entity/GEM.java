@@ -1,5 +1,7 @@
 package com.app.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +24,7 @@ public class GEM {
         strategy = "com.app.util.StringPrefixedSequenceIdGenerator", 
         parameters = {
             @Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-            @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "GEM_"),
+            @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "GEM"),
             @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%04d") })
 	private String requestno;
 	
@@ -32,9 +34,19 @@ public class GEM {
 	private String billdate;
 	private String amount;
 	
-	private String record_status;
-	private String SONum;
 	private String type;
+	
+	private LocalDateTime entryDate;
+	private LocalDateTime editDate;
+	
+	private LocalDateTime nsDate;
+	private LocalDateTime soDate;
+	
+	private Boolean noteStatus;
+	private Boolean sanctionStatus;
+	
+	private String sanctionNumber;
+	private Integer noteNumber;
 
 	public GEM() {
 		super();
@@ -42,7 +54,8 @@ public class GEM {
 	}
 
 	public GEM(String requestno, String monthYear, String period, String billno, String billdate, String amount,
-			String record_status, String sONum, String type) {
+			String type, LocalDateTime entryDate, LocalDateTime editDate, LocalDateTime nsDate, LocalDateTime soDate,
+			Boolean noteStatus, Boolean sanctionStatus, String sanctionNumber, Integer noteNumber) {
 		super();
 		this.requestno = requestno;
 		this.monthYear = monthYear;
@@ -50,9 +63,15 @@ public class GEM {
 		this.billno = billno;
 		this.billdate = billdate;
 		this.amount = amount;
-		this.record_status = record_status;
-		SONum = sONum;
 		this.type = type;
+		this.entryDate = entryDate;
+		this.editDate = editDate;
+		this.nsDate = nsDate;
+		this.soDate = soDate;
+		this.noteStatus = noteStatus;
+		this.sanctionStatus = sanctionStatus;
+		this.sanctionNumber = sanctionNumber;
+		this.noteNumber = noteNumber;
 	}
 
 	public String getRequestno() {
@@ -103,22 +122,6 @@ public class GEM {
 		this.amount = amount;
 	}
 
-	public String getRecord_status() {
-		return record_status;
-	}
-
-	public void setRecord_status(String record_status) {
-		this.record_status = record_status;
-	}
-
-	public String getSONum() {
-		return SONum;
-	}
-
-	public void setSONum(String sONum) {
-		SONum = sONum;
-	}
-
 	public String getType() {
 		return type;
 	}
@@ -127,17 +130,77 @@ public class GEM {
 		this.type = type;
 	}
 
+	public LocalDateTime getEntryDate() {
+		return entryDate;
+	}
+
+	public void setEntryDate(LocalDateTime entryDate) {
+		this.entryDate = entryDate;
+	}
+
+	public LocalDateTime getEditDate() {
+		return editDate;
+	}
+
+	public void setEditDate(LocalDateTime editDate) {
+		this.editDate = editDate;
+	}
+
+	public LocalDateTime getNsDate() {
+		return nsDate;
+	}
+
+	public void setNsDate(LocalDateTime nsDate) {
+		this.nsDate = nsDate;
+	}
+
+	public LocalDateTime getSoDate() {
+		return soDate;
+	}
+
+	public void setSoDate(LocalDateTime soDate) {
+		this.soDate = soDate;
+	}
+
+	public Boolean getNoteStatus() {
+		return noteStatus;
+	}
+
+	public void setNoteStatus(Boolean noteStatus) {
+		this.noteStatus = noteStatus;
+	}
+
+	public Boolean getSanctionStatus() {
+		return sanctionStatus;
+	}
+
+	public void setSanctionStatus(Boolean sanctionStatus) {
+		this.sanctionStatus = sanctionStatus;
+	}
+
+	public String getSanctionNumber() {
+		return sanctionNumber;
+	}
+
+	public void setSanctionNumber(String sanctionNumber) {
+		this.sanctionNumber = sanctionNumber;
+	}
+
+	public Integer getNoteNumber() {
+		return noteNumber;
+	}
+
+	public void setNoteNumber(Integer noteNumber) {
+		this.noteNumber = noteNumber;
+	}
+
 	@Override
 	public String toString() {
 		return "GEM [requestno=" + requestno + ", monthYear=" + monthYear + ", period=" + period + ", billno=" + billno
-				+ ", billdate=" + billdate + ", amount=" + amount + ", record_status=" + record_status + ", SONum="
-				+ SONum + ", type=" + type + "]";
+				+ ", billdate=" + billdate + ", amount=" + amount + ", type=" + type + ", entryDate=" + entryDate
+				+ ", editDate=" + editDate + ", nsDate=" + nsDate + ", soDate=" + soDate + ", noteStatus=" + noteStatus
+				+ ", sanctionStatus=" + sanctionStatus + ", sanctionNumber=" + sanctionNumber + ", noteNumber="
+				+ noteNumber + "]";
 	}
-
-	
-
-	 
-	
-	
 
 }

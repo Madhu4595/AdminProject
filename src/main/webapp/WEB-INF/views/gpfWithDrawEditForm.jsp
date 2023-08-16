@@ -39,7 +39,7 @@
 </style>
 <script>
 $(document).ready(function(){
-	
+	$("#editdata").hide();
 	$("#gpfNodiv").hide();
 	$("#gpfNodiv").val('');
 	
@@ -57,40 +57,48 @@ $(document).ready(function(){
 function findRequestNo(){
 	//alert("findRequestNo");
 	
-	var requestNo = $("#requestNo").val();
+	var requestNo = $("#requestnoo").val();
 	//alert("requestNo=> "+requestNo)
 	$.ajax({
 		type: "get",
-		url: "./getGpfWithDrawById?requestNo="+requestNo,
+		url: "./getGPFWithdrawForEdit?requestno="+requestNo,
 		cache: false,
 		success:function(resp){
-			//alert("success=> "+resp);
-			findEmp(resp.empCode);
+			//alert("success=> "+resp.length);
 			
-			$("#requestNo").prop('readonly','true');
+			if(resp.length === 0){
+				alert("No Record Found With Given Request Number");
+				$("#requestnoo").val('');
+				$("#requestnoo").focus();
+				return false;
+			}else{
+				findEmp(resp.empCode);
+				
+				$("#editdata").show();
+				
+				$("#requestNo").val(resp.requestNo);
+				document.getElementById("requestnoprint").innerHTML = resp.requestNo;
 
-			$("#gpfNodiv").show();
-			$("#gpfNo").val(resp.gpfNo);
-			
-			$("#purposediv").show();
-			$("#purpose").val(resp.purpose);
-			
-			$("#withDrawAmtdiv").show();
-			$("#withDrawAmt").val(resp.withDrawAmt);
-			
-			$("#netBalancediv").show();
-			$("#netBalance").val(resp.netBalance);
-			
-			$("#submitdiv").show();
-			
-			
+				$("#gpfNodiv").show();
+				$("#gpfNo").val(resp.gpfNo);
+				
+				$("#purposediv").show();
+				$("#purpose").val(resp.purpose);
+				
+				$("#withDrawAmtdiv").show();
+				$("#withDrawAmt").val(resp.withDrawAmt);
+				
+				$("#netBalancediv").show();
+				$("#netBalance").val(resp.netBalance);
+				
+				$("#submitdiv").show();
+			}
 		},
 		error:function(resp){
 			//alert("error=> "+resp);
 			alert("GPF Details are NOT FOUND with Given Request Number!");
-			$("#requestNo").val('');
-			$("#requestNo").focus();
-			
+			$("#requestnoo").val('');
+			$("#requestnoo").focus();
 		}
 	});
 	
@@ -137,12 +145,12 @@ function getrequestnos() {
 
 	$.ajax({
 		type : "get",
-		url : "./getAllGPFWithDraw",
+		url : "./getAllGPFWithdrawForEdit",
 		cache : false,
 		success : function(response) {
 			//alert("success response length=> "+response.length)
 			//alert("success response  => "+JSON.stringify(response))
-
+			$("#tbody").empty();
 			for (var i = 0; i < response.length; i++) {
 				var gpf = response[i];
 				$("#tbody").append(
@@ -164,7 +172,7 @@ function addRequestNo(a) {
 	var modal1 = document.getElementById("myModalSuccess");
 	modal1.style.display = "none";
 
-	$("#requestNo").val(a);
+	$("#requestnoo").val(a);
 	findRequestNo();
 }
 </script>
@@ -182,20 +190,37 @@ function addRequestNo(a) {
 			<b> ${msg} </b>
 		</h3>
 	</center>
-	
-	<div class="container mt-4 border font-weight-bolder p-4"
+	<div class="container mt-4 mb-4 border font-weight-bolder"
 		style="background-color: #e6ffff;">
-		<form:form action="./updateGpf" method="post" modelAttribute="gpf"  onsubmit="return validate()">
-			<div class="row align-items-center m-2 mb-4">
-				<div class="col-4">
-					<label for="monthYear" class="col-form-label">Request Number:</label>
+		
+		<div class="row align-items-center m-2">
+				<div class="col-3">
+					<label for="monthYear" class="col-form-label">Search Request Number</label>
+				</div>
+				<div class="col-2">
+					<input type="text" name="requestnoo" id="requestnoo" class="form-control" maxlength="9"/>
+				</div>
+				<div class="col-3">
+					<input type="button" class="form-control" value="Get Data" onclick="return findRequestNo()" style="background-color: green; color: white; font-weight: bold;"/>
 				</div>
 				<div class="col-4">
-					<input type="text" name="requestNo" id="requestNo"
-						placeholder="Ex: GPF_0001" class="form-control" onchange="return findRequestNo()"/>
+					<input type="button" class="form-control"  value="Get All Request Numbers"  onclick="return getrequestnos()" style="background-color: #6666ff; color: white; font-weight: bold;"/>
 				</div>
-				<div class="col-4"><span id="empspan"></span></div>
 			</div>
+			
+		</div>
+	<div class="container mt-4 border font-weight-bolder p-4"
+		style="background-color: #e6ffff;" id="editdata">
+		
+		<form:form action="./updateGpf" method="post" modelAttribute="gpf"  onsubmit="return validate()">
+		
+		<input type="hidden" name="requestNo" id="requestNo" />
+			<center > 
+			<b>
+			Request Number: <span id="requestnoprint" style="color: #3333ff;"></span> 
+			Employee Name: <span id="empspan" style="color: #3333ff;"></span>
+			</b> </center><br>
+ 
 			<div class="row align-items-center m-2" id="gpfNodiv">
 				<div class="col-4">
 					<label for="period" class="col-form-label">GPF Number:</label>
@@ -247,17 +272,11 @@ function addRequestNo(a) {
 		</form:form>
 	</div>
 
-	<center>
-		<button onclick="return getrequestnos()" id="getrequestnos"
-			class="btn btn-info mt-4">Get All Request Numbers</button>
-	</center>
-	
 	<div id="myModalSuccess" class="mymodalsuccess">
 		<div class="successcontent"><span class="close">&times;</span>
 			<center>
-
-				<table border="1">
-					<thead>
+				<table border="1" class="table table-bordered table-striped">
+					<thead style="background-color: black; color: white;">
 						<th>Request Number</th>
 						<th>Employee Code</th>
 						<th>GPF Number</th>
@@ -267,7 +286,6 @@ function addRequestNo(a) {
 					</thead>
 					<tbody id="tbody"></tbody>
 				</table>
-
 			</center>
 		</div>
 	</div>

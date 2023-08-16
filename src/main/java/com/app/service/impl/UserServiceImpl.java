@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService{
 				userRegistrationDto.getLastName(),
 				userRegistrationDto.getEmail(),
 				passwordEncoder.encode(userRegistrationDto.getPassword()),
-				Arrays.asList(new Roles("ROLE_USER"))
+				Arrays.asList(new Roles("ROLE_DD"))
 				);
 		
 		return appUserRepo.save(user);
@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("UserServiceImpl=> loadUserByUsername=>username=>"+username);
 		AppUser user = appUserRepo.findByEmail(username);
 		
 		if(user == null) {

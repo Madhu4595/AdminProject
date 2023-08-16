@@ -7,6 +7,7 @@
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	
 	<%
+	System.out.println("generateGEMOutsourceNoteSheet=============>");
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
 		String todaydate = formatter.format(date);

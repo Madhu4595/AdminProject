@@ -207,7 +207,7 @@
 	function validate(){
 		//alert("Asdfasdfasdf"); 
  		var noofbills = $("#noofbills").val();
- 		alert("noofbills==> "+noofbills);
+ 		//alert("noofbills==> "+noofbills);
 		
 		for(var i = 1; i <= noofbills; i++){
 			var a = $("#amount_approve"+i).val();

@@ -127,7 +127,7 @@ function addOwner(a){
 	 //console.log( $(a).closest('tr').clone());
     var tr = $(a).closest('tr').clone();//.insertAfter("tr:last");
     //$(tr).find('input').val('');
-    $(tr).find('input').attr('readonly', true);
+    $(tr).find('input').attr('readonly', true);i
     $(tr).find('input:last').val('Remove').attr("onclick","removeOwner(this)");
     tr.insertBefore('#multi tbody tr:last');
     var tr = $(a).closest('tr');

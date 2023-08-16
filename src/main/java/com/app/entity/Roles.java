@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Roles {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String name;
 	
@@ -37,6 +37,13 @@ public class Roles {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "Roles [id=" + id + ", name=" + name + "]";
+	}
+	
+	
 	
 }
 

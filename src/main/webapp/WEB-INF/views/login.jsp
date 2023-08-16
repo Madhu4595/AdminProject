@@ -52,7 +52,7 @@
 					</div>
 				</form:form>
 				<div class="form-group">
-					<!-- 					<span>New User? <a href="registration">Register Here</a></span> -->
+<!-- 										<span>New User? <a href="registration">Register Here</a></span> -->
 				</div>
 			</div>
 		</div>

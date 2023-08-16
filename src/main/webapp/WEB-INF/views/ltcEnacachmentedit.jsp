@@ -15,9 +15,11 @@
  $(document).ready(function(){
 	 //alert("asdfasdfas")
 	//requestno
+	$("#editbody").hide();
 	$("#requestno").focus();
  	//empcodelable
  	$("#empcodelable").hide();
+ 	$("#reqnolable").hide();
  	//empcode
  	$("#empcode").hide(); $("#empcode").val('');
 	//blockyearlable
@@ -57,86 +59,27 @@
 	
  });
 
-function searchrequestno(){
-	 
-	var requestno = document.getElementById("requestno").value;
-	//alert("requestno=> "+requestno);
-	var requestnopattern = /^[A-Z]{3}_[0-9]{4}$/;
-	
-	if(requestno.match(requestnopattern)){
-		//alert("matched");
-		$.ajax({
-			type: "get",
-			url: "./getltcbycode",
-			data: "requestno="+requestno,
-			cache: false,
-			success:function(response){
-				
-				//alert("response success=> "+JSON.stringify(response));
-				
-				document.getElementById("requestno").readOnly = true;
-				//searchbtn
-				$("#getrequestnos").hide();
-				
-				$("#empcodelable").show(); 
-				$("#empcode").show(); $("#empcode").val(response.empcode);
-				
-				$("#blockyearlable").show();
-				$("#blockyear").show(); $("#blockyear").val(response.blockyear);
-				
-				$("#locationlable").show();
-				$("#location").show(); $("#location").val(response.location);
-				
-				$("#visitplacelable").show();
-				$("#visitplace").show(); $("#visitplace").val(response.visitplace);
-				
-				$("#claimedforlable").show();
-				$("#claimedfor").show(); $("#claimedfor").val(response.claimedfor);
-				
-				$("#visitperiodlable").show();
-				$("#visitperiod").show(); $("#visitperiod").val(response.visitperiod);
-				
-				$("#leavedetailslable").show();
-				$("#leavedetails").show(); $("#leavedetails").val(response.leavedetails);
-				
-				$("#encashmentlable").show();
-				$("#encashment").show(); $("#encashment").val(response.encashment);
-				
-				$("#amountadvancelable").show();
-				$("#amountadvance").show(); $("#amountadvance").val(response.amountadvance);
-				
-				$("#submitbtn").show(); 
-				
-			},
-			error: function(response){
-				alert("Request Number Not Found!");
-			}
-		});
-	}else{
-		alert("Request Number Invalid");
-		$("#requestno").val(''); $("#requestno").focus();
-	}
-	
-	
-}
+
 
 function getrequestnos(){
-	//alert("getrequestnos")
+	//alert("getrequestnos");
 	
 	var modal1 = document.getElementById("myModalSuccess");
-    //var span = document.getElementsByClassName("successclose")[0];
+	var span = document.getElementsByClassName("close1")[0];
             
-    modal1.style.display = "block";
-   // span.onclick = function () {  modal1.style.display = "none"; };
+	modal1.style.display = "block";
+	span.onclick = function() {
+		modal1.style.display = "none";
+	};
     
     $.ajax({
     	type: "get",
-    	url: "./getAllLtcs",
+    	url: "./getAllLTCEncashForEdit",
     	cache: false,
     	success:function(response){
     		//alert("success response length=> "+response.length)
     		//alert("success response  => "+JSON.stringify(response))
-    		
+    		$("#tbody").empty();
     		for(var i = 0; i < response.length; i++){
     			var ltc = response[i];
     			$("#tbody").append('<tr><td><a href="javascript:addRequestNo(\''+ltc.requestno+'\')">'+ltc.requestno+'</a></td><td>'+ltc.empcode+'</td><td>'+ltc.location+'</td></tr>');
@@ -154,10 +97,88 @@ function addRequestNo(a){
 	var modal1 = document.getElementById("myModalSuccess");
 	modal1.style.display = "none";
 	
-	$("#requestno").val(a);
+	$("#requestnoo").val(a);
 	searchrequestno();
 }
- 
+
+function searchrequestno(){
+	 
+	var requestno = document.getElementById("requestnoo").value;
+	//alert("requestno=> "+requestno);
+	var requestnopattern = /^[A-Z]{3}[0-9]{4}$/;
+	
+	if(requestno.match(requestnopattern)){
+		//alert("matched");
+		$.ajax({
+			type: "get",
+			url: "./getLTCEncashForEdit",
+			data: "requestno="+requestno,
+			cache: false,
+			success:function(response){
+				
+				//alert("response success=> "+JSON.stringify(response));
+				
+				if(response === ""){
+					alert("Given Request Number is not Found");
+					$("#requestnoo").focus();
+					$("#editbody").hide();
+					return false;
+				}else{
+					$("#editbody").show();
+					$("#getrequestnos").hide();
+					
+					$("#requestno").val(response.requestno);
+					$("#empcode").val(response.empcode);
+					
+					document.getElementById("requestnoprint").innerHTML = response.requestno;
+					document.getElementById("empcodeprint").innerHTML = response.empcode;
+					
+					$("#reqnolable").show();
+					
+					$("#empcodelable").show(); 
+					$("#empcode").show(); $("#empcode").val(response.empcode);
+					
+					$("#blockyearlable").show();
+					$("#blockyear").show(); $("#blockyear").val(response.blockyear);
+					
+					$("#locationlable").show();
+					$("#location").show(); $("#location").val(response.location);
+					
+					$("#visitplacelable").show();
+					$("#visitplace").show(); $("#visitplace").val(response.visitplace);
+					
+					$("#claimedforlable").show();
+					$("#claimedfor").show(); $("#claimedfor").val(response.claimedfor);
+					
+					$("#visitperiodlable").show();
+					$("#visitperiod").show(); $("#visitperiod").val(response.visitperiod);
+					
+					$("#leavedetailslable").show();
+					$("#leavedetails").show(); $("#leavedetails").val(response.leavedetails);
+					
+					$("#encashmentlable").show();
+					$("#encashment").show(); $("#encashment").val(response.encashment);
+					
+					$("#amountadvancelable").show();
+					$("#amountadvance").show(); $("#amountadvance").val(response.amountadvance);
+					
+					$("#submitbtn").show();
+				}
+				
+				 
+				
+			},
+			error: function(response){
+				alert("Request Number Not Found!");
+			}
+		});
+	}else{
+		alert("Request Number Invalid");
+		$("#requestnoo").val(''); $("#requestnoo").focus();
+	}
+	
+	
+}
 </script>
 <style>
 .mymodalsuccess {
@@ -186,38 +207,62 @@ function addRequestNo(a){
     padding: 3px;
     width: 50%;
 }
+/* The Close Button */
+.close1 {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close1:hover, .close1:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
 	<%@include file="banner.jsp"%>
 	<%@include file="navbar.jsp"%>
 	<div align="center">
-		<h3 class="h3 font-weight-bolder">LTC-EL Enacachement Form</h3>
+		<h3 class="h3 font-weight-bolder">LTC-EL Enacachement Edit Form</h3>
 	</div>
 	<div class="container border p-4 font-weight-bolder"
 		style="background-color: #e6ffff;">
 		 
-	 <form:form action="./updateltcEnacachment" method="post" modelAttribute="updateltc">
+	 
 			<div class="row align-items-center m-2">
 				<div class="col-auto" style="width: 200px;">
-					<label for="requestno" class="col-form-label">Request No:</label>
+					<label for="requestno" class="col-form-label">Searching Request No:</label>
 				</div>
 				<div class="col-auto">
-					<input type="text" name="requestno" id="requestno" class="form-control" maxlength="9"/>
+					<input type="text" name="requestnoo" id="requestnoo" class="form-control" maxlength="9"/>
 					<span></span>
 				</div>
-				
+				<div class="col-auto" style="width: 200px;">
+					<input type="button" id="getdata" class="form-control"  value="Get Data" onclick="return searchrequestno()" style="background-color: green; color: white; font-weight: bold;"/>
+				</div>
+				<div class="col-auto">
+					<input type="button" id="getrequestnoss" class="form-control"  value="Get All Request Numbers"  onclick="return getrequestnos()" style="background-color: #6666ff; color: white; font-weight: bold;"/>
+				</div>
 			</div>
 			
-			<div class="row align-items-center m-2">
-				<div class="col-auto" style="width: 200px;" id="empcodelable">
-					<label for="code" class="col-form-label">Employee Code:</label>
-				</div>
-				<div class="col-auto">
-					<input type="text" name="empcode" id="empcode" class="form-control" readonly="readonly"/>
-					<span></span>
-				</div>
-			</div>
+			</div><br>
+			
+			<div class="container border p-4 font-weight-bolder" style="background-color: #e6ffff;" id="editbody">
+			
+			<form:form action="./updateltcEnacachment" method="post" modelAttribute="updateltc">
+			 
+			 <input type="hidden" name="requestno" id="requestno" />
+			 <input type="hidden" name="empcode" id="empcode" />
+			 
+			 <center style="color: #3333ff;">
+			 	<b>Request Number: <span id="requestnoprint"></span> 
+			 	&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+			 	&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+			 	Employee Code: <span id="empcodeprint"></span></b>
+			 </center><br>
 
 			<div class="row g-3 align-items-center m-2">
 				<div class="col-auto" style="width: 200px;" id="blockyearlable">
@@ -308,23 +353,22 @@ function addRequestNo(a){
 					style="margin-left: 38%;"  />
 			</div>
 		 </form:form>
-<!-- 		 <button onclick="return searchrequestno()" id="searchbtn" class="btn btn-success">Submit</button> -->
-		 <button onclick="return getrequestnos()" id="getrequestnos" class="btn btn-info">Get All Request Numbers</button>
+		
 	</div>
 	
     <div id="myModalSuccess" class="mymodalsuccess">
         <div class="successcontent">
+        <span class="close1" style="color: red; font-weight: bold;">&#9746;</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <center>
-                 
-                 <table>
-                 	<thead>
+                 <table class="table table-stripped">
+                 	<thead style="background-color: black; color: white;">
                  		<th>Request Number</th>
                  		<th>Employee Code</th>
                  		<th>Place of visit</th>
                  	</thead>
                  	<tbody id="tbody"></tbody>
                  </table>
-
             </center>
         </div>
     </div>

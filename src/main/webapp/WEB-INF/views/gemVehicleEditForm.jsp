@@ -14,6 +14,10 @@
 
 <script>
 	$(document).ready(function() {
+		
+		$("#requestnoo").val('GEM');
+		
+		$("#editdata").hide();
 		$("#myModalSuccess").hide();
 
 		$("#monthYeardiv").hide();
@@ -33,23 +37,27 @@
 
 		$("#submitdiv").hide();
 	});
+	
 	function getrequestnos() {
 		//alert("getrequestnos")
 
 		var modal1 = document.getElementById("myModalSuccess");
-		//var span = document.getElementsByClassName("successclose")[0];
-
-		modal1.style.display = "block";
-		// span.onclick = function () {  modal1.style.display = "none"; };
+		var span = document.getElementsByClassName("close1")[0];
+            
+	modal1.style.display = "block";
+	span.onclick = function() {
+		modal1.style.display = "none";
+	};
 
 		$.ajax({
 			type : "get",
-			url : "./getAllGEMs",
+			url : "./getAllGemVehicleForEdit",
 			cache : false,
 			success : function(response) {
 				//alert("success response length=> "+response.length)
 				//alert("success response  => "+JSON.stringify(response))
-
+				
+				$("#tbody").empty();
 				for (var i = 0; i < response.length; i++) {
 					var gem = response[i];
 					$("#tbody").append(
@@ -77,18 +85,22 @@
 
 	function searchrequestno(a) {
 		//alert("searchrequestno"+a);
-		var requestnopattern = /^[A-Z]{3}_[0-9]{4}$/;
+		var requestnopattern = /^[A-Z]{3}[0-9]{4}$/;
 
 		if (a.match(requestnopattern)) {
 			//alert("matched");
 			$.ajax({
 				type : "get",
-				url : "./getGEMbycode",
+				url : "./getGemVehicleForEdit",
 				data : "requestno=" + a,
 				cache : false,
 				success : function(response) {
 					//alert("response success=> "+JSON.stringify(response));
-					document.getElementById("requestno").readOnly = true;
+					$("#editdata").show();
+					
+					$("#requestno").val(response.requestno);
+					document.getElementById("requestnoprint").innerHTML = response.requestno;				
+					
 					$("#monthYeardiv").show();
 					$("#monthYear").val(response.monthYear);
 					$("#perioddiv").show();
@@ -111,6 +123,21 @@
 			$("#requestno").focus();
 		}
 
+	}
+	
+	
+	function getGemDataForEdit(){
+		var requestnoo = $("#requestnoo").val();
+		
+		if(requestnoo === null || requestnoo === ""){
+			alert("Search Request Number is Required, Please Enter");
+			$("#requestnoo").val('GEM');
+			$("#requestnoo").focus();
+			return false;
+		}else{
+			searchrequestno(requestnoo);
+		}
+		
 	}
 </script>
 <style>
@@ -141,6 +168,19 @@
 	padding: 3px;
 	width: 50%;
 }
+/* The Close Button */
+.close1 {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close1:hover, .close1:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -149,23 +189,39 @@
 	<div align="center">
 		<h3 class="h3 font-weight-bolder">GEM - Vehicle Details Edit Form</h3>
 	</div>
-
-
+	
 	<div class="container mt-4 mb-4 border font-weight-bolder"
 		style="background-color: #e6ffff;">
-		<form:form action="./updateGEM" method="post" modelAttribute="gem">
-			<div class="row align-items-center m-2">
-				<div class="col-2"></div>
-				<div class="col-4">
-					<label for="monthYear" class="col-form-label">Request
-						Number</label>
+		
+		<div class="row align-items-center m-2">
+				<div class="col-3">
+					<label for="monthYear" class="col-form-label">Search Request Number</label>
+				</div>
+				<div class="col-2">
+					<input type="text" name="requestnoo" id="requestnoo" class="form-control" maxlength="9"/>
+				</div>
+				<div class="col-3">
+					<input type="button" class="form-control" value="Get Data" onclick="return getGemDataForEdit()" style="background-color: green; color: white; font-weight: bold;"/>
 				</div>
 				<div class="col-4">
-					<input type="text" name="requestno" id="requestno"
-						class="form-control" maxlength="9" onchange="return searchrequestno(this.value)" /> <span></span>
+					<input type="button" id="getrequestnoss" class="form-control"  value="Get All Request Numbers"  onclick="return getrequestnos()" style="background-color: #6666ff; color: white; font-weight: bold;"/>
 				</div>
-				<div class="col-2"></div>
 			</div>
+			
+		</div>
+<br>
+	<div class="container mt-4 mb-4 border font-weight-bolder" style="background-color: #e6ffff;" id="editdata">
+		
+		<form:form action="./updateGEM" method="post" modelAttribute="gem">
+		
+		 		<input type="hidden" name="requestno" id="requestno" />
+			 	
+			 	<center style="color: #3333ff;">
+			 	<b>Request Number: <span id="requestnoprint"></span> </b>
+			 </center><br>
+		
+			 
+			
 			<div class="row align-items-center m-2" id="monthYeardiv">
 				<div class="col-2"></div>
 				<div class="col-4">
@@ -177,6 +233,7 @@
 				</div>
 				<div class="col-2"></div>
 			</div>
+			
 			<div class="row align-items-center m-2" id="perioddiv">
 				<div class="col-2"></div>
 				<div class="col-4">
@@ -187,6 +244,7 @@
 				</div>
 				<div class="col-2"></div>
 			</div>
+			
 			<div class="row align-items-center m-2" id="billnodiv">
 				<div class="col-2"></div>
 				<div class="col-4">
@@ -197,6 +255,7 @@
 				</div>
 				<div class="col-2"></div>
 			</div>
+			
 			<div class="row align-items-center m-2" id="billdatediv">
 				<div class="col-2"></div>
 				<div class="col-4">
@@ -208,6 +267,7 @@
 				</div>
 				<div class="col-2"></div>
 			</div>
+			
 			<div class="row align-items-center m-2" id="amountdiv">
 				<div class="col-2"></div>
 				<div class="col-4">
@@ -218,6 +278,7 @@
 				</div>
 				<div class="col-2"></div>
 			</div>
+			
 			<div class="row align-items-center m-2" id="submitdiv">
 				<div class="col-4"></div>
 				<div class="col-4">
@@ -225,27 +286,23 @@
 				</div>
 				<div class="col-4"></div>
 			</div>
+			
 		</form:form>
 	</div>
 
-	<center>
-		<button onclick="return getrequestnos()" id="getrequestnos"
-			class="btn btn-info">Get All Request Numbers</button>
-	</center>
-
 	<div id="myModalSuccess" class="mymodalsuccess">
 		<div class="successcontent">
+		<span class="close1" style="color: red; font-weight: bold;">&#9746;</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<center>
-
-				<table border="1">
-					<thead>
+				<table border="1" class="table table-stripped">
+					<thead style="background-color: black; color: white;">
 						<th>Request Number</th>
 						<th>Bill Number</th>
 						<th>Amount</th>
 					</thead>
 					<tbody id="tbody"></tbody>
 				</table>
-
 			</center>
 		</div>
 	</div>

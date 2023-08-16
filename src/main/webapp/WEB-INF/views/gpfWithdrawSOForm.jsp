@@ -53,33 +53,39 @@
 						$
 								.ajax({
 									type : "get",
-									url : "./getAllGPFWithDraw",
+									url : "./getAllGPFWithdrawForSO",
 									cache : false,
 									success : function(response) {
 										//alert("success response length=> "+response.length)
 										//alert("success response  => "+JSON.stringify(response))
 
-										for (var i = 0; i < response.length; i++) {
-											var gpf = response[i];
-											$("#tbody")
-													.append(
-															'<tr><td>'
-																	+ gpf.requestNo
-																	+ '</td><td>'
-																	+ gpf.empCode
-																	+ '</td><td>'
-																	+ gpf.gpfNo
-																	+ '</td><td>'
-																	+ gpf.purpose
-																	+ '</td><td>'
-																	+ gpf.withDrawAmt
-																	+ '</td><td>'
-																	+ gpf.netBalance
-																	+ '</td>'
-																	+ '<td><input type="text" name="soNum" id="soNum'+gpf.requestNo+'"/></td><td><input type="button" value="Generate Sanction Order" onClick="return generateSO(\''
-																	+ gpf.requestNo
-																	+ '\')"/></td></tr>');
+										if(response.length === 0){
+											$("#reqstable").hide();
+											document.getElementById("noreqsmsg").innerHTML = "No Request Numbers are Available for Generating NoteSheet";
+										}else{
+											for (var i = 0; i < response.length; i++) {
+												var gpf = response[i];
+												$("#tbody")
+														.append(
+																'<tr><td>'
+																		+ gpf.requestNo
+																		+ '</td><td>'
+																		+ gpf.empCode
+																		+ '</td><td>'
+																		+ gpf.gpfNo
+																		+ '</td><td>'
+																		+ gpf.purpose
+																		+ '</td><td>'
+																		+ gpf.withDrawAmt
+																		+ '</td><td>'
+																		+ gpf.netBalance
+																		+ '</td>'
+																		+ '<td><input type="text" name="soNum" id="soNum'+gpf.requestNo+'" /></td><td><input type="button" style="background-color: green; color: white; font-weight: bolder;" value="Generate Sanction Order" onClick="return generateSO(\''
+																		+ gpf.requestNo
+																		+ '\')"/></td></tr>');
+											}
 										}
+										
 
 									},
 									error : function(response) {
@@ -97,8 +103,37 @@
 			alert("Sanction Order Number is Required Please Fill that!");
 			return false;
 		} else {
- 			document.location.href = './generateGPFWithdrawSOPrint?requestNo='
- 					+ a + '&soNum=' + soNum;
+			//alert("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+			$.ajax({
+				type : "get",
+				url : "./checkSO?siodate="+soNum,
+				cache : false,
+				success : function(response) {
+					//alert("success response length=> "+response)
+					//alert("success response  => "+JSON.stringify(response))
+					
+					if(response === "200"){
+						//alert("dddddddddddddddddddddddddddd");
+						alert("Sanction Order Number is Already Available, Please change Sanction Order Number");
+						$("#SONum").val('');
+						$("#SONum").focus();
+						return false;
+					}
+					else{
+						//alert("fffffffffffffffffffffffffffffffffffffffff")
+						$("#requestNo").val(a);
+						$("#sanctionNumber").val(soNum);
+							document.forms[0].action="./generateGPFWithdrawSOPrint";
+							document.forms[0].submit();
+							return true;
+					}
+				},
+				error : function(response) {
+					alert("Employee Allowance Details are not Loaded");
+				}
+			});
+			
+ 			//document.location.href = './generateGPFWithdrawSOPrint?requestNo='+ a + '&soNum=' + soNum;
 			return true;
 		}
 
@@ -109,20 +144,76 @@
 		var requestno = $("#requestNo").val();
 		//alert("requestno=> "+requestno);
 		
-		var SONum = $("#soNum").val();
+		var SONum = $("#sanctionNumber").val();
 		//alert("SONum=> "+SONum);
 		
 
 		if (requestno === "" || requestno === null) {
 			alert("Please enter Request Number");
-			$("#requestno").focus();
+			$("#requestNo").focus();
 			return false;
-		}
-		
-		if (SONum === "" || SONum === null) {
-			alert("Please enter Sanction Order Number");
-			$("#SONum").focus();
-			return false;
+		}else{
+			$.ajax({
+				type : "get",
+				url : "./getGPFWithdrawForSO?requestno="+requestno,
+				cache : false,
+				success : function(response) {
+					//alert("success response length=> "+response.length)
+					//alert("success response  => "+JSON.stringify(response))
+					
+					if(response.length === 0){
+						alert("No record Found with Given Request Number for Approval");
+						$("#requestNo").val('');
+						$("#requestNo").focus();
+						$("#sanctionNumber").val('');
+						return false;
+					}else{
+						//alert("bbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+						if (SONum === "" || SONum === null) {
+							alert("Please enter Sanction Order Number");
+							$("#sanctionNumber").focus();
+							return false;
+						}
+						else{
+							//alert("in else")
+							
+							$.ajax({
+								type : "get",
+								url : "./checkSO?siodate="+SONum,
+								cache : false,
+								success : function(response) {
+									//alert("success response length=> "+response)
+									//alert("success response  => "+JSON.stringify(response))
+									
+									if(response === "200"){
+										//alert("in if");
+										alert("Sanction Order Number is Already Available, Please change Sanction Order Number");
+										$("#sanctionNumber").val('');
+										$("#sanctionNumber").focus();
+										return false;
+									}
+									else{
+											document.forms[0].action="./generateGPFWithdrawSOPrint";
+											document.forms[0].submit();
+											return true;
+									}
+									
+									 
+								},
+								error : function(response) {
+									alert("Employee Allowance Details are not Loaded");
+								}
+							});
+							
+							return false;
+							//alert("aaaaaaaaaaaaaaaaaaaaaaaaaaa")
+						}
+					}
+				},
+				error : function(response) {
+					alert("No GEM Request are Found");
+				}
+			});
 		}
 	return true;		 
 	}
@@ -137,7 +228,7 @@
 
 		$.ajax({
 			type : "get",
-			url : "./getAllGPFWithDraw",
+			url : "./getAllGPFWithdrawForSO",
 			cache : false,
 			success : function(response) {
 				//alert("success response length=> "+response.length)
@@ -176,50 +267,55 @@
 	<%@include file="navbar.jsp"%>
 	<div align="center">
 		<h3 class="h3 font-weight-bolder">GEM - Vehicle Details</h3>
-
-		<div class="container border" style="background-color: #e6f9ff;">
-			<form:form action="./generateGPFWithdrawSOPrint" method="post">
-				<div class="row g-3 align-items-center m-4 p-4">
-
-					<div class="col-auto">
-						<label for="inputPassword6" class="col-form-label">Request
-							No: </label>
+		
+		<div class="container border p-4" style="background-color: #e6f9ff;">
+		
+			<form:form action="" method="post">
+			
+				<div class="row">
+				
+					<div class="col-3 fw-bolder">
+						<label for="inputPassword6" class="col-form-label">Request No: </label>
 					</div>
-					<div class="col-auto">
-						<input type="text" name="requestNo" id="requestNo"
-							class="form-control" />
+					<div class="col-2">
+						<input type="text" name="requestNo" id="requestNo" class="form-control" />
 					</div>
-					<div class="col-auto">
-						<label for="inputPassword6" class="col-form-label">Sanction
-							Order Number </label>
+					<div class="col-6">
+						<input type="button" class="form-control w-50" onclick="return getrequestnos()"  value="Get All Request Numbers"   style="background-color: #6666ff; color: white; font-weight: bold;"/>
 					</div>
-					<div class="col-auto">
-						<input type="text" name="soNum" id="soNum" class="form-control" />
+					
+				</div>
+				
+				<div class="row mt-1">
+				
+					<div class="col-3">
+						<label for="inputPassword6" class="col-form-label">Sanction Order Number </label>
 					</div>
-
-
-					<div class="col-auto m-4">
-						<input type="submit" value="Sanction Order"
-							class="btn btn-success" onclick="return searchrequestno()" />
+					<div class="col-2">
+						<input type="text" name="sanctionNumber" id="sanctionNumber" class="form-control" />
 					</div>
-
+				</div>
+				
+				<div class="row mt-1">
+					<div class="col-6">
+						<input type="button" value="Generate Sanction Order" class="form-control w-50 btn btn-success" onclick="return searchrequestno()" />
+					</div>
 				</div>
 
 			</form:form>
+			
 			<span style="text-align: center; font-weight: bolder; color: red;">${msg }</span>
 		</div>
-		<div class="col-auto p-4" align="center">
-			<button onclick="return getrequestnos()" id="getrequestnos"
-				class="btn btn-info">Get All Request Numbers</button>
-		</div>
+<br>
+	 
 		<div id="myModalSuccess" class="mymodalsuccess">
 			<div class="successcontent">
 				<center>
 					<div id="scrollbar">
 						<span class="successclose"
 							style="text-align: right; margin-left: 50%; font-weight: bolder;">&#x2717;</span>
-						<table class="table table-bordered table-striped">
-							<thead>
+						<table border="1" class="table table-stripped">
+							<thead style="background-color: black; color: white;">
 								<th>Request Number</th>
 				<th>Employee Code</th>
 				<th>GPF Number</th>
@@ -233,8 +329,9 @@
 				</center>
 			</div>
 		</div>
-		<table border="1" class="table table-stripped">
-			<thead>
+		<center><span id="noreqsmsg" style="font-weight: bolder; color: red;"></span></center>
+		<table border="1" class="table table-stripped" id="reqstable">
+			<thead style="background-color: black; color: white;">
 				<th>Request Number</th>
 				<th>Employee Code</th>
 				<th>GPF Number</th>

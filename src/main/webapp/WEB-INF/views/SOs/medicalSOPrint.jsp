@@ -1,4 +1,3 @@
-<%@page import="com.app.entity.Medical_Bills_upload"%>
 <%@page import="com.app.util.MyUtil"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -146,7 +145,7 @@ td {
 					<br>
 
 					<div id="para2">
-						2. The expenditure involved is debitable as under: Demand No: 28,
+						2. The expenditure involved is debitable as under: Demand No: 27,
 						during the year 2023-2024 <br>
 					</div>
 					<br> '3451' Secretariat-Economic Services (Major Head)<br>

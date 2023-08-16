@@ -1,3 +1,4 @@
+<%@page import="com.app.entity.Employee"%>
 <%@page import="com.app.entity.Employee_allowance"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -7,6 +8,8 @@
 
 <%
 	int i = 1;
+String words =  request.getAttribute("totalAmout").toString();
+System.out.println("words==>===> "+words);
 %>
 <!DOCTYPE html>
 <html>
@@ -25,8 +28,25 @@
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+	<script type="text/javascript">
+function myFunction() {
+	var num = '<%=words%>';
+	var a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
+	var b = ['', '', 'Twenty','Thirty','Fourty','Fifty', 'Sixty','Seventy','Eighty','Ninety'];
+
+	    if ((num = num.toString()).length > 9) return 'overflow';
+	    n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+	    if (!n) return; var str = '';
+	    str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'Crore ' : '';
+	    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
+	    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
+	    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
+	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+	    document.getElementById("words").innerHTML = str;
+}
+</script>
 </head>
-<body>
+<body onload="myFunction();">
  <section class="container mt-5 pt-2 border">
 		<div class="row">
 			<div class="col-md-12">
@@ -72,6 +92,8 @@
 							<%
 							List<Employee_allowance> list = (List<Employee_allowance>)request.getAttribute("listEmpAllowances");
 							System.out.println("listttttttttttttttttttttttttt=> "+list.size());
+							
+							List<Employee> empsList = (List<Employee>)request.getAttribute("empsList");
 							 
 							for(Employee_allowance bean: list){
 								 
@@ -81,17 +103,39 @@
 									 
 									System.out.println("asdfasfasdfasdf");
 									String code = bean.getCode();
+									String empNameandDesg = "";
+									for(Employee emp:empsList){
+										if(emp.getCode().equalsIgnoreCase(code)){
+											empNameandDesg = emp.getName()+", "+emp.getDesignation();
+										}
+										
+									}
+									
 									String name_class_of_child1 = bean.getName_class_of_child1();
 									String period_of_claim_child1 = bean.getPeriod_of_claim_child1();
 									String amount_claimed = bean.getAmount_claimed().toString();
 									String amount_approve = bean.getAmount_approve().toString();
+									
+									
 									%>
 									<tr>
 									<td rowspan="2"><%=i++ %></td>
-									<td rowspan="2"><%=code %>=> 1child </td>
+									<td rowspan="2"><%=empNameandDesg %> </td>
 									<td><%=name_class_of_child1 %> </td>
 									<td><%=period_of_claim_child1 %> </td>
+									
+									<%if(bean.getCea_type_child1().equalsIgnoreCase("sfeehstl")){
+										%>
+										<td style="width: 150px; text-align: center"><b>Hostel
+									Subsidy</b> <br>81000 <br> (6750 &#215; 12) <br> <b>CEA</b>
+								<br> 27000 <br>
+								(2,250 &#215; 12)</td>
+										<%
+									}else{
+									 %>
 									<td><%=amount_claimed %> </td>
+									<%} %>
+									
 									<td><%=amount_approve %> </td>
 								 </tr>
 								 <tr> </tr>
@@ -100,6 +144,12 @@
 								if(bean.getNoofchilds().equalsIgnoreCase("2")){
 									System.out.println("asdfasfasdfasdf");
 									String code = bean.getCode();
+									String empNameandDesg = "";
+									for(Employee emp:empsList){
+										if(emp.getCode().equalsIgnoreCase(code)){
+											empNameandDesg = emp.getName()+", "+emp.getDesignation();
+										}
+									}
 									
 									String name_class_of_child1 = bean.getName_class_of_child1();
 									String name_class_of_child2 = bean.getName_class_of_child2();
@@ -115,16 +165,42 @@
 									%>
 									<tr>
 									 <td rowspan="2"><%=i++ %></td>
-									 <td rowspan="2"><%=code %>=>2child</td>
+									 <td rowspan="2"><%=empNameandDesg %> </td>
 									 <td><%=name_class_of_child1 %></td>
 									 <td><%=period_of_claim_child1 %></td>
-									 <td><%=cea_amount_child1 %></td>
+									 
+									 <%if(bean.getCea_type_child1().equalsIgnoreCase("sfeehstl")){
+										%>
+										<td style="width: 150px; text-align: center"><b>Hostel
+									Subsidy</b> <br>81000 <br> (6750 &#215; 12) <br> <b>CEA</b>
+								<br> 27000 <br>
+								(2,250 &#215; 12)</td>
+										<%
+									}else{
+									 %>
+									<td><%=cea_amount_child1 %> </td>
+									<%} %>
+									 
+<%-- 									 <td><%=cea_amount_child1 %></td> --%>
 									 <td><%=amount_approve1 %></td>
 									</tr>
 									<tr>
 									 <td><%=name_class_of_child2 %></td>
 									 <td><%=period_of_claim_child2 %></td>
-									 <td><%=cea_amount_child2 %></td>
+									 
+									 <%if(bean.getCea_type_child2().equalsIgnoreCase("sfeehstl")){
+										%>
+										<td style="width: 150px; text-align: center"><b>Hostel
+									Subsidy</b> <br>81000 <br> (6750 &#215; 12) <br> <b>CEA</b>
+								<br> 27000 <br>
+								(2,250 &#215; 12)</td>
+										<%
+									}else{
+									 %>
+									<td><%=cea_amount_child2 %> </td>
+									<%} %>
+									 
+<%-- 									 <td><%=cea_amount_child2 %></td> --%>
 									 <td><%=amount_approve2 %></td>
 									</tr>
 									<% 
@@ -135,8 +211,11 @@
 								<tr>
 									 <td colspan="5" align="right"><b>Total Amount: </b></td>
 									 <td><b>&#8377;${totalAmout }/-</b></td>
-									 
 									</tr>
+									<tr>
+									<td colspan="6" align="right"><b>Total Amount: (Rupees <span id="words" ></span> Only) </b></td>
+									</tr>
+									 
 							 
 							</tbody>
 						</table>
@@ -159,24 +238,20 @@
 				</div>
 				<br>
 				<div style="text-align: right;">
-						<b> <u>
-								<p>Dy.Director</p>
-						</u></b>
+						<b>
+							 (BSN Murty)<br>
+							 Deputy Director
+						</b>
 					</div>
 
-
 					<div style="text-align: left;">
-						<b><u>Head of Office</u></b>
+						<b><u>HO, APSC</u></b>
 					</div>
-					<br>
-					<br>
-					<br>
+					<br> <br> <br>
 					<div style="text-align: left;">
-						<b><u>State Informatics Officer</u></b>
+						<b><u>SIO, APSC</u></b>
 					</div>
-					<br>
-					<br>
-					<br>
+					<br> <br> <br>
 				</div></div></div></section>
 </body>
 </html>

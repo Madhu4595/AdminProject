@@ -1,5 +1,7 @@
 package com.app.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +23,7 @@ public class LTC {
         strategy = "com.app.util.StringPrefixedSequenceIdGenerator", 
         parameters = {
             @Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-            @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "LTC_"),
+            @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "LTC"),
             @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%04d") })
 	private String requestno;
 	
@@ -34,8 +36,20 @@ public class LTC {
 	private String leavedetails;
 	private String encashment;
 	private String amountadvance;
-	private String sanctionorderno;
 	private String totalfare;
+	
+	
+	private Integer note_number;
+	private String sanctionorderno;
+	
+	private LocalDateTime entry_date;
+	private LocalDateTime edit_date;
+	
+	private LocalDateTime note_date;
+	private LocalDateTime sanction_date;
+	
+	private Boolean note_status;
+	private Boolean sanction_status;
 	
 	
 	public LTC() {
@@ -46,7 +60,9 @@ public class LTC {
 
 	public LTC(String requestno, String empcode, String blockyear, String location, String visitplace,
 			String claimedfor, String visitperiod, String leavedetails, String encashment, String amountadvance,
-			String sanctionorderno, String totalfare) {
+			String totalfare, Integer note_number, String sanctionorderno, LocalDateTime entry_date,
+			LocalDateTime edit_date, LocalDateTime note_date, LocalDateTime sanction_date, Boolean note_status,
+			Boolean sanction_status) {
 		super();
 		this.requestno = requestno;
 		this.empcode = empcode;
@@ -58,8 +74,15 @@ public class LTC {
 		this.leavedetails = leavedetails;
 		this.encashment = encashment;
 		this.amountadvance = amountadvance;
-		this.sanctionorderno = sanctionorderno;
 		this.totalfare = totalfare;
+		this.note_number = note_number;
+		this.sanctionorderno = sanctionorderno;
+		this.entry_date = entry_date;
+		this.edit_date = edit_date;
+		this.note_date = note_date;
+		this.sanction_date = sanction_date;
+		this.note_status = note_status;
+		this.sanction_status = sanction_status;
 	}
 
 
@@ -163,16 +186,6 @@ public class LTC {
 	}
 
 
-	public String getSanctionorderno() {
-		return sanctionorderno;
-	}
-
-
-	public void setSanctionorderno(String sanctionorderno) {
-		this.sanctionorderno = sanctionorderno;
-	}
-
-
 	public String getTotalfare() {
 		return totalfare;
 	}
@@ -183,15 +196,101 @@ public class LTC {
 	}
 
 
+	public Integer getNote_number() {
+		return note_number;
+	}
+
+
+	public void setNote_number(Integer note_number) {
+		this.note_number = note_number;
+	}
+
+
+	public String getSanctionorderno() {
+		return sanctionorderno;
+	}
+
+
+	public void setSanctionorderno(String sanctionorderno) {
+		this.sanctionorderno = sanctionorderno;
+	}
+
+
+	public LocalDateTime getEntry_date() {
+		return entry_date;
+	}
+
+
+	public void setEntry_date(LocalDateTime entry_date) {
+		this.entry_date = entry_date;
+	}
+
+
+	public LocalDateTime getEdit_date() {
+		return edit_date;
+	}
+
+
+	public void setEdit_date(LocalDateTime edit_date) {
+		this.edit_date = edit_date;
+	}
+
+
+	public LocalDateTime getNote_date() {
+		return note_date;
+	}
+
+
+	public void setNote_date(LocalDateTime note_date) {
+		this.note_date = note_date;
+	}
+
+
+	public LocalDateTime getSanction_date() {
+		return sanction_date;
+	}
+
+
+	public void setSanction_date(LocalDateTime sanction_date) {
+		this.sanction_date = sanction_date;
+	}
+
+
+	public Boolean getNote_status() {
+		return note_status;
+	}
+
+
+	public void setNote_status(Boolean note_status) {
+		this.note_status = note_status;
+	}
+
+
+	public Boolean getSanction_status() {
+		return sanction_status;
+	}
+
+
+	public void setSanction_status(Boolean sanction_status) {
+		this.sanction_status = sanction_status;
+	}
+
+
 	@Override
 	public String toString() {
 		return "LTC [requestno=" + requestno + ", empcode=" + empcode + ", blockyear=" + blockyear + ", location="
 				+ location + ", visitplace=" + visitplace + ", claimedfor=" + claimedfor + ", visitperiod="
 				+ visitperiod + ", leavedetails=" + leavedetails + ", encashment=" + encashment + ", amountadvance="
-				+ amountadvance + ", sanctionorderno=" + sanctionorderno + ", totalfare=" + totalfare + "]";
+				+ amountadvance + ", totalfare=" + totalfare + ", note_number=" + note_number + ", sanctionorderno="
+				+ sanctionorderno + ", entry_date=" + entry_date + ", edit_date=" + edit_date + ", note_date="
+				+ note_date + ", sanction_date=" + sanction_date + ", note_status=" + note_status + ", sanction_status="
+				+ sanction_status + "]";
 	}
 
 
+	
+
+	
 	 
 	
 }

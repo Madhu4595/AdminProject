@@ -1,5 +1,4 @@
 <%@page import="com.app.entity.GEM"%>
-<%@page import="com.app.entity.LTC"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -87,7 +86,7 @@ td {
 					</h6>
 
 					<div>
-						<b>Sanction Order No: ${gem.SONum }</b><span style="margin-left: 70%">Date: <%=todaydate%></span>
+						<b>Sanction Order No: ${gem.sanctionNumber }</b><span style="margin-left: 70%">Date: <%=todaydate%></span>
 					</div>
 					<br>
 					

@@ -8,9 +8,62 @@
 <meta charset="ISO-8859-1">
 <title>MEDIC SANCTION ORDER</title>
 <script src="./js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<style>
+/*for admission number finding*/
+/* The Modal (background) */
+.modal1 {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 220px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow-y: scroll; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content1 {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+}
+
+/* The Close Button */
+.close1 {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close1:hover, .close1:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.modal-content1 {
+	background-color: #e4eeb9;
+	border: 2px solid black;
+}
+
+#scrollbar {
+	width: 800px;
+	height: 300px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align: justify;
+}
+</style>
 <script>
 $(document).ready(function(){
-	$("#scrollbar").hide();
+	$("#scrollbarr").hide();
 	$("#submitbtn").hide();
 })
 function validate(){
@@ -21,6 +74,9 @@ function validate(){
 		var request_no = $("#request_no").val();
 		//alert("request_no==> "+request_no);
 		
+		var patient_name = $("#patient_name").val();
+		//alert("patient_name==> "+patient_name);
+		
 		if(emp_code == "" || emp_code == null){
 			if(request_no == "" || request_no == null){
 				alert("Anyone Value either Employee Code or Request Number is Required for Getting Bills Data"); return false;
@@ -28,17 +84,18 @@ function validate(){
 				//alert("request_no=> "+request_no);
 				$.ajax({
 					type : "get",
-					url : "./getMedicBillsByReqNoSO?requestNo="+request_no,
+					url : "./getMedicBillsByReqNoSO2?requestNo="+request_no,
 					cache : false,
 					success : function(response) {
 						//alert("success response length=> "+response.length)
 						//alert("success response  => "+JSON.stringify(response))
 						if(response.length === 0){
-							$("#scrollbar").hide();
+							$("#scrollbarr").hide();
 							$("#submitbtn").hide();
 							alert("No Medical Bills Data Found with Given Request Number");
 						}else{
-							$("#scrollbar").show();
+							$("#myModal1").hide();
+							$("#scrollbarr").show();
 							$("#submitbtn").show();
 							generateTable(response);
 							}
@@ -50,25 +107,22 @@ function validate(){
 			}
 		
 		}else{
+			//alert("adfasfda")
 			if(request_no == "" || request_no == null){
-				//alert("employee id available, but not request number");
 				$.ajax({
 					type : "get",
-					url : "./getMedicBillsByEmpcodeSO?emp_code="+emp_code,
+					url : "./getMedicBillsByPatienctNameSO?patient_name="+patient_name,
 					cache : false,
 					success : function(response) {
 						//alert("success response length=> "+response.length)
 						//alert("success response  => "+JSON.stringify(response))
-						
+						$("#myModal1").hide();
 						if(response.length === 0){
-							$("#scrollbar").hide();
-							$("#submitbtn").hide();
 							alert("No Medical Bills Data Found with Given Employee Code");
-						}else{
-						$("#scrollbar").show();
+						}
+						$("#scrollbarr").show();
 						$("#submitbtn").show();
 						generateTable(response);
-						}
 					},
 					error : function(response) {
 						alert("Medical Bills Requests Data are not Found");
@@ -76,30 +130,29 @@ function validate(){
 				});
 				
 			}else{
-				//alert("two values entered");
-				$.ajax({
-					type : "get",
-					url : "./getByReqNoAndEmpcodeSO?requestNo="+request_no+"&emp_code="+emp_code,
-					cache : false,
-					success : function(response) {
-						//alert("success response length=> "+response.length)
-						//alert("success response  => "+JSON.stringify(response))
-						if(response.length === 0){
-							$("#scrollbar").hide();
-							$("#submitbtn").hide();
-							alert("No Medical Bills Data Found with Given Employee Code and Request Number");
-						}else{
-							$("#scrollbar").show();
-							$("#submitbtn").show();
-							generateTable(response);
-							}
+ 				//alert("adsfasfas")
+ 				$.ajax({
+ 					type : "get",
+ 					url : "./getMedicBillsByPatienctNameandReqNoSO?emp_code="+emp_code+"&patient_name="+patient_name+"&request_no="+request_no,
+ 					cache : false,
+ 					success : function(response) {
+ 						//alert("success response length=> "+response.length)
+ 						//alert("success response  => "+JSON.stringify(response))
+						$("#myModal1").hide();
+ 						if(response.length === 0){
+ 							alert("No Medical Bills Data Found with Given Employee Code");
+ 						}
+ 						$("#scrollbarr").show();
+ 						$("#submitbtn").show();
+ 						generateTable(response);
 					},
-					error : function(response) {
-						alert("Medical Bills Requests Data are not Found");
-					}
-				});
+ 					error : function(response) {
+ 						alert("Medical Bills Requests Data are not Found");
+ 					}
+ 				});
 				
-			}
+ 			}
+			
 			
 		}
 		
@@ -152,7 +205,9 @@ function generateTable(response){
 			$("#tbody").append('<tr>'
 			+'<td><input type="checkbox" class="checkSingle" name="checkClosureAlloc" value="'+i+'"  id="checkboxId'+i+'" /></td>'
 			+'<td><input type="hidden" name="request_no" id="request_no'+i+'" value="'+bean.request_no+'"/>'+bean.request_no+'</td>'
-			+'<td>'+bean.emp_code+'</td><td><input type="hidden" name="bill_no" id="bill_no'+i+'" value="'+bean.bill_no+'"/>'+bean.bill_no+'</td>'
+			+'<td>'+bean.emp_code+'</td>'
+			+'<td>'+bean.patient_name+'</td>'
+			+'<td><input type="hidden" name="bill_no" id="bill_no'+i+'" value="'+bean.bill_no+'"/>'+bean.bill_no+'</td>'
 			+'<td>'+bean.bill_date+'</td>'
 			+'<td>'+bean.lab_name+'</td>'
 			+'<td><input type="hidden" name="amount_claimed" id="amount_claimed'+i+'" value="'+bean.amount_claimed+'"/>'+bean.amount_claimed+'</td>'
@@ -225,9 +280,91 @@ $(document).ready(function () {
         }
     });
 });
+function getFamilyDetails(){
+	 //alert("asdfasfd")
+	 var emp_code = $("#emp_code").val();
+		$("#patient_name").empty();
+		$.ajax({
+	        type: "GET",
+	        contentType: "application/json",
+	         url: "./getFamilyDetails?emp_code="+emp_code,
+	        dataType: 'json',
+	        cache: false,
+	        timeout: 600000,
+	        success: function (data) {
+	        	$("#patient_name").append('<option value="self">-self-</option>');
+				for(var i = 0; i < data.length; i++){
+					var fdata = data[i];
+					$("#patient_name").append('<option value="'+fdata.per_name+'">'+fdata.per_name+'</option>');
+				}
+	            
+	        },
+	        error: function (data) {
+	            //alert("Admission Number Not Found");
+	            
+	        }
+	    });
+}
+function requestnosearch() {
+	// alert("requestnosearch")
+	var request_no = $("#request_no").val();
+	//alert("request_no==> "+request_no);
+	document.getElementById("request_no").readonly = true;
+
+	var modal1 = document.getElementById("myModal1");
+	var span = document.getElementsByClassName("close1")[0];
+	modal1.style.display = "block";
+	span.onclick = function() {
+		modal1.style.display = "none";
+	};
+
+	$
+			.ajax({
+				type : "get",
+				url : "./getAllMedicBillss",
+				cache : false,
+				success : function(response) {
+					//alert("success response length=> "+response.length)
+					//alert("success response  => "+JSON.stringify(response))
+					if (response.length === 0) {
+						alert("No Medical Bills Data Found with Given Request Number");
+					} else {
+						$("#myModal1").show();
+						$("#data").empty();
+						
+						for (var i = 0; i < response.length; i++) {
+							bean = response[i];
+
+							$("#data").append(
+											'<tr>'
+													+ '<td><a style="color:blue;" href="javascript:callrequestno(\''+bean.request_no+'\')">'+bean.request_no+'</a></td>'
+													+ '<td>'+bean.emp_code+'</td>'
+													+ '<td>'+bean.patient_name+'</td>'
+													+ '<td>'+bean.bill_no+'</td>'
+													+ '<td>'+bean.amount_claimed+'</td>'
+													+ '<td>'+bean.amount_approved+'</td>'
+													+ '</tr>');
+							id = i;
+
+						}
+
+					}
+				},
+				error : function(response) {
+					alert("Medical Bills Requests Data are not Found");
+				}
+			});
+
+}
+function callrequestno(a){
+	//alert("callrequestno=> "+a);
+	$("#request_no").val(a);
+	validate();
+	
+}
 	</script>
 	<style>
-#scrollbar {
+#scrollbarr {
 	height: 300px;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -255,7 +392,7 @@ $(document).ready(function () {
 			<div class="col-2"><label for="emp_code" class="col-form-label">Employee Code :</label></div>
 			<div class="col-4">
 				<input type="text" name="emp_code" id="emp_code"
-					placeholder="Ex: 3586" class="form-control" maxlength="4" />
+					placeholder="Ex: 3586" class="form-control" maxlength="4" onchange="return getFamilyDetails()"/>
 			</div>
 			<div class="col-2">
 				<label for="request_no" class="col-form-label">Request
@@ -267,12 +404,24 @@ $(document).ready(function () {
 			</div>
 		</div>
 		<div class="row align-items-center m-2">
-			<div class="col-4"></div>
+			<div class="col-2"><label for="emp_code" class="col-form-label">Patient Name :</label></div>
+			<div class="col-4">
+				<select name="patient_name" id="patient_name" class="form-control">
+				</select>
+			</div>
+		</div>
+		<div class="row align-items-center m-2">
+			<div class="col-2"></div>
 			<div class="col-4">
 				<input type="button" class="btn btn-success" value="Get Data"
 					style="width: 300px;" onclick="return validate()" />
 			</div>
-			<div class="col-4"></div>
+			<div class="col-4">
+				<input type="button" id="helpsearch" class="btn btn-info"
+					value="Seach Request No" style="width: 300px;"
+					onclick="return requestnosearch()" />
+			</div>
+			<div class="col-2"></div>
 		</div>
 		<div class="row align-items-center m-2">
 			<div class="col-12  fs-5 fw-bolder text-primary">Note : You can
@@ -283,14 +432,15 @@ $(document).ready(function () {
 	</div>
 	
 	<form:form action="./medicalSOPrint" method="post" target="_blank;">
-<div id="scrollbar"> 
-<div id="content"><br>
+<div id="scrollbarr"> 
+<div id="contentt"><br>
 <div align="center" style="color: blue; text-decoration: underline; font-weight: bolder;">APPROVED DETAILS ARE SHOWING BELOW </div>
 <table class="table table-bordered table-striped mt-4">
 		<thead class="bg-secondary text-light">
 			<th><input type="checkbox" id="checkedAll"/></th> 
 			<th>Req No</th>
 			<th>Emp. Code</th>
+			<th>Patient Name</th>
 			<th>Bill No</th>
 			<th>Bill Date</th>
 			<th>Lab Name</th>
@@ -307,7 +457,8 @@ $(document).ready(function () {
 		<div class="row align-items-center m-2">
 			<div class="col-4"></div>
 			<div class="col-4">
-				<input type="text"  class="form-control" name="soNumber" id="soNumber" style="width: 300px;" placeholder="Enter Sanction Order Number"/>
+				<input type="text"  class="form-control" name="soNumber" id="soNumber" 
+				style="width: 300px;" placeholder="Enter Sanction Order Number"/>
 			</div>
 			<div class="col-4"></div>
 		</div>
@@ -330,6 +481,31 @@ $(document).ready(function () {
 	
 	
 	</form:form>
-	
+	<div id="myModal1" class="modal1">
+		<div class="modal-content1">
+			<span class="close1" style="color: red; font-weight: bold;">&#9746;</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+			<center>
+				<div id="scrollbar">
+					<div id="content">
+					<table class="table table-stripped">
+							<thead>
+								<th>Request No</th>
+								<th>Emp Code</th>
+								<th>Patient Name</th>
+								<th>Bill No</th>
+								<th>Amount Claimed</th>
+								<th>Amount Approved</th>
+							</thead>
+							<tbody id="data"></tbody>
+						</table>
+					</div>
+				</div>
+			</center>
+			
+			 
+		</div>
+	</div>
 </body>
 </html>

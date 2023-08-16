@@ -50,34 +50,38 @@
 
 						$.ajax({
 									type : "get",
-									url : "./getAllGPFWithDraw",
+									url : "./getAllGPFWithdrawForNS",
 									cache : false,
 									success : function(response) {
 										//alert("success response length=> "+response.length)
 										//alert("success response  => "+JSON.stringify(response))
-
-										for (var i = 0; i < response.length; i++) {
-											var gpf = response[i];
-											$("#tbody")
-													.append(
-															'<tr><td>'
-																	+ gpf.requestNo
-																	+ '</td><td>'
-																	+ gpf.empCode
-																	+ '</td><td>'
-																	+ gpf.gpfNo
-																	+ '</td><td>'
-																	+ gpf.purpose
-																	+ '</td><td>'
-																	+ gpf.withDrawAmt
-																	+ '</td><td>'
-																	+ gpf.netBalance
-																	+ '</td>'
-																	+ '<td><a href=\"generateGPFWithdrawNS?requestNo='
-																	+ gpf.requestNo
-																	+ '\">Generate NoteSheet</a></td></tr>');
+										
+										if(response.length === 0){
+											$("#reqstable").hide();
+											document.getElementById("noreqsmsg").innerHTML = "No Request Numbers are Available for Generating NoteSheet";
+										}else{
+											for (var i = 0; i < response.length; i++) {
+												var gpf = response[i];
+												$("#tbody")
+														.append(
+																'<tr><td>'
+																		+ gpf.requestNo
+																		+ '</td><td>'
+																		+ gpf.empCode
+																		+ '</td><td>'
+																		+ gpf.gpfNo
+																		+ '</td><td>'
+																		+ gpf.purpose
+																		+ '</td><td>'
+																		+ gpf.withDrawAmt
+																		+ '</td><td>'
+																		+ gpf.netBalance
+																		+ '</td>'
+																		+ '<td><a href=\"generateGPFWithdrawNS?requestNo='
+																		+ gpf.requestNo
+																		+ '\">Generate NoteSheet</a></td></tr>');
+											}
 										}
-
 									},
 									error : function(response) {
 										alert("GEM Requests are not Found");
@@ -96,12 +100,12 @@
 
 		$.ajax({
 			type : "get",
-			url : "./getAllGPFWithDraw",
+			url : "./getAllGPFWithdrawForNS",
 			cache : false,
 			success : function(response) {
 				//alert("success response length=> "+response.length)
 				//alert("success response  => "+JSON.stringify(response))
-
+				$("#popuptbody").empty();
 				for (var i = 0; i < response.length; i++) {
 					var gpf = response[i];
 					$("#popuptbody").append(
@@ -123,16 +127,51 @@
 	function validate(){
 		var requestno = $("#requestNo").val();
 		//alert("requestNo "+requestno);
-		document.location.href='./generateGPFWithdrawNS?requestNo='+requestno;
+		
+		if (requestno === "" || requestno === null) {
+		alert("Please enter Request Number");
+		$("#requestno").focus();
+		return false;
+	}
+	else{
+		//alert("elseeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+		$.ajax({
+			type : "get",
+			url : "./getGPFWithdrawForNS?requestno="+requestno,
+			cache : false,
+			success : function(response) {
+				//alert("success response length=> "+response.length)
+				//alert("success response  => "+JSON.stringify(response))
+				
+				if(response.length === 0){
+					alert("No record Found with Given Request Number for Approval");
+					$("#requestno").val('');
+					$("#requestno").focus();
+					return false;
+				}else{
+					document.forms[0].action="./generateGPFWithdrawNS";
+					document.forms[0].submit();
+					return true;
+				}
+
+			},
+			error : function(response) {
+				alert("No GEM Request are Found");
+			}
+		});
+		
+		return true; 
+	}
+		
+	return true;	
 	}
 	function addRequestNo(a){
-		alert("addRequestNo=> "+a);
+		//alert("addRequestNo=> "+a);
 		
 		var modal1 = document.getElementById("myModalSuccess");
 		modal1.style.display = "none";
 		
 		$("#requestNo").val(a);
-		validate();
 		
 	}
 </script>
@@ -143,29 +182,27 @@
 
 	<div class="container mt-4 border font-weight-bolder p-4"
 		style="background-color: #e6ffff;">
-		<form:form action="./generateGPFWithdrawNS" method="post" onsubmit="return validate()">
-
-			<div class="row align-items-center m-2 mb-4">
-				<div class="col-4">
-					<label for="monthYear" class="col-form-label">Request
-						Number:</label>
+		<form:form action="" method="post" onsubmit="return validate()">
+		
+		<div class="row align-items-center m-2">
+		
+				<div class="col-3">
+					<label for="monthYear" class="col-form-label">Search Request Number</label>
+				</div>
+				<div class="col-2">
+					<input type="text" name="requestNo" id="requestNo" placeholder="Ex: GPF_0001" class="form-control" />
+				</div>
+				<div class="col-3">
+					<input type="button" class="form-control" value="Generate Note Sheet" onclick="return validate()" style="background-color: green; color: white; font-weight: bold;"/>
 				</div>
 				<div class="col-4">
-					<input type="text" name="requestNo" id="requestNo"
-						placeholder="Ex: GPF_0001" class="form-control" />
-				</div>
-				<div class="col-4">
-					<input type="submit" class="btn btn-success w-50"
-						style="width: 300px;" />
+					<input type="button" class="form-control" onclick="return getrequestnos()"  value="Get All Request Numbers"   style="background-color: #6666ff; color: white; font-weight: bold;"/>
 				</div>
 			</div>
+
 		</form:form>
 	</div>
-
-	<div class="col-auto p-4" align="center">
-		<button onclick="return getrequestnos()" id="getrequestnos"
-			class="btn btn-info">Get All Request Numbers</button>
-	</div>
+ <br>
 
 	<div id="myModalSuccess" class="mymodalsuccess">
 		<div class="successcontent">
@@ -173,7 +210,7 @@
 			<center>
 				<div id="scrollbar">
 					<table class="table table-bordered table-striped">
-						<thead>
+						<thead style="background-color: black; color: white;">
 							<th>Request Number</th>
 							<th>Employee Code</th>
 							<th>GPF Number</th>
@@ -187,9 +224,9 @@
 			</center>
 		</div>
 	</div>
-
-	<table border="1" class="table table-stripped">
-		<thead>
+	<center><span id="noreqsmsg" style="font-weight: bolder; color: red;"></span></center>
+	<table border="1" class="table table-stripped" id="reqstable">
+		<thead style="background-color: black; color: white;">
 			<th>Request Number</th>
 			<th>Employee Code</th>
 			<th>GPF Number</th>

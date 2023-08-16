@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,15 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.entity.GEM;
+import com.app.repo.GEM_Repo;
 import com.app.service.GEM_Service;
 
 @Controller
 public class GEM_Controller {
 
-	@Autowired
-	private GEM_Service service;
-	@Autowired
-	private HomeRestController homeRestController;
+	@Autowired private GEM_Service service;
+	@Autowired private GEM_Repo repo;
 	
 	//GEM Vehicle
 
@@ -32,8 +33,11 @@ public class GEM_Controller {
 		System.out.println("/saveGem====> " + gem.toString());
 		String msg = "";
 		try {
-			gem.setRecord_status("New Entry");
 			gem.setType("V");
+			gem.setNoteStatus(false);
+			gem.setSanctionStatus(false);
+			gem.setEntryDate(LocalDateTime.now());
+			
 			GEM savedGEM = service.saveGEM(gem);
 			msg = "GEM - Vehicle Details are Added SUCCESSFULLY with Request Number is " + savedGEM.getRequestno();
 			model.addAttribute("msg", msg);
@@ -63,12 +67,15 @@ public class GEM_Controller {
 		String msg = "";
 
 		try {
-			GEM oldGem = service.getGEMById(gem.getRequestno());
+			GEM oldGem = repo.getGemVehicleForEdit(gem.getRequestno());
+			
 			oldGem.setMonthYear(gem.getMonthYear());
 			oldGem.setPeriod(gem.getPeriod());
 			oldGem.setBillno(gem.getBillno());
 			oldGem.setBilldate(gem.getBilldate());
 			oldGem.setAmount(gem.getAmount());
+			oldGem.setEditDate(LocalDateTime.now());
+			
 			service.saveGEM(oldGem);
 			msg = "GEM - Vehicle Details are Updated SUCCESSFULLY";
 			model.addAttribute("msg", msg);
@@ -92,10 +99,16 @@ public class GEM_Controller {
 	public String generateGEMNoteSheet(@RequestParam("requestno") String requestno, Model model) {
 		System.out.println("/generateGEMNoteSheet==> requestno===> "+requestno);
 		try {
-			GEM gem =  service.getGEMById(requestno);
-			gem.setRecord_status("NS");
+			GEM gem =  repo.getGemVehicleForNS(requestno);
+			
+			gem.setNoteStatus(true);
+			gem.setNoteNumber(Integer.parseInt(requestno.substring(3)));
+			gem.setNsDate(LocalDateTime.now());
+			
 			GEM oldGem = service.saveGEM(gem);
+			
 			model.addAttribute("oldGem", oldGem);
+			
 			return "NSs/gemVehicleNoteSheetPrint";
 		} catch (Exception e) {
 			model.addAttribute("msg", "Given Request Number Not Found or Something Went Wrong");
@@ -119,18 +132,16 @@ public class GEM_Controller {
 		System.out.println("/generateGEMNoteSheet==> SONum===> "+SONum);
 		
 		try {
-			boolean find = homeRestController.checkSO(SONum);
-			System.out.println("/generateGEMVehicleSOPrint===> finddddddddd=> "+find);
+			GEM oldGem = repo.getGemVehicleForSO(requestno);
 			
-			if(find) {
-				model.addAttribute("msg", "Sanction Order Number is ALREADY ALLOCATED!!!");
-				return "gemVehicleSOForm";
-			}
-			GEM oldGem = service.getGEMById(requestno);
-			oldGem.setSONum(SONum);
-			oldGem.setRecord_status("SO");
+			oldGem.setSanctionNumber(SONum);
+			oldGem.setSanctionStatus(true);
+			oldGem.setSoDate(LocalDateTime.now());
+			
 			GEM updatedGem = service.saveGEM(oldGem);
+			
 			model.addAttribute("gem", updatedGem);
+			
 			return "SOs/generateGEMVehicleSOPrint";
 		} catch (Exception e) {
 			model.addAttribute("msg", "Given Request Number Not Found or Something Went Wrong");
@@ -141,7 +152,8 @@ public class GEM_Controller {
 	}
 	
 	
-	//GEM Outsourcing NEW
+	//GEM Outsourcing 
+	//NEW
 	@RequestMapping("/gemOutsourceForm")
 	public String gemOutsourceForm(Model model) {
 		model.addAttribute("gem", new GEM());
@@ -153,10 +165,14 @@ public class GEM_Controller {
 		System.out.println("/saveGem====> " + gem.toString());
 		String msg = "";
 		try {
-			gem.setRecord_status("New Entry");
 			gem.setType("O");
+			gem.setEntryDate(LocalDateTime.now());
+			gem.setNoteStatus(false);
+			gem.setSanctionStatus(false);
+			
 			GEM savedGEM = service.saveGEM(gem);
 			msg = "GEM - Outsourcing Details are Added SUCCESSFULLY with Request Number is " + savedGEM.getRequestno();
+			
 			model.addAttribute("msg", msg);
 			return "home";
 		} catch (Exception e) {
@@ -173,7 +189,7 @@ public class GEM_Controller {
 		@RequestMapping("/gemOutsourceEditForm")
 		public String gemOutsourceEditForm(Model model) {
 			model.addAttribute("gem", new GEM());
-			return "gemVehicleEditForm";
+			return "gemOutsourceEditForm";
 		}
 
 		@RequestMapping("/updateGEMOutsourcing")
@@ -183,12 +199,15 @@ public class GEM_Controller {
 			String msg = "";
 
 			try {
-				GEM oldGem = service.getGEMById(gem.getRequestno());
+				GEM oldGem = repo.getGemOutsourceForEdit(gem.getRequestno());
+				
 				oldGem.setMonthYear(gem.getMonthYear());
 				oldGem.setPeriod(gem.getPeriod());
 				oldGem.setBillno(gem.getBillno());
 				oldGem.setBilldate(gem.getBilldate());
 				oldGem.setAmount(gem.getAmount());
+				oldGem.setEditDate(LocalDateTime.now());
+				
 				service.saveGEM(oldGem);
 				msg = "GEM - Outsourcing Details are Updated SUCCESSFULLY";
 				model.addAttribute("msg", msg);
@@ -211,13 +230,20 @@ public class GEM_Controller {
 		}
 	
 		@RequestMapping("/generateGEMOutsourceNoteSheet")
-		public String generateGEMOutsourceNoteSheet(@RequestParam("requestno") String requestno, Model model) {
+		public String generateGEMOutsourceNoteSheet(
+				@RequestParam("requestno") String requestno, Model model) {
 			System.out.println("/generateGEMOutsourceNoteSheet==> requestno===> "+requestno);
 			try {
-				GEM gem =  service.getGEMById(requestno);
-				gem.setRecord_status("NS");
+				GEM gem =  repo.getGemOutsourceForNS(requestno);
+				
+				gem.setNoteStatus(true);
+				gem.setNsDate(LocalDateTime.now());
+				gem.setNoteNumber(Integer.parseInt(requestno.substring(3)));
+				
 				GEM oldGem = service.saveGEM(gem);
+				
 				model.addAttribute("oldGem", oldGem);
+				
 				return "NSs/generateGEMOutsourceNoteSheet";
 			} catch (Exception e) {
 				model.addAttribute("msg", "Given Request Number Not Found or Something Went Wrong");
@@ -234,26 +260,48 @@ public class GEM_Controller {
 		}
 		
 		@RequestMapping("/generateGEMOutsourceSOPrint")
-		public String generateGEMOutsourceSOPrint(@RequestParam("requestno") String requestno,
-				@RequestParam("SONum") String SONum,Model model) {
+		public String generateGEMOutsourceSOPrint(
+				@RequestParam("requestno") String requestno,
+				@RequestParam("sanctionNumber") String sanctionNumber,
+				Model model) {
 			
 			System.out.println("/generateGEMOutsourceSOPrint==> requestno===> "+requestno);
-			System.out.println("/generateGEMOutsourceSOPrint==> SONum===> "+SONum);
+			System.out.println("/generateGEMOutsourceSOPrint==> SONum===> "+sanctionNumber);
 			
 			try {
-				boolean find = homeRestController.checkSO(SONum);
-				System.out.println("/generateGEMVehicleSOPrint===> finddddddddd=> "+find);
+				GEM oldGem = repo.getGemOutsourceForSO(requestno);
 				
-				if(find) {
-					model.addAttribute("msg", "Sanction Order Number is ALREADY ALLOCATED!!!");
-					return "gemVehicleSOForm";
-				}
-				GEM oldGem = service.getGEMById(requestno);
-				oldGem.setSONum(SONum);
-				oldGem.setRecord_status("SO");
+				oldGem.setSanctionNumber(sanctionNumber);
+				oldGem.setSanctionStatus(true);
+				oldGem.setSoDate(LocalDateTime.now());
+				
 				GEM updatedGem = service.saveGEM(oldGem);
+				System.out.println("saved successfully=> updatedGem=> "+updatedGem.toString());
+				
 				model.addAttribute("gem", updatedGem);
+				System.out.println("saved successfully=> updatedGem=> ");
 				return "SOs/generateGEMOutsourceSOPrint";
+			} catch (Exception e) {
+				model.addAttribute("msg", "Given Request Number Not Found or Something Went Wrong or Already Approved");
+				return "home";
+
+			}
+			
+		}
+		
+		
+		//=======PRINTS====VEHICLE==============NOTESHEET====================================
+		@RequestMapping("/gemVehicleNSPrints")
+		public String gemVehicleNSPrints() {
+			return "NSsPrintForms/gemVehicleNSPrints";
+		}
+		@RequestMapping("/generateGEMVehicleNSPrints")
+		public String generateGEMVehicleNSPrints(@RequestParam("requestno") String requestno, Model model) {
+			System.out.println("/generateGEMNoteSheet==> requestno===> "+requestno);
+			try {
+				GEM gem =  repo.getGemVehicleForNSPrints(requestno);
+				model.addAttribute("oldGem", gem);
+				return "NSsPrints/gemVehicleNoteSheetPrints";
 			} catch (Exception e) {
 				model.addAttribute("msg", "Given Request Number Not Found or Something Went Wrong");
 				return "home";
@@ -261,7 +309,69 @@ public class GEM_Controller {
 			}
 			
 		}
-		
-	
+		//=======PRINTS====OUTSOURCE==============NOTESHEET====================================
+				@RequestMapping("/gemOutsourcingNSPrints")
+				public String gemOutsourcingNSPrints() {
+					return "NSsPrintForms/gemOutsourcingNSPrints";
+				}
+				@RequestMapping("/generateGEMOutsourceNSPrints")
+				public String generateGEMOutsourceNSPrints(@RequestParam("requestno") String requestno, Model model) {
+					System.out.println("/generateGEMNoteSheet==> requestno===> "+requestno);
+					try {
+						GEM gem =  repo.getGemOutsourceNSPrints(requestno);
+						model.addAttribute("oldGem", gem);
+						return "NSsPrints/generateGEMOutsourceNSPrints";
+						//return "NSs/generateGEMOutsourceNoteSheet";
+					} catch (Exception e) {
+						model.addAttribute("msg", "Given Request Number Not Found or Something Went Wrong");
+						return "home";
+
+					}
+					
+				}
+		 
+		//=======PRINTS====VEHICLE==============SANCTION ORDER====================================
+		@RequestMapping("/gemVehicleSOPrints")
+		public String gemVehicleSOPrints() {
+			return "SOsPrintsForms/gemVehicleSOPrints";
+		}
+		@RequestMapping("/generateGEMVehicleSOPrints")
+		public String generateGEMVehicleSOPrints(@RequestParam("requestno") String requestno, Model model) {
+			
+			System.out.println("/generateGEMNoteSheet==> requestno===> "+requestno);
+			
+			try {
+				GEM oldGem = repo.getGemVehicleForSOPrints(requestno);
+				model.addAttribute("gem", oldGem);
+				return "SOsPrints/generateGEMVehicleSOPrints";
+				//return "SOs/generateGEMVehicleSOPrint";
+			} catch (Exception e) {
+				model.addAttribute("msg", "Given Request Number Not Found or Something Went Wrong");
+				return "home";
+
+			}
+			
+		}
+		//=======PRINTS====OUTSOURCE==============SANCTION ORDER====================================
+		@RequestMapping("/gemOutsourcingSOPrints")
+		public String gemOutsourcingSOPrints() {
+			return "SOsPrintsForms/gemOutsourcingSOPrints";
+		}
+		@RequestMapping("/generateGEMOutsourceSOPrints")
+		public String generateGEMOutsourceSOPrints(@RequestParam("requestno") String requestno, Model model) {
+			
+			System.out.println("/generateGEMOutsourceSOPrint==> requestno===> "+requestno);
+			try {
+				GEM oldGem = repo.getGemOutsourceSOPrints(requestno);
+				model.addAttribute("gem", oldGem);
+				return "SOsPrints/generateGEMOutsourceSOPrints";
+				//return "SOs/generateGEMOutsourceSOPrint";
+			} catch (Exception e) {
+				model.addAttribute("msg", "Given Request Number Not Found or Something Went Wrong or Already Approved");
+				return "home";
+
+			}
+			
+		}
 
 }

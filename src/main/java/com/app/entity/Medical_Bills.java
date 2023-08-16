@@ -20,6 +20,7 @@ public class Medical_Bills {
 	private String 	bill_date;
 	private String 	amount_claimed;
 	private String 	lab_name;
+	private String patient_name;
 	
 	private Integer	request_no;
 	private String	emp_code;
@@ -44,25 +45,23 @@ public class Medical_Bills {
 	private String remarks;
 	
 	private String soNumber;
+	private String nsNumber;
+
 	
 	
-	public Medical_Bills() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-
+	
 	public Medical_Bills(Long id, String bill_no, String bill_date, String amount_claimed, String lab_name,
-			Integer request_no, String emp_code, boolean noteStatus, boolean sanctionStatus, LocalDate noteDate,
-			LocalDate sanctionDate, LocalDateTime entryDate, LocalDate notesheetDate, LocalDateTime nsDate,
-			LocalDateTime sanctionorderDate, LocalDateTime updatedTime, String amount_approved, String remarks,
-			String soNumber) {
+			String patient_name, Integer request_no, String emp_code, boolean noteStatus, boolean sanctionStatus,
+			LocalDate noteDate, LocalDate sanctionDate, LocalDateTime entryDate, LocalDate notesheetDate,
+			LocalDateTime nsDate, LocalDateTime sanctionorderDate, LocalDateTime updatedTime, String amount_approved,
+			String remarks, String soNumber, String nsNumber) {
 		super();
 		this.id = id;
 		this.bill_no = bill_no;
 		this.bill_date = bill_date;
 		this.amount_claimed = amount_claimed;
 		this.lab_name = lab_name;
+		this.patient_name = patient_name;
 		this.request_no = request_no;
 		this.emp_code = emp_code;
 		this.noteStatus = noteStatus;
@@ -77,6 +76,27 @@ public class Medical_Bills {
 		this.amount_approved = amount_approved;
 		this.remarks = remarks;
 		this.soNumber = soNumber;
+		this.nsNumber = nsNumber;
+	}
+
+
+
+
+	public Medical_Bills() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	
+
+	public String getNsNumber() {
+		return nsNumber;
+	}
+
+
+	public void setNsNumber(String nsNumber) {
+		this.nsNumber = nsNumber;
 	}
 
 
@@ -127,6 +147,16 @@ public class Medical_Bills {
 
 	public void setLab_name(String lab_name) {
 		this.lab_name = lab_name;
+	}
+
+
+	public String getPatient_name() {
+		return patient_name;
+	}
+
+
+	public void setPatient_name(String patient_name) {
+		this.patient_name = patient_name;
 	}
 
 
@@ -273,12 +303,15 @@ public class Medical_Bills {
 	@Override
 	public String toString() {
 		return "Medical_Bills [id=" + id + ", bill_no=" + bill_no + ", bill_date=" + bill_date + ", amount_claimed="
-				+ amount_claimed + ", lab_name=" + lab_name + ", request_no=" + request_no + ", emp_code=" + emp_code
-				+ ", noteStatus=" + noteStatus + ", sanctionStatus=" + sanctionStatus + ", noteDate=" + noteDate
-				+ ", sanctionDate=" + sanctionDate + ", entryDate=" + entryDate + ", notesheetDate=" + notesheetDate
-				+ ", nsDate=" + nsDate + ", sanctionorderDate=" + sanctionorderDate + ", updatedTime=" + updatedTime
-				+ ", amount_approved=" + amount_approved + ", remarks=" + remarks + ", soNumber=" + soNumber + "]";
+				+ amount_claimed + ", lab_name=" + lab_name + ", patient_name=" + patient_name + ", request_no="
+				+ request_no + ", emp_code=" + emp_code + ", noteStatus=" + noteStatus + ", sanctionStatus="
+				+ sanctionStatus + ", noteDate=" + noteDate + ", sanctionDate=" + sanctionDate + ", entryDate="
+				+ entryDate + ", notesheetDate=" + notesheetDate + ", nsDate=" + nsDate + ", sanctionorderDate="
+				+ sanctionorderDate + ", updatedTime=" + updatedTime + ", amount_approved=" + amount_approved
+				+ ", remarks=" + remarks + ", soNumber=" + soNumber + "]";
 	}
 
+
+	
 
 }

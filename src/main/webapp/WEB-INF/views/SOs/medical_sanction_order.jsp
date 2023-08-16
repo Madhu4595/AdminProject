@@ -147,7 +147,7 @@ td {
 					<br>
 
 					<div id="para2">
-						2. The expenditure involved is debitable as under: Demand No: 28,
+						2. The expenditure involved is debitable as under: Demand No: 27,
 						during the year 2023-2024 <br>
 					</div>
 					<br> '3451' Secretariat-Economic Services (Major Head)<br>

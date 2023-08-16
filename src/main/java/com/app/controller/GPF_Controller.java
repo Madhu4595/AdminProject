@@ -34,8 +34,13 @@ public class GPF_Controller {
 		
 		try {
 			gpf.setType("withdraw");
+			gpf.setEntryDate(LocalDateTime.now());
+			gpf.setNoteStatus(false);
+			gpf.setSanctionStatus(false);
+			
 			GPF savedGPF = gpf_repo.save(gpf);
 			model.addAttribute("msg", "Given GPF Details are Saved Successfully with ID: "+savedGPF.getRequestNo());
+			
 			return "home";
 			
 		}catch(Exception e) {
@@ -58,10 +63,12 @@ public class GPF_Controller {
 		
 		try {
 			GPF oldGPF = gpf_repo.findById(gpf.getRequestNo()).get();
+			
 			oldGPF.setGpfNo(gpf.getGpfNo());
 			oldGPF.setPurpose(gpf.getPurpose());
 			oldGPF.setWithDrawAmt(gpf.getWithDrawAmt());
 			oldGPF.setNetBalance(gpf.getNetBalance());
+			oldGPF.setEditDate(LocalDateTime.now());
 			gpf_repo.save(oldGPF);
 			
 			model.addAttribute("msg", "Given GPF Details are Updated Successfully");
@@ -91,8 +98,9 @@ public class GPF_Controller {
 			GPF oldGPF = gpf_repo.findById(requestNo).get();
 			System.out.println("oldGPF=> "+oldGPF.toString());
 			
-			oldGPF.setNSDate(LocalDateTime.now().toString());
-			oldGPF.setRecordStatus("NS");
+			oldGPF.setNoteStatus(true);
+			oldGPF.setNoteNumber(Integer.parseInt(requestNo.substring(3)));
+			oldGPF.setNsDate(LocalDateTime.now());
 			
 			GPF updatedGPF = gpf_repo.save(oldGPF);
 			System.out.println("updatedGPF=> "+updatedGPF.toString());
@@ -120,24 +128,21 @@ public class GPF_Controller {
 	}
 	
 	@RequestMapping("/generateGPFWithdrawSOPrint")
-	public String generateGPFWithdrawSOPrint(@RequestParam String requestNo, @RequestParam String soNum, Model model ) {
+	public String generateGPFWithdrawSOPrint(
+			@RequestParam("requestNo") String requestNo, 
+			@RequestParam("sanctionNumber") String sanctionNumber, 
+			Model model ) {
 		System.out.println("generateGPFWithdrawSOPrint=> requestNo=> "+requestNo);
-		System.out.println("generateGPFWithdrawSOPrint=> soNum=> "+soNum);
+		System.out.println("generateGPFWithdrawSOPrint=> soNum=> "+sanctionNumber);
 		
 		try {
 			System.out.println("generateGPFWithdrawSOPrint=> in try block=> ");
-			
-			Optional<GPF> gpf = gpf_repo.findById(requestNo);
-			
-			if(!gpf.isPresent()) {
-				model.addAttribute("msg", "No GPF Details are Found with Given Request Number");
-				return "home";
-			}else {
-				GPF oldGPF = gpf_repo.findById(requestNo).get();
+		 
+				GPF oldGPF = gpf_repo.getGPFWithdrawForSO(requestNo);
+				oldGPF.setSanctionNumber(sanctionNumber);
+				oldGPF.setSanctionStatus(true);
+				oldGPF.setSoDate(LocalDateTime.now());
 				
-				oldGPF.setSODate(LocalDateTime.now().toString());
-				oldGPF.setSoNum(soNum);
-				oldGPF.setRecordStatus("SO");
 				GPF updatedGPF = gpf_repo.save(oldGPF);
 				
 				Employee emp = employeeService.getById(updatedGPF.getEmpCode());
@@ -147,8 +152,92 @@ public class GPF_Controller {
 				model.addAttribute("emp", emp);
 				
 				return "SOs/generateGPFWithdrawSOPrint";
-			}
 			
+		}catch(Exception e) {
+			System.out.println("Exception from => generateGPFWithdrawNS");
+			e.printStackTrace();
+			model.addAttribute("msg", "Something Went Wrong Please Try Again!!");
+			return "home";
+		}
+		
+	}
+	
+	//=============Sanction Ordr Print=============
+	@RequestMapping("/getGPFWithdrawSOPrint")
+	public String getGPFWithdrawSOPrint(
+			@RequestParam("requestNo") String requestNo,
+			Model model ) {
+		System.out.println("getGPFWithdrawSOPrint=> sanctionNumber=> "+requestNo);
+		try {
+			System.out.println("generateGPFWithdrawSOPrint=> in try block=> ");
+		 
+				Optional<GPF> oldGPF = gpf_repo.findById(requestNo);
+				Employee emp = employeeService.getById(oldGPF.get().getEmpCode());
+				System.out.println("emp=> "+emp.toString());
+				
+				model.addAttribute("gpf", oldGPF.get());
+				model.addAttribute("emp", emp);
+				
+				return "SOs/generateGPFWithdrawSOPrint";
+			
+		}catch(Exception e) {
+			System.out.println("Exception from => generateGPFWithdrawNS");
+			e.printStackTrace();
+			model.addAttribute("msg", "Something Went Wrong Please Try Again!!");
+			return "home";
+		}
+		
+	}
+	
+	//====================GPF=======Withdraw=================
+	@RequestMapping("/gpfWithdrawNSPrint")
+	public String gpfWithdrawNSPrint() {
+		return "NSsPrintForms/gpfWithdrawNSPrint";
+	}
+	@RequestMapping("/generateGPFWithdrawNSPrint")
+	public String generateGPFWithdrawNSPrint(@RequestParam String requestNo,Model model) {
+		System.out.println("/generateGPFWithdrawNS=> requestno=>"+requestNo);
+		try {
+			System.out.println("/generateGPFWithdrawNS=> try block=>");
+			
+			GPF oldGPF = gpf_repo.findById(requestNo).get();
+			Employee emp = employeeService.getById(oldGPF.getEmpCode());
+			System.out.println("emp=> "+emp.toString());
+			
+			model.addAttribute("gpf", oldGPF);
+			model.addAttribute("emp", emp);
+			
+			return "NSsPrints/generateGPFWithdrawNSPrints";
+		}catch(Exception e) {
+			System.out.println("Exception from => generateGPFWithdrawNS");
+			e.printStackTrace();
+			model.addAttribute("msg", "Something Went Wrong Please Try Again!!");
+			return "home";
+		}
+		
+	}
+		
+	@RequestMapping("/gpfWithdrawSOPrint")
+	public String gpfWithdrawSOPrint() {
+		return "SOsPrintsForms/gpfWithdrawSOPrint";
+	}
+	@RequestMapping("/getGPFWithdrawSOPrints")
+	public String getGPFWithdrawSOPrints(
+			@RequestParam("requestNo") String requestNo,
+			Model model ) {
+		System.out.println("getGPFWithdrawSOPrint=> sanctionNumber=> "+requestNo);
+		try {
+			System.out.println("generateGPFWithdrawSOPrint=> in try block=> ");
+		 
+				Optional<GPF> oldGPF = gpf_repo.findById(requestNo);
+				Employee emp = employeeService.getById(oldGPF.get().getEmpCode());
+				System.out.println("emp=> "+emp.toString());
+				
+				model.addAttribute("gpf", oldGPF.get());
+				model.addAttribute("emp", emp);
+				
+				return "SOsPrints/generateGPFWithdrawSOPrints";
+				//return "SOs/generateGPFWithdrawSOPrint";
 			
 		}catch(Exception e) {
 			System.out.println("Exception from => generateGPFWithdrawNS");

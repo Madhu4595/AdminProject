@@ -379,7 +379,7 @@ $(document).ready(function(){
 	<%@include file="banner.jsp"%>
 	<%@include file="navbar.jsp"%>
 
-	<form:form action="billsupload" method="post"
+	<form:form action="./billsupload" method="post"
 		modelAttribute="medical_Bills_upload" enctype="multipart/form-data">
 
 		<section class="container mt-5 shadow py-5" id="section">
