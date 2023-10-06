@@ -1,11 +1,15 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.GEM"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 Date date = new Date();
@@ -72,35 +76,33 @@ td {
 			<div class="col-md-12">
 				<div>
 
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Government of India </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Ministry of Electronics & Information Technology </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> National Informatics Centre (APSC) </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Vijayawada - 520010 </b>
-					</h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
 
+					<br>
 					<div>
-						<b>Sanction Order No: ${gem.sanctionNumber }</b><span style="margin-left: 70%">Date: <%=todaydate%></span>
+						<%= localizationManager.getMessage("nic36") %> / Sanction Order No <b> : ${gem.sanctionNumber } </b> 
+						<span style="margin-left: 550px;"><%= localizationManager.getMessage("nic37") %> / Date  : <b><%=todaydate%></b></span>
 					</div>
 					<br>
-					
-					<div>
-						Accounts Officer,<br>
-						Pay and Accounts Office,<br>
-						Ministry of Electronics and Information Technology,<br>
-						Department of Information Technology, <br>
-						National Informatics Centre, <br>
-						New Delhi - 110 003.
-					</div><br>
+					 
+					<div style="text-align: left;">
+							<%= localizationManager.getMessage("nic5") %> / To,<br>
+							<%= localizationManager.getMessage("nic38") %> / The Accounts Officer,<br>
+							<%= localizationManager.getMessage("nic39") %> / Pay and Accounts Office,<br>
+							<%= localizationManager.getMessage("nic40") %> / National Informatics Centre,<br>
+							<%= localizationManager.getMessage("nic41") %> / A-Block, CGO Complex, Lodhi Road,<br>
+							<%= localizationManager.getMessage("nic42") %> - <%= localizationManager.getMessage("nic28") %> / New Delhi - 110 003.
+						</div><br>
 					
 					<div style="margin-left: 50px;">
-						<b>Sub:</b> Expenditure sanction towards vehicle hiring charges for the for the office of NIC, APSC, Vijayawada for the month of <b>${gem.monthYear }</b>.
+<%-- 						<b><%= localizationManager.getMessage("nic23") %>: </b> <%= localizationManager.getMessage("nic24") %> <b>${gem.monthYear }</b>.<br> --%>
+<%-- 						<b>Subject:</b> Expenditure sanction towards vehicle hiring charges for the for the office of NIC, APSC, Vijayawada for the month of <b>${gem.monthYear }</b>. --%>
+						
+						<b>Subject:</b> Expenditure sanction towards outsourcing services of one office assistant and one MTS for the month of  <b>${gem.monthYear }</b>.
 					</div>
 					<br> 
 					<b>Sir,</b>
@@ -112,12 +114,12 @@ td {
 					</div>
 					<br>
 					<div style="text-align: justify;">
-						Sanction is also conveyed to the drawl of said amount through DD/Cheque in favor of <b>M/s. MASCOT PROTECTION FORCE LLP, New Delhi</b> and payment thereof to the
-						party <b>(Bank Details: Current A/C No: 0349102000005852, IDBI Bank, Hapur Branch Uttar Pradesh - 245101, IFSC Code: IBKL0000349</b>.
+						Sanction is also conveyed to the drawl of said amount through DD/Cheque in favor of <b>M/s. KK Group of Companies, New Delhi</b> and payment thereof to the
+						party <b>(Bank Details: Current A/C No: 50200070417090, HDFC Bank, Mandakini Branch, New Delhi - 110019, IFSC Code: HDFC0001338</b>.
 					</div>
 					<br>
 					<div>
-						This has been approved vide <b>IFS Dairy No. 66 dated 11/01/2023</b>
+						This has been approved vide <b>IFS Dairy No. 1241 dated 16/03/2023</b>
 					</div>
 					<br>
 					<div>
@@ -139,8 +141,9 @@ td {
 					
 					<br><br><br>
 					<div style="text-align: right">
-						<br> <br> <b>(S.V.Ch. Subba Rao)<br>
-							Scientist-F & Head of Office
+						<br> <br> <b>
+						(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
+<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
 						</b>
 					</div>
 

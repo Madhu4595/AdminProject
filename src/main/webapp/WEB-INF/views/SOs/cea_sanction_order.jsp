@@ -1,9 +1,14 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.Employee_allowance"%>
 <%@page import="com.app.util.MyUtil"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 	Employee_allowance employee_allowance = (Employee_allowance) request.getAttribute("employee_allowance");
 String words = employee_allowance.getAmount_approve().toString();
@@ -72,21 +77,11 @@ function myFunction() {
 			<div id="topline">No.1 (18) / NIC-APSC/2019/Admn.</div>
 			<div class="col-md-12">
 				<div>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Government of India </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Ministry of Electronics & Information Technology </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> National Informatics Centre </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Andhra Pradesh State Centre </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Vijayawada - 520010 </b>
-					</h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / Government of India </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic2") %> / Ministry of Electronics & Information Technology </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic13") %> / National Informatics Centre </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("ANDHRAPRADESHSTATECENTRE") %> / Andhra Pradesh State Centre </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic4") %> 520010 / Vijayawada - 520010 </b> </h6>
 
 					<div>
 						<div style="text-align: right;"></div>
@@ -198,8 +193,9 @@ function myFunction() {
 					</div>
 					<br>
 					<div id="sign">
-						<br> <br> <b>(S.V.Ch. Subba Rao)<br>
-							Scientist-F & Head of Office
+						<br> <br> <b>
+						<%= localizationManager.getMessage("nic9") %>(S.V.Ch. Subba Rao)<br>
+							<%= localizationManager.getMessage("nic10") %>Scientist-F & Head of Office
 						</b>
 					</div>
 					<br>

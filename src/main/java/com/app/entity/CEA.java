@@ -1,6 +1,7 @@
 package com.app.entity;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,6 +59,8 @@ public class CEA {
 	private String sanctionNumber;
 	private Long noteNumber;
 	
+	private byte[] document;
+	
 	public CEA() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -68,7 +71,7 @@ public class CEA {
 			String name_class_of_child2, String period_of_claim_child2, String cea_type_child2,
 			Integer cea_amount_child2, Integer amount_approve2, Integer amount_claimed, Integer amount_approved,
 			LocalDateTime entryDate, LocalDateTime editDate, LocalDateTime nsDate, LocalDateTime soDate,
-			Boolean noteStatus, Boolean sanctionStatus, String sanctionNumber, Long noteNumber) {
+			Boolean noteStatus, Boolean sanctionStatus, String sanctionNumber, Long noteNumber, byte[] document) {
 		super();
 		this.requestno = requestno;
 		this.empCode = empCode;
@@ -93,6 +96,7 @@ public class CEA {
 		this.sanctionStatus = sanctionStatus;
 		this.sanctionNumber = sanctionNumber;
 		this.noteNumber = noteNumber;
+		this.document = document;
 	}
 
 	public String getRequestno() {
@@ -279,6 +283,14 @@ public class CEA {
 		this.noteNumber = noteNumber;
 	}
 
+	public byte[] getDocument() {
+		return document;
+	}
+
+	public void setDocument(byte[] document) {
+		this.document = document;
+	}
+
 	@Override
 	public String toString() {
 		return "CEA [requestno=" + requestno + ", empCode=" + empCode + ", noofchilds=" + noofchilds
@@ -290,10 +302,7 @@ public class CEA {
 				+ ", amount_claimed=" + amount_claimed + ", amount_approved=" + amount_approved + ", entryDate="
 				+ entryDate + ", editDate=" + editDate + ", nsDate=" + nsDate + ", soDate=" + soDate + ", noteStatus="
 				+ noteStatus + ", sanctionStatus=" + sanctionStatus + ", sanctionNumber=" + sanctionNumber
-				+ ", noteNumber=" + noteNumber + "]";
+				+ ", noteNumber=" + noteNumber + ", document=" + Arrays.toString(document) + "]";
 	}
-
-	 
-	
 
 }

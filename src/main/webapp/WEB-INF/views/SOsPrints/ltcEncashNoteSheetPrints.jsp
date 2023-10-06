@@ -1,3 +1,5 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.LTC"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
@@ -5,9 +7,12 @@
 <%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+ <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
  
 LTC ltc = (LTC) request.getAttribute("ltc");
@@ -111,34 +116,25 @@ function myFunction() {
 			<div class="col-md-12">
 				<div>
 
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> GOVERNMENT OF INDIA </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> MINISTRY OF ELECTRONICS AND INFORMATION TECHNOLOGY </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> NATIONAL INFORMATICS CENTRE </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Andhra Pradesh State Centre </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Vijayawada - 520010 </b>
-					</h6>
-
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
+					
 					<div>
-						<div style="text-align: right;">
-							Date:
-							<%=date%>
+						<%= localizationManager.getMessage("nic36") %> / Sanction Order No <b> : ${ltc.sanctionorderno}  </b> 
+						<span style="margin-left: 550px;"><%= localizationManager.getMessage("nic37") %> / Date  : <b><%=date%></b></span>
+					</div>
+					<br>  
+					<div style="text-align: left;">
+							<%= localizationManager.getMessage("nic5") %> / To,<br>
+							<%= localizationManager.getMessage("nic38") %> / The Accounts Officer,<br>
+							<%= localizationManager.getMessage("nic39") %> / Pay and Accounts Office,<br>
+							<%= localizationManager.getMessage("nic40") %> / National Informatics Centre,<br>
+							<%= localizationManager.getMessage("nic41") %> / A-Block, CGO Complex, Lodhi Road,<br>
+							<%= localizationManager.getMessage("nic42") %> - <%= localizationManager.getMessage("nic28") %> / New Delhi - 110 003.
 						</div>
-					</div>
-					<br> <label class="font-weight-bolder"> Sanction order
-						No: ${ltc.sanctionorderno}</label> <br> <br>
-					<div id="from">
-						To,<br> The Drawing & Disbursing Officer,<br> NIC,<br>
-						Hyderabad.
-					</div>
 					<br> <br>
 					<div style="text-align: justify;">
 						Sanction of the Competent Authority under Rule 52(2) of General
@@ -182,8 +178,9 @@ function myFunction() {
 					<br>
 					<br>
 					<div id="sign">
-						<br> <br> <b>(S.V.Ch. Subba Rao)<br>
-							Scientist-F & Head of Office
+						<br> <br> <b>
+						(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
+<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office</b>
 						</b>
 					</div>
 					<br>

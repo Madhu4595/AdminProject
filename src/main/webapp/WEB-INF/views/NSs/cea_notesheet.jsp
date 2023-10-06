@@ -1,4 +1,5 @@
-
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.util.MyUtil"%>
 <%@page import="com.app.entity.Employee_allowance"%>
 <%@page import="java.io.OutputStream"%>
@@ -10,6 +11,11 @@
 <%@page import="java.util.Date"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+ <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,10 +78,10 @@
 			<div class="col-md-12">
 				<div>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>NATIONAL INFORMATICS CENTRE </b>
+						<b><%= localizationManager.getMessage("NATIONALINFORMATICSCENTRE") %> / NATIONAL INFORMATICS CENTRE </b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>ANDHRA PRADESH STATE CENTRE, VIJAYAWADA </b>
+						<b><%= localizationManager.getMessage("ANDHRAPRADESHSTATECENTREVIJAYAWADA") %> ANDHRA PRADESH STATE CENTRE, VIJAYAWADA </b>
 					</h6>
 					<div>
 						<div style="text-align: right;">
@@ -190,17 +196,17 @@
 
 					<div style="text-align: right;">
 						<b>
-							 (BSN Murty)<br>
-							 Deputy Director
+							 <%= localizationManager.getMessage("(BSNMurty)") %> / (BSN Murty)<br>
+							 <%= localizationManager.getMessage("DeputyDirector") %> / Deputy Director
 						</b>
 					</div>
 
 					<div style="text-align: left;">
-						<b><u>HO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("HOAPSC") %> / HO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 					<div style="text-align: left;">
-						<b><u>SIO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("SIOAPSC") %> / SIO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 				</div>

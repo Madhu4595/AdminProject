@@ -1,6 +1,8 @@
 package com.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -19,6 +21,7 @@ import com.app.entity.LTC;
 import com.app.entity.Medical_Bills;
 import com.app.model.DistinctNoteNumbers;
 import com.app.model.DistinctSanctionOrderNumbers;
+import com.app.model.EmployeeCompleteDetailsModel;
 import com.app.repo.BriefCaseRepo;
 import com.app.repo.CEARepo;
 import com.app.repo.EmployeeRepo;
@@ -463,14 +466,6 @@ public class HomeRestController {
 		return gEM_Repo.getGemOutsourceForSO(requestno);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	//=======================GPF===Withdraw====================
 	@GetMapping("getAllGPFWithdrawForEdit")
@@ -502,6 +497,8 @@ public class HomeRestController {
 		return gpfRepo.getAllGPFWithdrawForSOPrint();
 	}
 	
+	@GetMapping("getAllGPFWithdrawForNSPrint") public List<GPF> getAllGPFWithdrawForNSPrint(){ return gpfRepo.getAllGPFWithdrawForNSPrint(); }
+	
 	//==============CEA REPORTS
 	//NOTESHEET
 	@GetMapping("/getDistinctNotenumbers")
@@ -525,6 +522,53 @@ public class HomeRestController {
 		System.out.println("noteStatus=>"+noteStatus);
 		System.out.println("noteStatus=>"+sanctionStatus);
 		return briefCaseRepo.findByNoteStatusandSanctionStatus(noteStatus,sanctionStatus);
+	}
+	
+	@GetMapping("getEmpDetails")
+	public EmployeeCompleteDetailsModel getEmpDetails(String code) {
+		System.out.println("UR in getEmpDetails"+code);
+		Optional<Employee> employee = employeeRepo.findById(code);
+		EmployeeCompleteDetailsModel employeeCompleteDetailsModel = null;
+		if(employee.isPresent()) {
+			employeeCompleteDetailsModel = new EmployeeCompleteDetailsModel();
+			employeeCompleteDetailsModel.setCode(employee.get().getCode());
+			employeeCompleteDetailsModel.setName(employee.get().getName());
+			employeeCompleteDetailsModel.setDesignation(employee.get().getDesignation());
+			employeeCompleteDetailsModel.setBasic_pay(employee.get().getBasic_pay());
+			employeeCompleteDetailsModel.setPlace(employee.get().getPlace());
+			employeeCompleteDetailsModel.setEmail(employee.get().getEmail());
+			employeeCompleteDetailsModel.setDate_of_retirement(employee.get().getDate_of_retirement());
+			employeeCompleteDetailsModel.setDob(employee.get().getDob());
+			employeeCompleteDetailsModel.setPayscale(employee.get().getPayscale());
+			employeeCompleteDetailsModel.setCallSign(employee.get().getCallSign());
+			employeeCompleteDetailsModel.setEcghsCode(employee.get().getEcghsCode());
+			employeeCompleteDetailsModel.setPhno(employee.get().getPhno());
+			employeeCompleteDetailsModel.setAddress(employee.get().getAddress());
+			employeeCompleteDetailsModel.setWardEntitlement(employee.get().getWardEntitlement());
+			
+			List<Employee_Family> empFamily = employeeFamilyRepo.getAllByEmpcode(code);
+			
+			if(empFamily.size() > 0) {
+				com.app.model.Employee_Family empfamily = null;
+				List<com.app.model.Employee_Family> listempfamily = new ArrayList<com.app.model.Employee_Family>();
+				
+				for(Employee_Family emp: empFamily) {
+					empfamily = new com.app.model.Employee_Family();
+					empfamily.setId(emp.getId());
+					empfamily.setEmp_code(emp.getEmp_code());
+					empfamily.setPer_name(emp.getPer_name());
+					empfamily.setRelation(emp.getRelation());
+					empfamily.setDob(emp.getDob());
+					empfamily.setDependency(emp.getDependency());
+					empfamily.setCghsCode(emp.getCghsCode());
+					listempfamily.add(empfamily);
+				}
+				System.out.println("listempfamily=>"+listempfamily.size());
+				employeeCompleteDetailsModel.setFamily(listempfamily);
+			}
+			
+		}
+		return employeeCompleteDetailsModel;
 	}
  
 	 

@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.entity.Employee;
 import com.app.entity.Employee_Family;
@@ -40,7 +42,8 @@ public class HomeController {
 	}
 
 	@RequestMapping("/saveEmp")
-	public String saveEmp(@ModelAttribute("employee") Employee employee, Model model, HttpServletRequest request) {
+	public String saveEmp(@ModelAttribute("employee") Employee employee, Model model, HttpServletRequest request,
+			MultipartFile photo_doc) {
 
 		System.out.println("UR in====saveEmp=====");
 		System.out.println("employee=====" + employee.toString());
@@ -51,13 +54,10 @@ public class HomeController {
 			String[] editrelationname = request.getParameterValues("relation");
 			String[] editdob = request.getParameterValues("editdob");
 			String[] editdependency = request.getParameterValues("editdependency");
+			String[] cghsCode = request.getParameterValues("cghsCode");
 
 			String designation = request.getParameter("edesignation");
 			String payscale = request.getParameter("egst");
-			//String stateordist = request.getParameter("stateordist");
-
-			System.out.println("designation=====" + designation);
-			System.out.println("payscale=====" + payscale);
 
 			Employee saveEmployee;
 			Employee_Family family;
@@ -71,6 +71,12 @@ public class HomeController {
 				saveEmployee.setDob(employee.getDob());
 				saveEmployee.setPayscale(payscale);
 				saveEmployee.setPlace(employee.getPlace());
+				saveEmployee.setEcghsCode(employee.getEcghsCode());
+				if(photo_doc.isEmpty()) { System.out.println("phot is nullllllllll"); }
+				else { saveEmployee.setEmpPhoto(photo_doc.getBytes()); }
+				saveEmployee.setPhno(employee.getPhno());
+				saveEmployee.setAddress(employee.getAddress());
+				saveEmployee.setWardEntitlement(employee.getWardEntitlement());
 
 				employee_Family_Repo.deleteAllFamilyDetailsByEmpCode(employee.getCode());
 
@@ -86,6 +92,7 @@ public class HomeController {
 						family.setRelation(editrelationname[i]);
 						family.setDob(editdob[i]);
 						family.setDependency(editdependency[i]);
+						family.setCghsCode(cghsCode[i]);
 						employee_Family_Service.saveEmployee_Family(family);
 					}
 				}
@@ -99,6 +106,13 @@ public class HomeController {
 				saveEmployee.setBasic_pay(employee.getBasic_pay());
 				saveEmployee.setDob(employee.getDob());
 				saveEmployee.setPayscale(payscale);
+				saveEmployee.setEcghsCode(employee.getEcghsCode());
+				saveEmployee.setAddress(employee.getAddress());
+				saveEmployee.setWardEntitlement(employee.getWardEntitlement());
+				
+				if(photo_doc == null) { }
+				else { saveEmployee.setEmpPhoto(photo_doc.getBytes()); }
+				saveEmployee.setPhno(employee.getPhno());
 
 				for (int i = 0; i < feditname.length; i++) {
 					String x = feditname[i];
@@ -111,6 +125,7 @@ public class HomeController {
 						family.setRelation(editrelationname[i]);
 						family.setDob(editdob[i]);
 						family.setDependency(editdependency[i]);
+						family.setCghsCode(cghsCode[i]);
 						employee_Family_Service.saveEmployee_Family(family);
 					}
 				}
@@ -140,6 +155,16 @@ public class HomeController {
 		String empDob = emp.getDob();
 		String ps = emp.getPayscale();
 		String empDesg = emp.getDesignation();
+		
+		String photo = "";
+		if(emp.getEmpPhoto() == null) {
+			photo = "";
+		}else {
+			photo = Base64.getEncoder().encodeToString(emp.getEmpPhoto());
+		}
+		
+		String phno = emp.getPhno();
+		String address = emp.getAddress();
 
 		List<String> empDetails = new ArrayList<String>();
 		empDetails.add(empName); // 0
@@ -148,7 +173,12 @@ public class HomeController {
 		empDetails.add(empDob.toString()); // 3
 		empDetails.add(ps); // 4
 		empDetails.add(emp.getPlace()); //5
-
+		empDetails.add(emp.getEcghsCode()); //6
+		empDetails.add(photo);//7
+		empDetails.add(phno);//8
+		empDetails.add(address);//9
+		empDetails.add(emp.getWardEntitlement()); //10
+		
 		return ResponseEntity.ok(empDetails);
 	}
 

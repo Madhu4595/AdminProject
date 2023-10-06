@@ -28,7 +28,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeRepo employeeRepo;
 
-	@RequestMapping("/em pNSForm")
+	@RequestMapping("/empNSForm")
 	public String empNSForm() {
 		return "empNSForm";
 	}

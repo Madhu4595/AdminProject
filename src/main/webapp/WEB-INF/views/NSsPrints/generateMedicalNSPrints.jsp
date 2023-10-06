@@ -1,3 +1,5 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="com.app.entity.Medical_Bills_upload"%>
@@ -11,6 +13,11 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 	Medical_Bills_upload upload = (Medical_Bills_upload) request.getAttribute("medical_Bills_upload3");
 //String words = MyUtil.convert(Long.valueOf(upload.getTotAmountApproved()));
@@ -82,24 +89,16 @@ function myFunction() {
 		<div class="row">
 			<div class="col-md-12">
 				<div>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b>Government of India </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b>Ministry of Electronics & Information Technology</b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b>NATIONAL INFORMATICS CENTRE </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b>Andhra Pradesh State Centre </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b>Vijayawada - 520010 </b>
-					</h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
 					<div>
 
-						<div style="text-align: right;">Date: ${nsDate }</div>
+						<div style="text-align: right;">
+							<%= localizationManager.getMessage("nic37") %> / Date:<b> ${nsDate }</b>
+						</div>
 						<div style="text-align: center;">
 							<b><u> Subject: Verified medical claim for approval</u></b>
 						</div>
@@ -109,7 +108,7 @@ function myFunction() {
 							<table style="line-height: 2.5em;">
 								<tr>
 									<td>1. Full Name of claimant (Block Letters)</td>
-									<td>: ${employee.name.toUpperCase()}</td>
+									<td>: ${employee.callSign }. ${employee.name.toUpperCase()}</td>
 								</tr>
 								<tr>
 									<td>2. Designation & Emp. Code</td>
@@ -213,7 +212,7 @@ function myFunction() {
 									<td>${medical_Bills_upload4.lab_name }</td>
 									<td>${medical_Bills_upload4.amount_claimed }</td>
 									<td>${medical_Bills_upload4.amount_approved }</td>
-									<td>${medical_Bills_upload4.remarks }</td>
+									<td>CGHS rates</td>
 								</tr>
 							</c:forEach>
 							<tr>
@@ -228,7 +227,7 @@ function myFunction() {
 
 					<div style="text-align: left;">
 						<p>Certified that:</p>
-						1. The medicine mentioned in the prescription / bill are
+						1. The medicine mentioned in the prescription / bills are
 						admissible as per CGHS / CSMA rules.<br> 2. Serial no.
 						mentioned in the bill as per admissible list of CGHS / CSMA.<br>
 						(In case of Ayurvedic, Siddha, Unani and Homeopathic medicine
@@ -248,22 +247,22 @@ function myFunction() {
 							).
 						</b>
 					</div>
-
+<br><br><br><br>
 					<div style="text-align: right;">
 						<b> <u>
-								<p>Dy.Director</p>
+								<p><%= localizationManager.getMessage("DyDirector") %> / Dy.Director</p>
 						</u></b>
 					</div>
 
 
 					<div style="text-align: left;">
-						<b><u>Head of Office</u></b>
+						<b><u><%= localizationManager.getMessage("HeadofOffice") %> / Head of Office</u></b>
 					</div>
 					<br>
 					<br>
 					<br>
 					<div style="text-align: left;">
-						<b><u>State Informatics Officer</u></b>
+						<b><u><%= localizationManager.getMessage("StateInformaticsOfficer") %> / State Informatics Officer</u></b>
 					</div>
 					<br>
 					<br>

@@ -1,6 +1,7 @@
 package com.app.entity;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,6 +52,8 @@ public class LTC {
 	private Boolean note_status;
 	private Boolean sanction_status;
 	
+	private byte[] document;
+	
 	
 	public LTC() {
 		super();
@@ -62,7 +65,7 @@ public class LTC {
 			String claimedfor, String visitperiod, String leavedetails, String encashment, String amountadvance,
 			String totalfare, Integer note_number, String sanctionorderno, LocalDateTime entry_date,
 			LocalDateTime edit_date, LocalDateTime note_date, LocalDateTime sanction_date, Boolean note_status,
-			Boolean sanction_status) {
+			Boolean sanction_status, byte[] document) {
 		super();
 		this.requestno = requestno;
 		this.empcode = empcode;
@@ -83,6 +86,7 @@ public class LTC {
 		this.sanction_date = sanction_date;
 		this.note_status = note_status;
 		this.sanction_status = sanction_status;
+		this.document = document;
 	}
 
 
@@ -276,6 +280,16 @@ public class LTC {
 	}
 
 
+	public byte[] getDocument() {
+		return document;
+	}
+
+
+	public void setDocument(byte[] document) {
+		this.document = document;
+	}
+
+
 	@Override
 	public String toString() {
 		return "LTC [requestno=" + requestno + ", empcode=" + empcode + ", blockyear=" + blockyear + ", location="
@@ -284,12 +298,10 @@ public class LTC {
 				+ amountadvance + ", totalfare=" + totalfare + ", note_number=" + note_number + ", sanctionorderno="
 				+ sanctionorderno + ", entry_date=" + entry_date + ", edit_date=" + edit_date + ", note_date="
 				+ note_date + ", sanction_date=" + sanction_date + ", note_status=" + note_status + ", sanction_status="
-				+ sanction_status + "]";
+				+ sanction_status + ", document=" + Arrays.toString(document) + "]";
 	}
 
-
 	
-
 	
 	 
 	

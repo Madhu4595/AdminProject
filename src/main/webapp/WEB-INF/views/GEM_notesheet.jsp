@@ -1,3 +1,5 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="java.io.OutputStream"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
@@ -6,6 +8,11 @@
  <%@page import="java.text.SimpleDateFormat"%>
  <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %> 
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,9 +39,11 @@ function myFunction() {
 
 <section class="container mt-5 pt-2">
  <h6 style="text-align: center;font-weight:50px;"><b>Government of India   </b></h6>
-      <h6 style="text-align: center;font-weight:50px;"><b>Ministry of Electronics & Information Technology  </b></h6>
-      <h6 style="text-align: center;font-weight:50px;"><b>National Informatics Centre (APSC)   </b></h6>
-      <h6 style="text-align: center;font-weight:50px;"><b>VIJAYAWADA 520010.  </b></h6> 
+      <h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / Government of India </b> </h6>
+				<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic2") %> / Ministry of Electronics & Information Technology </b> </h6>
+				<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic3") %> / National Informatics Centre (APSC) </b> </h6>
+				<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic4") %> - 520010 / Vijayawada - 520010 </b> </h6>
+			
 <div class="row">
   <div class="col-md-12">
     <div> 
@@ -68,10 +77,10 @@ towards expenditure payment for procurement of <b>${transactions.subject}</b> fo
     <div> 
     Put up for necessary action.
     </div>     
-        <p align="right"><b>(BSN Murty)</b></p>
-        <p align="right"><b>Deputy Director</b></p>
+        <p align="right"><b><%= localizationManager.getMessage("(BSNMurty)") %> / (BSN Murty)</b></p>
+        <p align="right"><b><%= localizationManager.getMessage("DeputyDirector") %> / Deputy Director</b></p>
        
-        <p align="left"><b>H.O. APSC</b></p>  
+        <p align="left"><b><%= localizationManager.getMessage("HOAPSC") %> / H.O. APSC</b></p>  
   </div>
 </div>
 </div>

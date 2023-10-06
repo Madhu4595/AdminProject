@@ -175,278 +175,191 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 
-
-
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-
-						<%
-							//if(role.equalsIgnoreCase("ROLE_USER")){
-						%>
-
-						<li class="dropdown"><a class="dropdown-toggle" href="#"
-							id="navbarDropdown" role="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false"> Allowance/Bills </a>
+						<li><a href="/">Home</a></li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Allowance/Bills </a>
+							
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> CEA </a>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> CEA </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="./empceaform">New</a></li>
 										<li><a href="./empCEAEditForm">Modify</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> Medical </a>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Medical </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="billsupload_edit">Modify</a></li>
 										<li><a href="billsupload2">New</a></li>
-									</ul></li>
-
+									</ul>
+								</li>
 								<li><a href="home">Vendor</a></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> LTC- EL
-										Enacachment </a>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> LTC- EL Enacachment </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="ltcEnacachment">New</a></li>
 										<li><a href="ltcEnacachmentedit">Modify</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> LTC- Advance
-										Enacachment </a>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> LTC- Advance Enacachment </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="ltcAdvanceEnacachment">New</a></li>
 										<li><a href="ltcAdvanceEnacachmentedit">Modify</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> GEM-Vehicle </a>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEM-Vehicle </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="gemVehicleForm">New</a></li>
 										<li><a href="gemVehicleEditForm">Modify</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> GEM-OutSourcing
-								</a>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GEM-OutSourcing </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="gemOutsourceForm">New</a></li>
 										<li><a href="gemOutsourceEditForm">Modify</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> GPF-WithDraw </a>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> GPF-WithDraw </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="gpfWithDrawForm">New</a></li>
 										<li><a href="gpfWithDrawEditForm">Modify</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false"> BriefCase </a>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> BriefCase </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="briefcaseForm">New</a></li>
 										<li><a href="briefcaseEditForm">Modify</a></li>
-									</ul></li>
-
-							</ul></li>
-						<%
-							//}
-						%>
-						<!-- 								ALLOWANCES END HERE -->
-
-						<!-- 								APPROVALS START -->
-						<%
-							//if(role.equalsIgnoreCase("ROLE_DD")){
-						%>
-						<li class="dropdown"><a class="dropdown-toggle" href="#"
-							id="navbarDropdown" role="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false"> Approval Details
-						</a>
+									</ul>
+								</li>
+								<li><a href="cghsForm">CGHS MRCF Reibursement</a></li>
+								<li><a href="empCEAApplyForm">Employee CEA Apply Form</a></li>
+							</ul>
+						</li>
+					 
+						<li class="dropdown">
+							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Approval Details</a>
 
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-								<!-- 									<li><a href="allowance_approve">Employee</a></li> -->
-								<!-- 									<li><a href="./empNSForm">Employee</a></li> -->
 								<li><a href="./empCEANSForm">CEA</a></li>
-
-								<!-- 									<li><a href="medical_approve">Medical</a></li> -->
 								<li><a href="medicalNoteSheetForm">Medical</a></li>
-								<!-- 								<li><a href="ltcElEnacachmentNSForm">LTC- EL Enacachment</a></li> -->
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">LTC </a>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">LTC </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<li><a href="ltcElEnacachmentNSForm">LTC- EL
-												Enacachment</a></li>
+										<li><a href="ltcElEnacachmentNSForm">LTC- EL Enacachment</a></li>
 										<li><a href="ltcAdvanceNSForm">LTC- Advance</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">GEM </a>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GEM </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="gemVehicleNoteSheet">Vehicle NoteSheet</a></li>
-										<li><a href="gemOutsourcingNoteSheet">Outsourcing
-												NoteSheet</a></li>
-									</ul></li>
+										<li><a href="gemOutsourcingNoteSheet">Outsourcing NoteSheet</a></li>
+									</ul>
+								</li>
 
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">GPF-WithDraw </a>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GPF-WithDraw </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="gpfWithDrawNSForm">WithDraw</a></li>
-									</ul></li>
-									
-									<li><a href="briefcaseNSForm">Briefcase</a></li>
+									</ul>
+								</li>
+								<li><a href="briefcaseNSForm">Briefcase</a></li>
 
-							</ul></li>
-						<%
-							//}
-						%>
-						<!-- 								APPROVALS END HERE -->
-
-						<!-- 								SANCTION ORDERS START HERE -->
-						<%
-							//if(role.equalsIgnoreCase("ROLE_HO")){
-						%>
-						<li class="dropdown"><a class="dropdown-toggle" href="#"
-							id="navbarDropdown" role="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">Sanction Order
-								Generation</a>
-
+							</ul>
+						</li>
+					 
+						<li class="dropdown">
+							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sanction Order Generation</a>
+							
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-								<!-- 									<li> <a href="sanction_approve">Employee & Medical</a> </li> -->
-								<!-- 									<li> <a href="empSOForm">Employee</a> </li> -->
 								<li><a href="./empCEASOForm">CEA</a></li>
 								<li><a href="medicalSOForm">Medical</a></li>
-								<!-- 								<li><a href="ltcELEnacachmentSOForm">LTC- EL Enacachment</a></li> -->
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">LTC </a>
+								<li class="dropdown"><a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">LTC </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<li><a href="ltcELEnacachmentSOForm">LTC- EL
-												Enacachment</a></li>
+										<li><a href="ltcELEnacachmentSOForm">LTC- EL Enacachment</a></li>
 										<li><a href="ltcAdvanceSOForm">LTC- Advance</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="true">GEM</a>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">GEM</a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<li><a href="gemVehicleSOForm">Vehicle Sanction Order</a></li>
-										<li><a href="gemOutsourcingSOForm">Outsourcing
-												Sanction Order</a></li>
-									</ul></li>
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="true">GPF</a>
+										<li><a href="gemVehicleSOForm">Vehicle </a></li>
+										<li><a href="gemOutsourcingSOForm">Outsourcing </a></li>
+									</ul>
+								</li>
+								<li class="dropdown"><a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">GPF</a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="gpfWithdrawSOForm">Withdraw</a></li>
-										<!-- 												<li><a href=""></a></li> -->
-									</ul></li>
-									
-									<li><a href="briefcaseSOForm">Briefcase</a></li>
-
-							</ul></li>
-						<%
-							//}
-						%>
-						<!-- 								SANCTION ORDERS END HERE -->
-						<%
-							//if(role.equalsIgnoreCase("ROLE_USER")){
-						%>
-
-
-						<li class="dropdown"><a class="dropdown-toggle" href="#"
-							id="navbarDropdown" role="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">Notesheet Prints</a>
-
+									</ul>
+								</li>
+								<li><a href="briefcaseSOForm">Briefcase</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notesheet Prints</a>
+							
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li><a href="ceaNSPrints">CEA</a></li>
 								<li><a href="gpfWithdrawNSPrint">GPF-withdraw</a></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="true">GEM</a>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">GEM</a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<li><a href="gemVehicleNSPrints">Vehicle Notesheet</a></li>
-										<li><a href="gemOutsourcingNSPrints">Outsourcing
-												Sanction Order</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="true">LTC</a>
+										<li><a href="gemVehicleNSPrints">Vehicle</a></li>
+										<li><a href="gemOutsourcingNSPrints">Outsourcing</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">LTC</a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="ltcEncashmentsNSPrints">Encashment</a></li>
 										<li><a href="ltcAdvanceNSPrints">Advance</a></li>
-
-									</ul></li>
+									</ul>
+								</li>
 								<li><a href="medicalNSPrintsForm">Medical</a></li>
 								<li><a href="briefcaseNSPrintForm">BRIEF CASE</a></li>
-							</ul></li>
-
-						<li class="dropdown"><a class="dropdown-toggle" href="#"
-							id="navbarDropdown" role="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">Sanction Order
-								Prints</a>
-
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sanction Order Prints</a>
+							
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li><a href="gpfWithdrawSOPrint">GPF-withdraw</a></li>
 								<li><a href="ceaSOPrintForm">CEA</a></li>
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="true">GEM</a>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">GEM</a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<li><a href="gemVehicleSOPrints">Vehicle Notesheet</a></li>
-										<li><a href="gemOutsourcingSOPrints">Outsourcing
-												Sanction Order</a></li>
-									</ul></li>
-
-								<li class="dropdown"><a class="dropdown-toggle" href="#"
-									id="navbarDropdown" role="button" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="true">LTC</a>
+										<li><a href="gemVehicleSOPrints">Vehicle</a></li>
+										<li><a href="gemOutsourcingSOPrints">Outsourcing</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">LTC</a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<li><a href="ltcEncashmentsSOPrints">Encashment</a></li>
 										<li><a href="ltcAdvanceSOPrints">Advance</a></li>
-									</ul></li>
+									</ul>
+								</li>
 								<li><a href="medicalSOPrintsForms">Medical</a></li>
 								<li><a href="briefcaseSOPrintForm">BRIEF CASE</a></li>
-							</ul></li>
-
-
-
-
-
-
-						<li style="width: 150px;"><a href="employee_insert">Employee
-								Details</a></li>
-
-						<li style="width: 120px;"><a href="vendor_insert">Vendor
-								Details</a></li>
-						<%
-							//}
-						%>
-						<li><a href=""></a></li>
-						<li><a href=""></a></li>
-						<li><a href=""></a></li>
-						<li><a href=""></a></li>
-
-						<li><a href="logout"
-							style="font-weight: bolder; color: blue;">Logout</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" href="#" id="navbarDropdown">Prints</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a href="cghsmrcfPrintform">CGHS MRCF</a></li>
+							</ul>
+						</li>
+						<li style="width: 100px;"><a href="employee_insert">Employee</a></li>
+						<li style="width: 100px;"><a href="vendor_insert">Vendor</a></li>
+						<li><a href="logout" style="font-weight: bolder; color: blue;">Logout</a></li>
 					</ul>
 				</div>
 			</nav>

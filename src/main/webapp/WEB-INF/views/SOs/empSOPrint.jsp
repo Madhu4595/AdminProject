@@ -1,11 +1,15 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.Employee"%>
 <%@page import="com.app.entity.Employee_allowance"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 	int i = 1;
 	String words =  request.getAttribute("totAmt").toString();
@@ -55,19 +59,19 @@ function myFunction() {
 				
 				 
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>GOVERNMENT OF INDIA </b>
+						<b><%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA </b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b>
+						<b><%= localizationManager.getMessage("nic2") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>NATIONAL INFORMATICS CENTRE </b>
+						<b><%= localizationManager.getMessage("NATIONALINFORMATICSCENTRE") %> / NATIONAL INFORMATICS CENTRE </b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>ANDHRA PRADESH STATE CENTRE </b>
+						<b><%= localizationManager.getMessage("ANDHRAPRADESHSTATECENTRE") %> / ANDHRA PRADESH STATE CENTRE </b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>Vijayawada - 520010  </b>
+						<b><%= localizationManager.getMessage("nic4") %> 520010 / Vijayawada - 520010  </b>
 					</h6>
 					<div>
 
@@ -222,8 +226,8 @@ function myFunction() {
 				<br>
 				<div style="text-align: right;">
 								<b>
-								(S.V. Ch. Subba Rao)<br>
-								Scientist-F & Head of Office
+								<%= localizationManager.getMessage("nic9") %>(S.V. Ch. Subba Rao)<br>
+								<%= localizationManager.getMessage("nic10") %>Scientist-F & Head of Office
 								</b>
 					</div>
 

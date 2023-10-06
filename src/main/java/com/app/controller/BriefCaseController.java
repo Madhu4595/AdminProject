@@ -1,6 +1,8 @@
 package com.app.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -129,6 +131,11 @@ public class BriefCaseController {
 			BriefCase savedBean =  briefCaseRepo.save(bean.get());
 			model.addAttribute("bean", savedBean);
 			model.addAttribute("emp", employeeRepo.findById(bean.get().getEmpCode()).get());
+			
+			Date date = new Date();  
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+			String todaydate=formatter.format(date);
+			model.addAttribute("todaydate", todaydate);
 			
 			return "/briefcaseNSPrint";
 		}else {

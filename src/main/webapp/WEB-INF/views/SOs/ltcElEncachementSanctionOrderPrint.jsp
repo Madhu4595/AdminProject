@@ -1,10 +1,15 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.Employee"%>
 <%@page import="com.app.util.MyUtil"%>
 <%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 	<%
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
@@ -96,33 +101,26 @@ function myFunction() {
 			<div class="col-md-12">
 				<div>
 
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Government of India </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Ministry of Electronics & Information Technology </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> National Informatics Centre </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Andhra Pradesh State Centre </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Vijayawada - 520010 </b>
-					</h6>
-
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
+<br>
 					<div>
-						<div style="text-align: right;">
-							Date:
-							<%=todaydate%>
-						</div>
+						<%= localizationManager.getMessage("nic36") %> / Sanction order No: <b>${ltc.sanctionorderno}</b> 
+							<span style="margin-left: 550px;"> <%= localizationManager.getMessage("nic37") %> / Date:<b> <%=todaydate%></b></span>  
 					</div>
-					<br> <label class="font-weight-bolder">
-						Sanction order No: ${ltc.sanctionorderno}</label> <br> <br>
-					<div id="from">
-						To,<br> The Drawing & Disbursing Officer,<br> National
-						Informatics Centre,<br> Hyderabad.
+					<br>  
+					
+					
+					<div>
+						<%= localizationManager.getMessage("nic5") %> / To,<br>
+							<%= localizationManager.getMessage("nic38") %> / The Accounts Officer,<br>
+							<%= localizationManager.getMessage("nic39") %> / Pay and Accounts Office,<br>
+							<%= localizationManager.getMessage("nic40") %> / National Informatics Centre,<br>
+							<%= localizationManager.getMessage("nic41") %> / A-Block, CGO Complex, Lodhi Road,<br>
+							<%= localizationManager.getMessage("nic42") %> - <%= localizationManager.getMessage("nic28") %> / New Delhi - 110 003.
 					</div>
 					<br> <br>
 					<div style="text-align: justify;">
@@ -131,7 +129,7 @@ function myFunction() {
 						No. 31011/4/2008-Estt.(A0 dated 23.9.2008 issued by M/o Personnel
 						& public Grievances & Pension) is conveyed to the grant of cash
 						equivalent to 10 days as following in respect of earned leave at
-						credit of <b>${emp.name}, ${designation.name} (Emp. Code No.
+						credit of <b>${emp.callSign}. ${emp.name}, ${designation.name} (Emp. Code No.
 							${emp.code})</b> of NIC, APSC, Vijayawada (${ltc.location}) to visit
 						<b>"${ltc.visitplace}"</b> for the block year ${ltc.blockyear}
 						during Earned Leave ${ltc.leavedetails}.
@@ -160,7 +158,7 @@ function myFunction() {
 						<tbody>
 							<tr>
 								<td>1</td>
-								<td><b>${emp.name}, <br>${designation.name} (Emp. Code No. ${emp.code})</b></td>
+								<td><b>${emp.callSign}. ${emp.name}, <br>${designation.name} (Emp. Code No. ${emp.code})</b></td>
 								<td><%=basicpay %><br><%=dabasicpay %></td>
 								<td><%=daplusbasicpay %></td>
 								<td>10</td>
@@ -168,14 +166,15 @@ function myFunction() {
 							</tr>
 						</tbody>
 					</table>
-					<center><b>(Rupees <span id="words" ></span>)</b></center>
+					<center><b>(Rupees <span id="words" ></span> Only)</b></center>
 					<br>
-					It is certified that <b>${emp.name}, ${designation.name} (Emp. Code No. ${emp.code})</b> is having more than
+					It is certified that <b>${emp.callSign}. ${emp.name}, ${designation.name} (Emp. Code No. ${emp.code})</b> is having more than
 					30 days of Earned Leave at his credit after taking into account the period of encashment.
 					<br><br><br><br>
 					<div id="sign">
-						<br> <br> <b>(S.V.Ch. Subba Rao)<br>
-							Scientist-F & Head of Office
+						<br> <br> <b>
+						(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
+							<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
 						</b>
 					</div>
 					<br>

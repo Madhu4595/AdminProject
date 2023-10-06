@@ -1,9 +1,14 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.Medical_Bills_upload"%>
 <%@page import="com.app.util.MyUtil"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+ <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 	String totAmountApproved = request.getAttribute("totAmountApproved").toString();
 System.out.println("words=> " + totAmountApproved);
@@ -98,23 +103,27 @@ td {
 
 
 					<div id="header">
-						GOVERNMENT OF INDIA<br> MINISTRY OF ELECTRONICS & INFORMATION
-						TECHNOLOGY<br> NATIONAL INFORMATIC CENTRE<br> ANDHRA
-						PRADESH STATE CENTRE<br> Vijayawada - 520010
+						<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
 					</div>
 
 					<div>
-						<span>Sanction Order No: </span><b>${so_number}</b><span 
-							style="margin-left: 70%">Date: ${siodate}</span><br>
-					</div>
-
-					<div>
-						<br> Accounts Officer,<br> Pay and Accounts Office,<br>
-						Ministry of Electronics and Information Technology,<br>
-						Department of Information Technology,<br> National
-						Informatics Centre,<br> New Delhi - 110 003.
+						<%= localizationManager.getMessage("nic36") %> / Sanction Order No <b> : ${so_number} </b> 
+						<span style="margin-left: 550px;"><%= localizationManager.getMessage("nic37") %> / Date  : <b>${siodate}</b></span>
 					</div>
 					<br>
+					
+					<div style="text-align: left;">
+							<%= localizationManager.getMessage("nic5") %> / To,<br>
+							<%= localizationManager.getMessage("nic38") %> / The Accounts Officer,<br>
+							<%= localizationManager.getMessage("nic39") %> / Pay and Accounts Office,<br>
+							<%= localizationManager.getMessage("nic40") %> / National Informatics Centre,<br>
+							<%= localizationManager.getMessage("nic41") %> / A-Block, CGO Complex, Lodhi Road,<br>
+							<%= localizationManager.getMessage("nic42") %> - <%= localizationManager.getMessage("nic28") %> / New Delhi - 110 003.
+						</div><br>
 
 					<div>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Subject: -</b>
@@ -152,10 +161,12 @@ td {
 					<br> '3451' Secretariat-Economic Services (Major Head)<br>
 					00.091 Secretariat-(Minor Head)<br> .13 National Informatics
 					Centre<br> .13.01 Establishment<br> <b>.13.01.06
-						Medical Expenses.</b> <br>
+						Medical Treatment.</b> <br>
 					<div id="sign">
-						<br> <br>
-						<b> (S.V.Ch. Subba Rao)<br> Scientist-F & Head of Office
+						<br> <br><br> <br>
+						<b> 
+						<%= localizationManager.getMessage("nic9") %> / (S.V.Ch. Subba Rao)<br>
+						<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
 						</b>
 					</div>
 					<br> <br>

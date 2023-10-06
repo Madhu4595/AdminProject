@@ -1,12 +1,18 @@
+<%@page import="com.app.util.LocalizationManager"%>
 <%@page import="com.app.entity.GPF"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.Locale" %>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+
+ <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 
 <%
  
@@ -26,6 +32,7 @@ System.out.println("After Formatting: " + formatDateTime);
 <html>
 <head>
 <meta charset="ISO-8859-1">
+
 <title>GPF - Withdraw</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -76,31 +83,38 @@ System.out.println("After Formatting: " + formatDateTime);
 		<div class="row">
 			<div class="col-md-12">
 				<div>
-				
-				<h6 style="text-align: center; font-weight: 50px;">
-						<b> Government of India </b>
+					<h6 style="text-align: center; font-weight: 50px;">
+						<b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Ministry of Electronics & Information Technology </b>
+						<b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b> National Informatics Centre (APSC) </b>
+						<b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Vijayawada - 520010 </b>
+						<b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b>
 					</h6>
-
-					<div>
-						<b>Sanction Order No: ${gpf.sanctionNumber }</b><span style="margin-left: 70%">Date: <%=formatDateTime%></span>
-					</div>
-					<br>
+					<h6 style="text-align: center; font-weight: 50px;">
+						<b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b>
+					</h6>
 					
-					<div>
-						To <br>
-						The Accounts Officer, <br>
-						Pay & Accounts Office, <br>
-						NIC,(Hqrs.,), New Delhi.
-					</div><br>
+					<br>
+						<div>
+							<%= localizationManager.getMessage("nic36") %> / Sanction Order No <b> : ${gpf.sanctionNumber } </b> 
+							<span style="margin-left: 550px;"><%= localizationManager.getMessage("nic37") %> / Date  : <b><%=formatDateTime%></b></span>
+						</div>
+						<br>
+						<div style="text-align: left;">
+							<%= localizationManager.getMessage("nic5") %> / To,<br>
+							<%= localizationManager.getMessage("nic38") %> / The Accounts Officer,<br>
+							<%= localizationManager.getMessage("nic39") %> / Pay and Accounts Office,<br>
+							<%= localizationManager.getMessage("nic40") %> / National Informatics Centre,<br>
+							<%= localizationManager.getMessage("nic41") %> / A-Block, CGO Complex, Lodhi Road,<br>
+							<%= localizationManager.getMessage("nic42") %> - <%= localizationManager.getMessage("nic28") %> / New Delhi - 110 003.
+						</div>
+					<br>
+					 
 					
 					<div style="margin-left: 30px;">
 						<b>Sub:</b> Withdrawal from GPF account by <b>${emp.callSign } ${emp.name }</b>, ${emp.designation }, ${emp.place }.
@@ -108,7 +122,7 @@ System.out.println("After Formatting: " + formatDateTime);
 					
 					<div style="text-align: justify;">
 						1. Sanction of the competent Authority is hereby conveyed under Rule 15(1)(A) read with 16(1) and 16(2) of
-						GPF rules, to the withdrawal by ${emp.callSign } ${emp.name }, ${emp.designation }, ${emp.place }, <b>Rs. ${gpf.withDrawAmt }/- (Rupees <span id="words"></span>)
+						GPF rules, to the withdrawal by ${emp.callSign } ${emp.name }, ${emp.designation }, ${emp.place }, <b>Rs. ${gpf.withDrawAmt }/- (Rupees <span id="words"></span> Only)
 						</b> from his GPF Account No. ${gpf.gpfNo } to enable him to defray the expenses in connection with Purchase of consumer durable (Refrigerator).
 					</div><br>
 					
@@ -153,8 +167,9 @@ System.out.println("After Formatting: " + formatDateTime);
 				
 				<br><br><br>
 					<div style="text-align: right">
-						<br> <br> <b>(S.V.Ch. Subba Rao)<br>
-							Scientist-F & Head of Office
+						<br> <br><b>
+						(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
+<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
 						</b>
 					</div>
 					

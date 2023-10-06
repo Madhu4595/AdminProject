@@ -1,13 +1,18 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.app.util.MyUtil"%>
 <%@page import="com.app.entity.BriefCase"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 BriefCase bean = (BriefCase)request.getAttribute("bean");
 String words =   bean.getAmountApproved();
@@ -66,47 +71,30 @@ body {
 	%>
 
 	<section class="container mt-5 pt-2 border">
-
-		<div class="row">
-			<div class="col-md-12">
-				<h6 style="text-align: center; font-weight: 50px;">
-					<b> Government of India </b>
-				</h6>
-				<h6 style="text-align: center; font-weight: 50px;">
-					<b> Ministry of Electronics & Information Technology </b>
-				</h6>
-				<h6 style="text-align: center; font-weight: 50px;">
-					<b> National Informatics Centre (APSC) </b>
-				</h6>
-				<h6 style="text-align: center; font-weight: 50px;">
-					<b> VIJAYAWADA - 520010 </b>
-				</h6>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-12">
-				<div align="left" class="font-weight-bolder">Sanction Order
-					No: ${bean.sanctionNumber }</div>
-				<div align="right" class="font-weight-bolder">
-					Date:
-					<%=sodatee %></div>
-			</div>
-		</div>
+	
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
+	
+					<div>
+						<%= localizationManager.getMessage("nic36") %> / Sanction Order No <b> : ${bean.sanctionNumber } </b> 
+						<span style="margin-left: 550px;"><%= localizationManager.getMessage("nic37") %> / Date  : <b><%=sodatee %></b></span>
+					</div>
+				 
 		<br>
+		<div style="text-align: left;">
+							<%= localizationManager.getMessage("nic5") %> / To,<br>
+							<%= localizationManager.getMessage("nic38") %> / The Accounts Officer,<br>
+							<%= localizationManager.getMessage("nic39") %> / Pay and Accounts Office,<br>
+							<%= localizationManager.getMessage("nic40") %> / National Informatics Centre,<br>
+							<%= localizationManager.getMessage("nic41") %> / A-Block, CGO Complex, Lodhi Road,<br>
+							<%= localizationManager.getMessage("nic42") %> - <%= localizationManager.getMessage("nic28") %> / New Delhi - 110 003.
+						</div><br>
 		<div class="row">
 			<div class="col-md-12">
-				<div align="left">
-					Accounts Officer <br> Pay & Accounts Officer <br>
-					Department of Information Technology <br> National Informatics
-					Centre (Hqrs), <br> New Delhi - 110 003.
-				</div>
-			</div>
-		</div>
-		<br>
-		<div class="row">
-			<div class="col-md-12">
-				Sub: Reimbursement Towards purchase of <b>BRIEF CASE</b>
+				<b>Subject</b>: Reimbursement Towards purchase of <b>BRIEF CASE</b>
 			</div>
 		</div>
 		<br>
@@ -151,11 +139,12 @@ body {
 		</div>
 
 
-		<br>
+		 
 		<br>
 		<div id="sign" align="right">
-			<br> <br> <b>(S.V.Ch. Subba Rao)<br> Scientist-F &
-				Head of Office
+			  <b>
+(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
+<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
 			</b>
 		</div>
 		<br>

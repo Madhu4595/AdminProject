@@ -1,11 +1,15 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.GEM"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 Date date = new Date();
@@ -76,26 +80,22 @@ td {
 			<div class="col-md-12">
 				<div>
 
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Government of India </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Ministry of Electronics & Information Technology </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> National Informatics Centre (APSC) </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Vijayawada - 520010 </b>
-					</h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
 
+					<br>
 					<div>
-						<b>Sanction Order No: ${gem.sanctionNumber }</b><span style="margin-left: 70%">Date: <%=todaydate%></span>
+						<%= localizationManager.getMessage("nic36") %> / Sanction Order No <b> : ${gem.sanctionNumber } </b> 
+						<span style="margin-left: 550px;"><%= localizationManager.getMessage("nic37") %> / Date  : <b><%=todaydate%></b></span>
 					</div>
 					<br>
+					 
 					
 					<div>
-						<b>Sub:</b> Expenditure sanction towards vehicle hiring charges for the for the office of NIC, APSC, Vijayawada for the month of <b>${gem.monthYear }</b>.
+						<b>Subject:</b> Expenditure sanction towards vehicle hiring charges for the for the office of NIC, APSC, Vijayawada for the month of <b>${gem.monthYear }</b>.
 					</div>
 					<br> 
 					<b>Sir</b>
@@ -107,16 +107,16 @@ td {
 					</div>
 					<br>
 					<div style="text-align: justify;">
-						Sanction is also conveyed to the drawl of said amount through DD/Cheque in favor of <b>M/s. Swarnandhra Travels, Chittor</b> and payment thereof to the
-						party <b>(Bank Details: Current A/C No: 920020039167111, Axis Bank, Kadiri Branch, Anantapur - 515591, IFSC Code: UTIB0002016)</b>.
+						Sanction is also conveyed to the drawl of said amount through DD/Cheque in favor of <b>M/s. Viswa Enterprises, Visakhapatnam</b> and payment thereof to the
+						party <b>(Bank Details: Current A/C No: 50200076201971, HDFC Bank, Maddilapalem Branch, Visakhapatnam, IFSC Code: HDFC0006187)</b>.
 					</div>
 					<br>
 					<div>
-						This has been approved vide <b>IFS Dairy No. 420 dated 30/06/2022</b>
+						This has been approved vide <b>IFS Dairy No. 390 dated 12/06/2023</b>
 					</div>
 					<br>
 					<div>
-						The expenditure involved is debitable as under Demand No. 28 during the financial year 2023-2024
+						The expenditure involved is debitable as under Demand No. 27 during the financial year 2023-2024
 					</div>
 					<br>
 					<div>
@@ -124,7 +124,7 @@ td {
 						<span style="margin-right: 20px;">00.091</span> Secretariats (Minor Head)<br>
 						<span style="margin-right: 50px;">13</span> National Informatics Centre<br>
 						<span style="margin-right: 30px;">13.01</span> Establishment<br>
-						<b><span style="margin-right: 3px;" >13.01.13 </span>  Office Expenses</b>
+						<b><span style="margin-right: 3px;" >13.01.18 </span>  Rent for Others</b>
 					</div>
 					
 					
@@ -134,8 +134,9 @@ td {
 					
 					<br><br><br>
 					<div style="text-align: right">
-						<br> <br> <b>(S.V.Ch. Subba Rao)<br>
-							Scientist-F & Head of Office
+						<br> <br> <b>
+						(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
+<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
 						</b>
 					</div>
 

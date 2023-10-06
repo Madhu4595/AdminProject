@@ -1,3 +1,5 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.Medical_Bills_upload"%>
 <%@page import="com.app.util.MyUtil"%>
 <%@page import="java.io.OutputStream"%>
@@ -9,6 +11,11 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 Medical_Bills_upload upload = (Medical_Bills_upload)request.getAttribute("medical_Bills_upload3");
 //String words = MyUtil.convert(Long.valueOf(upload.getTotAmountApproved()));
@@ -56,11 +63,11 @@ function myFunction() {
 <div class="row">
   <div class="col-md-12">
     <div> 
-      <h6 style="text-align: center;font-weight:50px;"><b>Government of India   </b></h6>
-      <h6 style="text-align: center;font-weight:50px;"><b>Ministry of Electronics & Information Technology</b></h6>
-      <h6 style="text-align: center;font-weight:50px;"><b>NATIONAL INFORMATICS CENTRE </b></h6>
-      <h6 style="text-align: center;font-weight:50px;"><b>Andhra Pradesh State Centre </b></h6>
-      <h6 style="text-align: center;font-weight:50px;"><b>Vijayawada - 520010 </b></h6>
+      <h6 style="text-align: center;font-weight:50px;"><b><%= localizationManager.getMessage("nic1") %> / Government of India   </b></h6>
+      <h6 style="text-align: center;font-weight:50px;"><b><%= localizationManager.getMessage("nic2") %> / Ministry of Electronics & Information Technology</b></h6>
+      <h6 style="text-align: center;font-weight:50px;"><b><%= localizationManager.getMessage("NATIONALINFORMATICSCENTRE") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+      <h6 style="text-align: center;font-weight:50px;"><b><%= localizationManager.getMessage("AndhraPradeshStateCentre") %> / Andhra Pradesh State Centre </b></h6>
+      <h6 style="text-align: center;font-weight:50px;"><b><%= localizationManager.getMessage("nic4") %> 520010 / Vijayawada - 520010 </b></h6>
       <div>
     
       <div style="text-align: right;">
@@ -198,15 +205,15 @@ approve the reimbursement of admissible amount for <b>&#8377;  ${tot_amount }/- 
       
       
      <div style="text-align: right;">
-    <b> <u> <p>Dy.Director</p></u></b>
+    <b> <u> <p><%= localizationManager.getMessage("DyDirector") %> / Dy.Director</p></u></b>
       </div>
       
       
        <div style="text-align: left;">
-   		<b><u>Head of Office</u></b>
+   		<b><u><%= localizationManager.getMessage("HeadofOffice") %> / Head of Office</u></b>
       </div><br><br><br>
        <div style="text-align: left;">
-   		<b><u>State Informatics Officer</u></b>
+   		<b><u><%= localizationManager.getMessage("StateInformaticsOfficer") %> / State Informatics Officer</u></b>
       </div><br><br><br>
   
 

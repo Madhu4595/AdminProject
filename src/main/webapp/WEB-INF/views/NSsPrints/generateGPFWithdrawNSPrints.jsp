@@ -1,16 +1,18 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="com.app.entity.GPF"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
-	
-
 
 GPF gpf = (GPF) request.getAttribute("gpf");
 String words = gpf.getWithDrawAmt();
@@ -77,42 +79,35 @@ System.out.println("nsdateprint==> "+nsdateprint);
 			<div class="col-md-12">
 				<div>
 
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Government of India </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Ministry of Electronics & Information Technology </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> National Informatics Centre (APSC) </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b> Vijayawada - 520010 </b>
-					</h6>
+									 <h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
+<br>
 
 					<div>
 						<div style="text-align: right;">
-							Date:
-							<%=nsdateprint%>
+							<%= localizationManager.getMessage("nic37") %> / Date: <b><%=nsdateprint%></b>
 						</div>
 					</div>
 					<div>
 						<b>Subject: </b> Withdrawal of Rs. <b>${gpf.withDrawAmt }/-</b>
-						from GPF in favour of ${emp.callSign }, ${emp.name },
+						from GPF in favour of ${emp.callSign }. ${emp.name },
 						${emp.designation }, ${emp.place }.
 					</div>
 					<br> <br>
 
 					<div style="text-align: justify;">
-						${emp.callSign }, ${emp.name }, ${emp.designation }, ${emp.place }
+						${emp.callSign }. ${emp.name }, ${emp.designation }, ${emp.place }
 						has applied for withdrawal of Rs. <b>${gpf.withDrawAmt }/-</b> (
-						Rupees <span id="words"></span> ) from the amount standing to his
+						Rupees <span id="words"></span> Only) from the amount standing to his
 						credit in GPF account No.${gpf.gpfNo } towards expenditure in
 						connection with purchase of consumer durables in terms of Rule
 						15(1)(A) of General Provident Fund (Central Services) Rules, 1960.
 					</div>
 					<br>
-					<div style="text-align: justify;">${emp.callSign },
+					<div style="text-align: justify;">${emp.callSign }.
 						${emp.name }, ${emp.designation }, ${emp.place } is having net
 						balance of Rs. ${gpf.netBalance }/- in his GPF account and the
 						amount applied for does not exceed the limits as laid down under
@@ -165,16 +160,16 @@ System.out.println("nsdateprint==> "+nsdateprint);
 					</div>
 					<br>
 
-					<div style="text-align: justify;">${emp.callSign },
+					<div style="text-align: justify;">${emp.callSign }.
 						${emp.name }, ${emp.designation }, ${emp.place }, has submitted
 						the required documents. The withdrawal applied for by
-						${emp.callSign }, ${emp.name } does not exceed the limit of 75%
+						${emp.callSign }. ${emp.name } does not exceed the limit of 75%
 						under Rule 16(1).</div>
 					<br>
 					<div style="text-align: justify;">
 						SIO, NIC, APSC being the competent authority as per the delegation
 						of powers vide No.M11017/1/2014 dated 17/07/2014 any approve for
-						withdrawal of Rs. <b>${gpf.withDrawAmt }/-</b> to ${emp.callSign },
+						withdrawal of Rs. <b>${gpf.withDrawAmt }/-</b> to ${emp.callSign }.
 						${emp.name } from his GPF account
 					</div>
 					<br> <br>
@@ -183,16 +178,18 @@ System.out.println("nsdateprint==> "+nsdateprint);
 					<br>
 					<br>
 					<div style="text-align: right;">
-						<b> (BSN Murty)<br> Deputy Director
+						<b> 
+						(<%= localizationManager.getMessage("nic45") %>) / (BSN Murty)<br>
+							 <%= localizationManager.getMessage("DeputyDirector") %> / Deputy Director
 						</b>
 					</div>
 
 					<div style="text-align: left;">
-						<b><u>HO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("HOAPSC") %> / HO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 					<div style="text-align: left;">
-						<b><u>SIO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("SIOAPSC") %> / SIO, APSC</u></b>
 					</div>
 
 

@@ -1,11 +1,16 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.GEM"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 	<%
 	System.out.println("generateGEMOutsourceNoteSheet=============>");
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -52,14 +57,15 @@
 			<div class="col-md-12">
 				<div>
 				
-				<h6 style="text-align: center; font-weight: 50px;"> <b> National Informatics Centre </b> </h6>
-				<h6 style="text-align: center; font-weight: 50px;"> <b> Andhra Pradesh State Centre </b> </h6>
-				<h6 style="text-align: center; font-weight: 50px;"> <b> Vijayawada - 520010 </b> </h6>
-				
+				 <h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
+<br>
 					<div>
 						<div style="text-align: right;">
-							Date:
-							<%=todaydate%>
+							<%= localizationManager.getMessage("nic37") %> / Date:<b> <%=todaydate%></b>
 						</div>
 					</div>
 					<br>
@@ -70,22 +76,19 @@
 					<br><br>
 					<div style="text-align: justify;">
 						DG. NIC has given the in principle approval for outsourcing services of one Office Assistant and one MTS for Administration support for NIC, APSC 
-						through e file dated 09/11/2021 (Copy placed in the receipts) for which financial concurrence has been obtained from the competent authority vide IFD 
-						Dairy No. 981 dated 10/01/2022 for giving the services for a period of one year w.e.f 12/01/2022 for an amount of <b>Rs. ${oldGem.amount }/-</b>
-						under the <b>Budget Head Office</b> (Copy placed in the receipts).
+						through e file dated 12/11/2022 (Copy placed in the receipts) for which financial concurrence has been obtained from the competent authority vide IFD 
+						Dairy No. 1241 dated 16/03/2023 for giving the services for a period of one year w.e.f 12/04/2023 for an amount of <b>Rs. 7,29,637.80/-</b>
+						under the <b>Budget Head - Office Expenses</b> (Copy placed in the receipts).
 					</div>
 					<br> 
 					<div style="text-align: justify;">
-						A work order through GEM Contract No <u>GEMC-511687746353612</u> dated 11/01/2022 has been issued to the empanelled vendor i.e., M/s
-						Mascot Protection Force LLP, New Delhi.(Copy placed in receipts).
+						A work order through GEM Contract No <u>GEMC-511687760862087</u> dated 10/04/2023 has been issued to the empanelled vendor i.e., M/s
+						KK Group of Companies, New Delhi.(Copy placed in receipts).
 					</div><br>
-					<div style="text-align: justify;">
-						 The agreement has been extended for a period of one month vide IFD Dairy No.66 Dated 11.11.2023 (i.e., ${oldGem.period }). (Approval copy attached).
-					</div>
 					 <br>
 					<div style="text-align: justify;">
-						 M/s. Mascot Protection Force LLP has submitted the bill towards outsourcing service charges of one Office Assistant and one MTS for the month of 
-						 ${oldGem.monthYear } for NIC, APSC, Vijayawada.
+						 M/s. KK Group of Companies has submitted the bill towards outsourcing service charges of one Office Assistant and one MTS for the month of 
+						 <b>${oldGem.monthYear }</b> for NIC, APSC, Vijayawada.
 					</div><br>
 					<div style="text-align: justify;">
 						 The bill has been verified and found that the vendor has submitted as per the approved rates.
@@ -120,17 +123,17 @@
 					<br><br><br><br><br>
 					<div style="text-align: right;">
 						<b>
-							 (BSN Murty)<br>
-							 Deputy Director
+							 (<%= localizationManager.getMessage("nic45") %>) / (BSN Murty)<br>
+							 <%= localizationManager.getMessage("DeputyDirector") %> / Deputy Director
 						</b>
 					</div>
 					
 					<div style="text-align: left;">
-						<b><u>HO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("HOAPSC") %> / HO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 					<div style="text-align: left;">
-						<b><u>SIO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("SIOAPSC") %> / SIO, APSC</u></b>
 					</div>
  
 				</div>

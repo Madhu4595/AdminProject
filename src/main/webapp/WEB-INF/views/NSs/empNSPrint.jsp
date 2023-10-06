@@ -1,11 +1,15 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.Employee"%>
 <%@page import="com.app.entity.Employee_allowance"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+ <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 	int i = 1;
 String words =  request.getAttribute("totalAmout").toString();
@@ -54,14 +58,15 @@ function myFunction() {
 				
 				 
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>NATIONAL INFORMATICS CENTRE </b>
+						<b><%= localizationManager.getMessage("NATIONALINFORMATICSCENTRE") %> / NATIONAL INFORMATICS CENTRE </b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>ANDHRA PRADESH STATE CENTRE </b>
+						<b><%= localizationManager.getMessage("ANDHRAPRADESHSTATECENTRE") %> / ANDHRA PRADESH STATE CENTRE </b>
 					</h6>
 					<h6 style="text-align: center; font-weight: 50px;">
-						<b>VIJAYAWADA  </b>
-					</h6>
+						<b><%= localizationManager.getMessage("VIJAYAWADA") %> / VIJAYAWADA  </b>
+					</h6> 
+					
 					<div>
 
 						<div style="text-align: right;"><b>Date</b>: ${todaydate }</div>
@@ -239,17 +244,17 @@ function myFunction() {
 				<br>
 				<div style="text-align: right;">
 						<b>
-							 (BSN Murty)<br>
-							 Deputy Director
+							 <%= localizationManager.getMessage("(BSNMurty)") %> / (BSN Murty)<br>
+							 <%= localizationManager.getMessage("DeputyDirector") %> / Deputy Director
 						</b>
 					</div>
 
 					<div style="text-align: left;">
-						<b><u>HO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("HOAPSC") %> / HO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 					<div style="text-align: left;">
-						<b><u>SIO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("SIOAPSC") %> / SIO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 				</div></div></div></section>

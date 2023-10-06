@@ -3,17 +3,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
+
 <link rel="stylesheet" href="./sass/style.css" />
-<link type="text/css"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
-	rel="stylesheet" />
+<link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
 
 <script src="./js/ajax.js" type="text/javascript"></script>
 <script src="./js/jquery-3.3.1.min.js" type="text/javascript"></script>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script type="text/javascript"
-	src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
 $(function() {
@@ -54,8 +52,6 @@ function Validation(){
 	var edesignation = document.getElementById('edesignation').value;
 	var basic_pay = document.getElementById('basic_pay').value;
 	var dob = document.getElementById('dob').value;
-	//var bank_acno = document.getElementById('bank_acno').value;
-	//var ifsc_code = document.getElementById('ifsc_code').value;
 	
 	//null check
 	if(code==null || code==''){
@@ -84,17 +80,7 @@ function Validation(){
 		document.getElementById('dob').focus();
 		return false;
 	}
-// 	if(bank_acno==null || bank_acno==''){
-// 		alert("Please Enter Bank Name");
-// 		document.getElementById('bank_acno').focus();
-// 		return false;
-// 	}
-// 	if(ifsc_code==null || ifsc_code==''){
-// 		alert("Please Enter IFSC Code");
-// 		document.getElementById('ifsc_code').focus();
-// 		return false;
-// 	}
-//size check
+ 
 	
 	if(code.length>4){
 		   alert("Please enter 4 digits Emploee Code");
@@ -108,19 +94,7 @@ function Validation(){
 		   $('#name').focus();
 		   return false;
 	   }
-// 	if(basic_pay.length>6){
-// 		   alert("Please enter Basic Pay Correctly");
-// 		   $('#basic_pay').val('');
-// 		   $('#basic_pay').focus();
-// 		   return false;
-// 	   }
-	
-// 	if(bank_acno.length>18){
-// 		   alert("Please enter Bank Account Number Correctly");
-// 		   $('#bank_acno').val('');
-// 		   $('#bank_acno').focus();
-// 		   return false;
-// 	   }
+ 
 }
 
 function addOwner(a){ 
@@ -145,31 +119,21 @@ function searchempno(){
 	  //alert("searchempno()"+code);
   	  document.getElementById("code").readonly=true;
   	  
-//   		 $.getJSON('employeesearchnum.action?code=' + eno, function (response) {
-//   			 if (response) {				
-//   				 //alert(response.dob);
-//   	             if(response.Error=='Success'){
-//   	             document.getElementById("name").value =response.name;
-//   	           //  document.getElementById("edesignation").value =response.designation;
-//   	           	 document.getElementById("basic_pay").value =response.basic_pay;
-//   	         	 document.getElementById("dob").value =response.dob;  	         
-//   	       		 document.getElementById("bank_acno").value =response.bank_acno;
-//   	     		 document.getElementById("ifsc_code").value =response.ifsc_code;
-//   	   			 document.getElementById("egst").value =response.gst_no;
-//   	   		 $("#edesignation option[value="+response.designation+"]").prop('selected', true);
-//   	         }}
-//   		 });
-  		 
   		$.get('./employeesearchnum',{code : code}, function (response) {
 	             document.getElementById("name").value =response[0];
-	           //	 $("#edesignation option[value="+response[1]+"]").prop('selected', true);
 	           	 document.getElementById("edesignation").value =response[1];
 	           	 document.getElementById("basic_pay").value =response[2];
 	         	 document.getElementById("dob").value =response[3];  	         
-	       		 //document.getElementById("bank_acno").value =response[4];
 	     		 document.getElementById("egst").value =response[4];
 	     		 document.getElementById("place").value =response[5];
-	   		 	//$("#egst option[value="+response[6]+"]").prop('selected', true);
+	     		 document.getElementById("ecghsCode").value =response[6];
+	     		 document.getElementById("address").value =response[9];
+	     		 document.getElementById("phno").value =response[8];
+	     		 document.getElementById("wardEntitlement").value =response[10];
+	     		
+	     		 $("#viewphoto").append('<img src="data:image/png;base64,'+response[7]+'" alt="Image" width="100px;" height="100px;" />')
+	     		
+	     		 
 		 });
   		 
   		$.ajax({
@@ -180,15 +144,11 @@ function searchempno(){
 		    success: function(html)
 		    {
 		    	
-		    	//alert(html);
 		    	$("#search").hide();	
 		    	$("#submit_btn").show();	
 		    	$("#allowance_response").html(html);	
-		    	//$("#addfamily").hide();
 		    	 
 		    	document.getElementById("empinsert").action = document.getElementById("formaction").value;
-		    	//document.myform.action = empinsert;
-		    	//return allowancecheck();
 	       }
 		});
   		 
@@ -200,94 +160,63 @@ function searchempno(){
 	<%@include file="banner.jsp"%>
 	<%@include file="navbar.jsp"%>
 
-	<section class="container mt-5 shadow py-5 ">
+	<div class="container-fluid shadow align-items-center">
 		<h4 align="center" class="sendhead">EMPLOYEE INSERT</h4>
 		<div align="left" style="padding-left: 50px;">
 
 			<form:form action="./empinsert" method="post"
 				onsubmit="return Validation();" modelAttribute="employee"
-				name="empinsert" id="empinsert">
-				<div class="abc">
-
-
-
-					<p class="bb">
-						<b>Basic Details</b>
-					</p>
-					<table>
-						<tr>
-							<td>Employee Code:</td>
-							<td><form:input path="code" maxlength="4" id="code"
-								onchange="searchempno()" onkeypress="return isNumberKey(event)"
-								style="width: 50px;"/></td>
-						</tr>
-						<tr>
-							<td>Employee Name:</td>
-							<td><form:input path="name" maxlength="50"
-								id="name" style="width: 300px;"/><br>
-						</tr>
-						<tr>
-							<td>Designation:</td>
-							<td>
-							<input type="text" name="edesignation" id="edesignation" style="width: 300px; height: 26px;"/>
-<!-- 							<select name="edesignation" id="edesignation" -->
-<!-- 								style="width: 170px; height: 26px;"> -->
-<!-- 									<option value="">-select-</option> -->
-<%-- 									<c:forEach items="${desglist}" var="list"> --%>
-<%-- 										<option value="${list.id }">${list.name}</option> --%>
-<%-- 									</c:forEach> --%>
-
-<!-- 							</select>  -->
-							<br>
-						</tr>
-						<tr>
-							<td>Basic Pay:</td>
-							<td><form:input path="basic_pay" id="basic_pay" maxlength="6"
-								onkeypress="return isNumberKey(event)"
-								onchange="return rupeeformat(this.value) " style="width: 300px; height: 26px;"/><br>
-						</tr>
-						<!-- 	<tr><td>Date of Birth:</td><td><input type="date" name="dob" id="dob"><br></tr> -->
-						<tr>
-							<td>Date of Birth:</td>
-							<td><form:input path="dob" id="dob" style="width: 300px; height: 26px;" /><br>
-						</tr>
-<!-- 						<tr> -->
-<!-- 							<td>Bank Account Number:</td> -->
-<%-- 							<td><form:input path="bank_acno" id="bank_acno" --%>
-<%-- 								maxlength="18" onkeypress="return isNumberKey(event)"/><br> --%>
-<!-- 						</tr> -->
-<!-- 						<tr> -->
-<!-- 							<td>IFSC Code:</td> -->
-<%-- 							<td><form:input path="ifsc_code" id="ifsc_code" --%>
-<%-- 								onkeypress="allowAlphaNumericSpace(event)" maxlength="11"/><br> --%>
-<!-- 						</tr> -->
-						<tr>
-							<td>Pay Scale/Level:</td>
-							<td>
-									<input type="text" name="egst" id="egst" style="width: 300px; height: 26px;"> 
-<!-- 								<select -->
-<!-- 								name="egst" id="egst" style="width: 100px; height: 26px;"> -->
-<%-- 									<c:forEach items="${pscalelist}" var="list"> --%>
-<%-- 										<option value="${list.id}">${list.name}</option> --%>
-<%-- 									</c:forEach> --%>
-
-<!-- 							</select>  -->
-							<br>
-						</tr>
-
-						<tr>
-							<td>State / Dist Employee</td>
-							<td>
-							<input type="text" name="place" id="place" style="width: 500px;" />
-							
-<!-- 								<select name="place" id="place" > -->
-<!-- 									<option value="">-select-</option> -->
-<!-- 									<option value="state">State</option> -->
-<!-- 									<option value="district">District</option> -->
-<!-- 								</select> -->
-							</td>
-						</tr>
-					</table>
+				name="empinsert" id="empinsert" enctype="multipart/form-data">
+				
+				
+				
+				<div class="row align-items-center">
+					<div class="col-sm-3" align="center">Employee Code:</div>
+					<div class="col-sm-3"><form:input path="code" class="form-control" maxlength="4" id="code" onchange="searchempno()" onkeypress="return isNumberKey(event)" /></div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-3"></div>
+				</div>
+				<br>
+				<p class="bb"> <b>Basic Details</b> </p>
+				<div class="row align-items-center m-1">
+					<div class="col-sm-3" align="center">Employee Name:</div>
+					<div class="col-sm-3"><form:input class="form-control"  path="name" maxlength="50" id="name"  /></div>
+					<div class="col-sm-3" align="center">Designation:</div>
+					<div class="col-sm-3"><input type="text" class="form-control"  name="edesignation" id="edesignation" /></div>
+				</div>
+				<div class="row align-items-center m-1">
+					<div class="col-sm-3" align="center">Basic Pay:</div>
+					<div class="col-sm-3"><form:input class="form-control"  path="basic_pay" id="basic_pay" maxlength="6" onkeypress="return isNumberKey(event)" onchange="return rupeeformat(this.value) "  /></div>
+					<div class="col-sm-3" align="center">Date of Birth:</div>
+					<div class="col-sm-3"><form:input class="form-control"  path="dob" id="dob" /></div>
+				</div>
+				<div class="row align-items-center m-1">
+					<div class="col-sm-3" align="center">Pay Scale/Level:</div>
+					<div class="col-sm-3"><input type="text" class="form-control"  name="egst" id="egst"  /></div>
+					<div class="col-sm-3" align="center">State / Dist Employee:</div>
+					<div class="col-sm-3"><input type="text" class="form-control"  name="place" id="place" /></div>
+				</div>
+				<div class="row align-items-center m-1">
+					<div class="col-sm-3" align="center">Phone Number:</div>
+					<div class="col-sm-3"><input type="text" class="form-control"  name="phno" id="phno" /></div>
+					<div class="col-sm-3" align="center">CGHS ID:</div>
+					<div class="col-sm-3"><input type="text" class="form-control"  name="ecghsCode" id="ecghsCode" /></div>
+				</div>
+				<div class="row align-items-center m-1">
+					<div class="col-sm-3" align="center">Ward Entitlement:</div>
+					<div class="col-sm-3"><select class="form-control" name="wardEntitlement" id="wardEntitlement">
+												<option value="">-select-</option>
+												<option value="Pvt">Private</option>
+												<option value="SemiPvt">Semi Private</option>
+												<option value="general">General</option>
+											</select></div>
+					<div class="col-sm-3" align="center">Address:</div>
+					<div class="col-sm-3"><textarea class="form-control"  rows="2" cols="40" name="address" id="address"></textarea></div>
+				</div>
+				<div class="row align-items-center m-1">
+					<div class="col-sm-3" align="center">Photo:</div>
+					<div class="col-sm-3"><input type="file" class="form-control"  name="photo_doc" id="photo_doc" /></div>
+					<div class="col-sm-6"><span id="viewphoto"></span></div>
 				</div>
 				<br>
 
@@ -311,4 +240,4 @@ function searchempno(){
 		</div>
 
 
-	</section>
+	</div>

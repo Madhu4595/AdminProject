@@ -51,12 +51,12 @@
 	<%@include file="/WEB-INF/views/banner.jsp"%>
 	<%@include file="/WEB-INF/views/navbar.jsp"%>
 
-	<center>
+	<div align="center">
 		<span style="color: blue; font-weight: bolder;">APPROVED
 			DETAILS FOR CEA </span><br> <span id="noreqsmsg"
 			style="font-weight: bolder; color: red;"></span>
 
-	</center>
+	</div>
 
 	<table border="1" class="table table-stripped" id="reqstable">
 		<thead style="background-color: black; color: white;">

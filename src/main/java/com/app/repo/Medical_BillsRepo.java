@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.entity.Medical_Bills;
+import com.app.model.MasterRespProjModel;
 
 public interface Medical_BillsRepo extends JpaRepository<Medical_Bills, Long> {
 
@@ -104,6 +105,11 @@ public interface Medical_BillsRepo extends JpaRepository<Medical_Bills, Long> {
 	// Prints Notesheet Queries
 	@Query(value = "select * from medic_bills where note_status=true order by request_no", nativeQuery = true)
 	public List<Medical_Bills> getMedicBillsForNSPrint();
+	
+	@Query(value = "select request_no,emp_code,ns_number,string_agg(bill_no, ',')as bill_no,string_agg(bill_date, ',')as bill_date,\r\n" + 
+			" string_agg(lab_name, ',')as lab_name,string_agg(amount_approved, ',')as amount_approved \r\n" + 
+			" from medic_bills where note_status=true group by request_no,emp_code,ns_number", nativeQuery = true)
+	public List<MasterRespProjModel> getMedicBillsForNSPrint2();
 
 	@Query(value = "select * from medic_bills where note_status=true and ns_number=? order by request_no", nativeQuery = true)
 	public List<Medical_Bills> getMedicBillsByNotenumber(String ns_number);
@@ -111,6 +117,11 @@ public interface Medical_BillsRepo extends JpaRepository<Medical_Bills, Long> {
 //Sanction Order Prints Queries
 	@Query(value = "select * from medic_bills where sanction_status=true order by request_no", nativeQuery = true)
 	public List<Medical_Bills> getMedicBillsForSOPrint();
+	
+	@Query(value = "select request_no,emp_code,so_number,string_agg(bill_no, ',')as bill_no,string_agg(bill_date, ',')as bill_date,\r\n" + 
+			"string_agg(lab_name, ',')as lab_name,string_agg(amount_approved, ',')as amount_approved \r\n" + 
+			"from medic_bills where sanction_status=true group by request_no,emp_code,so_number", nativeQuery = true)
+	public List<MasterRespProjModel> getMedicBillsForSOPrint2();
 	
 	@Query(value = "select * from medic_bills where sanction_status=true and so_number=? order by request_no", nativeQuery = true)
 	public List<Medical_Bills> getMedicBillsForSOPrintbySoNumber(String soNumber);

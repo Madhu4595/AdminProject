@@ -18,6 +18,7 @@ public class Employee_Family {
 	private String relation;
 	private String dob;
 	private String dependency;
+	private String cghsCode;
 	
 	
 	public Employee_Family() {
@@ -26,8 +27,8 @@ public class Employee_Family {
 	}
 
 
-	public Employee_Family(Integer id, String emp_code, String per_name, String relation, String dob,
-			String dependency) {
+	public Employee_Family(Integer id, String emp_code, String per_name, String relation, String dob, String dependency,
+			String cghsCode) {
 		super();
 		this.id = id;
 		this.emp_code = emp_code;
@@ -35,6 +36,7 @@ public class Employee_Family {
 		this.relation = relation;
 		this.dob = dob;
 		this.dependency = dependency;
+		this.cghsCode = cghsCode;
 	}
 
 
@@ -98,15 +100,20 @@ public class Employee_Family {
 	}
 
 
+	public String getCghsCode() {
+		return cghsCode;
+	}
+
+
+	public void setCghsCode(String cghsCode) {
+		this.cghsCode = cghsCode;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Employee_Family [id=" + id + ", emp_code=" + emp_code + ", per_name=" + per_name + ", relation="
-				+ relation + ", dob=" + dob + ", dependency=" + dependency + "]";
+				+ relation + ", dob=" + dob + ", dependency=" + dependency + ", cghsCode=" + cghsCode + "]";
 	}
-	
-	
-	
-	
-	
-	
+
 }

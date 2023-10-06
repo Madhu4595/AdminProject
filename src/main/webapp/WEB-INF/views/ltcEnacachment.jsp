@@ -47,6 +47,7 @@ $(document).ready(function(){
 	$("#amountadvancelable").hide();
 	//amountadvance
 	$("#amountadvance").hide(); $("#amountadvance").val('');
+	$("#doc").hide(); $("#doclable").hide();
 	//submitbtn
 	$("#submitbtn").hide();
 	
@@ -77,6 +78,7 @@ function empSearch(){
 				$("#leavedetailslable").show(); $("#leavedetails").show(); $("#leavedetails").val('');
 				$("#encashmentlable").show(); 	$("#encashment").show(); $("#encashment").val('');
 				$("#amountadvancelable").show();$("#amountadvance").show(); $("#amountadvance").val('');
+				$("#doc").show(); $("#doclable").show();
 				$("#submitbtn").show();
 				
 			},
@@ -120,13 +122,13 @@ function validate(){
 	<%@include file="banner.jsp"%>
 	<%@include file="navbar.jsp"%>
 
-	<center><b>${saveltcEnacachmentMsg }</b></center>
+	<div align="center"><b>${saveltcEnacachmentMsg }</b></div>
 	<div align="center">
 		<h6 class="h6 font-weight-bolder text-primary">LTC-EL Enacachement Form</h6>
 	</div>
 	<div class="container border p-4 font-weight-bolder"
 		style="background-color: #e6ffff;">
-		<form:form action="./saveltcEnacachment" method="post" modelAttribute="ltcEnacachment" >
+		<form:form action="./saveltcEnacachment" method="post" modelAttribute="ltcEnacachment" enctype="multipart/form-data">
 
 			<div class="row align-items-center m-2">
 				<div class="col-auto" style="width: 200px;" id="empcodelable">
@@ -221,6 +223,16 @@ function validate(){
 					<input type="text" name="amountadvance" id="amountadvance"
 						class="form-control" placeholder="Ex: NIL" />
 				</div>
+			</div>
+			
+			<div class="row g-3 align-items-center m-2">
+				<div class="col-auto" style="width: 200px;" id="encashmentlable">
+					<label for="encashment" class="col-form-label" id="doclable"> Upload Document:</label>
+				</div>
+				<div class="col-auto">
+					<input type="file" name="doc" id="doc" class="form-control" />
+				</div>
+				
 			</div>
 
 			<div class="row g-3 align-items-center m-2" id="submitbtn">

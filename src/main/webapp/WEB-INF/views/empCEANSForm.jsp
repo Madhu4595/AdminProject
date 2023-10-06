@@ -353,19 +353,17 @@ function checkVal() {
 				one input is requesting.</div>
 		</div>
 	</div>
-	<center style="color: red;">
-		<h4>
-			<b> ${msg} </b>
-			
-		</h4>
+	<div style="color: red;" align="center">
+		<h4> <b> ${msg} </b> </h4>
 		<p id="demo"></p>
-	</center>
+	</div>
 	<form:form action="./empCEANSPrint" method="post" target="_blank;">
 <div id="scrollbar"> 
 <div id="content">
 	
 	<table class="table table-bordered table-striped mt-4">
 		<thead class="bg-secondary text-light">
+		<tr>
 			<th><input type="checkbox" id="checkedAll"/></th> 
 			<th>Req No</th>
 			<th>Emp. Code</th>
@@ -373,6 +371,7 @@ function checkVal() {
 <!-- 			<th>Bill Type</th> -->
 			<th>Amount Claimed</th>
 			<th>Amount Approved</th>
+			</tr>
 		</thead>
 		<tbody id="tbody"></tbody>
 

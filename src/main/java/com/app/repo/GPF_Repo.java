@@ -38,6 +38,11 @@ public interface GPF_Repo extends JpaRepository<GPF, String>{
 	public GEM getBySanctionNumber(String sanction_number);
 	
 	
+	//===============For GPF Withdraw Notesheet Print==================
+	@Query(value="select * from gpf where type='withdraw' and note_status = true order by request_no", nativeQuery = true)
+	public List<GPF> getAllGPFWithdrawForNSPrint();
+ 
+	
 	//=====================For Sanction Order Print========================
 	//sanction order
 	@Query(value="select * from gpf where type='withdraw' and note_status = true and sanction_status = true order by request_no", nativeQuery = true)

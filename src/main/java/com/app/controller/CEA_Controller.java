@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.entity.CEA;
 import com.app.model.DistinctNoteNumbers;
@@ -38,13 +39,19 @@ public class CEA_Controller {
 	}
 	
 	@RequestMapping("/empCEASave")
-	public String empCEASave(@ModelAttribute("cea") CEA cea,Model model) {
+	public String empCEASave(@ModelAttribute("cea") CEA cea,Model model,MultipartFile doc) {
 		System.out.println("UR IN /empCEASave");
 		System.out.println("ModelAttribute==> CEA=> "+cea.toString());
 		try {
 			cea.setEntryDate(LocalDateTime.now());
 			cea.setNoteStatus(false);
 			cea.setSanctionStatus(false);
+			
+			if(doc == null) {
+				
+			}else {
+				cea.setDocument(doc.getBytes());
+			}
 			
 			CEA savedCEA = repo.save(cea);
 			System.out.println("Saved Record==> "+savedCEA.toString());
@@ -63,11 +70,17 @@ public class CEA_Controller {
 	}
 	
 	@RequestMapping("/updateCEA")
-	public String updateCEA(@ModelAttribute("cea") CEA cea, Model model) {
+	public String updateCEA(@ModelAttribute("cea") CEA cea, Model model,MultipartFile doc) {
 		System.out.println("updateCEA==> "+cea.toString());
 		
 		try {
 		Optional<CEA> oldCEA = repo.findById(cea.getRequestno());
+
+		if(doc == null) {
+			
+		}else {
+			oldCEA.get().setDocument(doc.getBytes());
+		}
 		
 		if(!oldCEA.isPresent()) {
 			model.addAttribute("msg", "Given Request Number is Not Found!!!");
@@ -297,12 +310,13 @@ public class CEA_Controller {
 						empAllowance.get().setSanctionStatus(true);
 						
 						if (empAllowance.get().getNoofchilds().equalsIgnoreCase("1")) {
-							totAmt = totAmt + empAllowance.get().getAmount_approved();
+							totAmt = totAmt + empAllowance.get().getAmount_approve1();
 						}
 						if (empAllowance.get().getNoofchilds().equalsIgnoreCase("2")) {
-							totAmt = totAmt + empAllowance.get().getAmount_approved();
+							totAmt = totAmt + empAllowance.get().getAmount_approve1();
+							totAmt = totAmt + empAllowance.get().getAmount_approve2();
 						}
-						
+						empAllowance.get().setAmount_approved(totAmt);
 						repo.save(empAllowance.get());
 					}
 				}
@@ -314,8 +328,7 @@ public class CEA_Controller {
 				System.out.println("totAmt==> " + totAmt);
 				model.addAttribute("totAmt", totAmt);
 
-				reqList.stream()
-						.forEach(a -> listEmpAllowances.add(repo.findById( a).get()));
+				reqList.stream().forEach(a -> listEmpAllowances.add(repo.findById( a).get()));
 				model.addAttribute("listEmpAllowances", listEmpAllowances);
 				model.addAttribute("empsList", employeeRepo.findAll());
 				System.out.println("listEmpAllowances size==> " + listEmpAllowances.size());
@@ -360,6 +373,7 @@ public class CEA_Controller {
 		@RequestMapping("/generateCEASOPrints")
 		public String generateCEASOPrints(@RequestParam String sanctionNumber,Model model) {
 			
+			System.out.println("sanctionNumber=>"+sanctionNumber);
 			
 				DistinctSanctionOrderNumbers sonumber = repo.getDistinctSanctionOrderNumbersbySanctionNumber(sanctionNumber);
 				String[] requestno = sonumber.getRequestno().split(",");
@@ -371,9 +385,11 @@ public class CEA_Controller {
 				List<CEA> listEmpAllowances = new ArrayList<CEA>();
 				
 				reqList.stream().forEach(a -> listEmpAllowances.add(repo.findById( a.replaceAll("\\s+", "")).get()));
+				
 				model.addAttribute("listEmpAllowances", listEmpAllowances);
 				model.addAttribute("empsList", employeeRepo.findAll());
 				model.addAttribute("SONumber", sanctionNumber);
+				
 				System.out.println("listEmpAllowances size==> " + listEmpAllowances.size());
 			
 			return "SOsPrints/generateCEASOPrints";

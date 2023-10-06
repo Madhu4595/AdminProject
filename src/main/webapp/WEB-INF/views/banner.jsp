@@ -13,7 +13,7 @@
 	<style>
 	#nicimgg,#apimgg{
 		width: 180px;
-		height: 180px;
+		height: 80px;
 	}
 	#nicimgg{
 	margin-right: 80px;
@@ -28,6 +28,7 @@
 	#bannnersection{
 		border: 2px solid black;
 		background: #e6ffcc;
+		
 	}
 /* 	.container{ */
 /* 		border: 2px solid black; */

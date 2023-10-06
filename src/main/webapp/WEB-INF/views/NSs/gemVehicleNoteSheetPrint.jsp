@@ -1,12 +1,15 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.GEM"%>
 <%@page import="com.app.entity.LTC"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 	<%
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
@@ -60,15 +63,15 @@
 			<div class="col-md-12">
 				<div>
 				
-				<h6 style="text-align: center; font-weight: 50px;"> <b> Government of India </b> </h6>
-				<h6 style="text-align: center; font-weight: 50px;"> <b> Ministry of Electronics & Information Technology </b> </h6>
-				<h6 style="text-align: center; font-weight: 50px;"> <b> National Informatics Centre (APSC) </b> </h6>
-				<h6 style="text-align: center; font-weight: 50px;"> <b> Vijayawada - 520010 </b> </h6>
-				
+				 <h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
+<br>
 					<div>
 						<div style="text-align: right;">
-							Date:
-							<%=todaydate%>
+							 <%= localizationManager.getMessage("nic37") %> / Date:<b>  <%=todaydate%> </b>
 						</div>
 					</div>
 					<br>
@@ -78,16 +81,16 @@
 					<br><br>
 					<div style="text-align: justify;">
 						NIC, APSC sent a proposal for hiring vehicle for office purpose on rental basis. DG, NIC has given the in principle approval for which financial concurrence has been 
-						obtained vide <u>IFS Dairy No. 420 dated 30/06/2022</u> for giving the services for a period of one year w.e.f ${oldGem.period } for an amount of Rs. ${oldGem.amount }/-
+						obtained vide <u>IFS Dairy No. 390 dated 12/06/2023</u> for giving the services for a period of one year w.e.f 1723 for an amount of Rs. ${oldGem.amount }/-
 						per month inclusive of all taxes. (Copy attached).
 					</div>
 					<br> 
 					<div style="text-align: justify;">
-						A work order through GEM Contract No <u>GEMC-511687746353612</u> dated 30/06/2022 and Sanction order vide No. 511687746353612 dated 30/06/2022
-						has been issued to the empanelled vendor i.e., M/s. Swarnandhra Travels. (Copy attached)
+						A work order through GEM Contract No <u>GEMC-511687720502285</u> dated 30/06/2023 and Sanction order vide No. 511687720502285 dated 30/06/2023
+						has been issued to the empanelled vendor i.e., M/s. Viswa Enterprises, Vishakhapatnam. (Copy attached)
 					</div><br>
 					<div style="text-align: justify;">
-						M/s. Swarnandhra Travels has submitted the following bill for the month of ${oldGem.monthYear } towards vehicle hiring charges for the office of NIC,
+						M/s. Viswa Enterprises has submitted the following bill for the month of ${oldGem.monthYear } towards vehicle hiring charges for the office of NIC,
 						APSC, Vijayawada.
 					</div>
 					 <br>
@@ -124,17 +127,17 @@
 					<br><br><br><br><br>
 					<div style="text-align: right;">
 						<b>
-							 (BSN Murty)<br>
-							 Deputy Director
+							 (<%= localizationManager.getMessage("nic45") %>) / (BSN Murty)<br>
+							 <%= localizationManager.getMessage("DeputyDirector") %> / Deputy Director
 						</b>
 					</div>
 					
 					<div style="text-align: left;">
-						<b><u>HO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("HOAPSC") %> / HO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 					<div style="text-align: left;">
-						<b><u>SIO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("SIOAPSC") %> / SIO, APSC</u></b>
 					</div>
  
 				</div>

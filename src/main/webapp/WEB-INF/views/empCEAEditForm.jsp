@@ -189,6 +189,9 @@ function validate(){
 					$("#empName").val('');
 					$("#noofchilds").val(response.noofchilds);
 					
+					alert(response.document)
+					
+					
 					getEmpNameAndDesg(response.empCode);
 					
 					if(response.noofchilds === "1"){
@@ -336,7 +339,7 @@ function Validate(){
 	<div align="center">
 		<h6 class="h6 font-weight-bolder text-primary">EMPLOYEE CEA ALLOWANCE EDIT FORM</h6>
 	</div>
-	<form:form action="./updateCEA" modelAttribute="cea" method="post" onsubmit="return Validate()">
+	<form:form action="./updateCEA" modelAttribute="cea" method="post" enctype="multipart/form-data" onsubmit="return Validate()">
 	<div class="container mt-4 border font-weight-bolder"
 		style="background-color: #e6ffff;">
 		
@@ -523,8 +526,10 @@ function Validate(){
 						class="form-control" onChange="return amount_claValidation()"
 						  />
 					</div>
-					<div class="col-3"></div>
-					<div class="col-3"></div>
+					<div class="col-3"><label for="doument" class="col-form-label">Upload Documet:</label></div>
+					<div class="col-3">
+						<input type="file" name="doc" id="doc"/>
+					</div>
 				</div>
 			 
 			 <div class="row m-1" id="submit">
@@ -537,10 +542,10 @@ function Validate(){
 		
 	</div>
 	</form:form>
-	<center style="color: red;">
+	<div align="center" style="color: red;">
 		<h3>
 			<b> ${msg} </b>
 		</h3>
-	</center>
+	</div>
 </body>
 </html>

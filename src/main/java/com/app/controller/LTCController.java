@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.entity.Employee;
 import com.app.entity.Employee_Family;
@@ -40,7 +41,8 @@ public class LTCController {
 	}
 
 	@RequestMapping("/saveltcEnacachment")
-	public String saveltcEnacachment(@ModelAttribute("saveltcEnacachment") LTC ltc, Model model) {
+	public String saveltcEnacachment(@ModelAttribute("saveltcEnacachment") LTC ltc, Model model,
+			MultipartFile doc) {
 		System.out.println("ltc=> " + ltc.toString());
 
 		String saveltcEnacachmentMsg = "";
@@ -49,6 +51,12 @@ public class LTCController {
 			ltc.setEntry_date(LocalDateTime.now());
 			ltc.setNote_status(false);
 			ltc.setSanction_status(false);
+			
+			if(doc == null) {
+				
+			}else {
+				ltc.setDocument(doc.getBytes());
+			}
 			
 			LTC savedLtc = service.save(ltc);
 			saveltcEnacachmentMsg = "LTC - EL Enacachment is Successfully Added with Request No: "
@@ -353,7 +361,6 @@ public class LTCController {
 						model.addAttribute("ltc", ltc);
 						model.addAttribute("emp", emp);
 						return "NSsPrints/ltcElEncachementNotesheetPrints";
-						//return "NSs/ltcElEncachementNotesheetPrint";
 			} catch (Exception e) {
 				e.printStackTrace();
 				msg = "LTC or Employee Details are not available with given Request Number: "

@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 	$.ajax({
 				type : "get",
-				url : "./getAllGPFWithdrawForNS",
+				url : "./getAllGPFWithdrawForNSPrint",
 				cache : false,
 				success : function(response) {
 					//alert("success response length=> "+response.length)

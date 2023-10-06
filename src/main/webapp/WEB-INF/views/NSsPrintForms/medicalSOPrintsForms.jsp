@@ -11,6 +11,7 @@
 <body>
 <%@include file="/WEB-INF/views/banner.jsp"%>
 	<%@include file="/WEB-INF/views/navbar.jsp"%>
+	<div align="center" style="color: red;"><h6>AVAILABLE SANCTION ORDERS IN MEDICAL</h6></div>
 <table class="table table-bordered table-striped" id="datatable">
 					<thead style="background-color: black; color: white;">
 						<tr>
@@ -30,7 +31,7 @@
 					<td>${medicalNsprintList.bill_no}</td>
 					<td>${medicalNsprintList.bill_date}</td>
 					<td>${medicalNsprintList.amount_approved}</td>
-					<td><a href="./generateMedicalSOPrints?so_number=${medicalNsprintList.soNumber}">Generate Notesheet</a></td>
+					<td><a href="./generateMedicalSOPrints?so_number=${medicalNsprintList.so_number}">Generate Sanction Order</a></td>
 					
 					</tr>
 					

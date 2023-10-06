@@ -400,8 +400,7 @@ $(document).ready(function(){
 						<label>Name of Patient:</label> <select name="patient_name"
 							style="width: 425px;" id="patient_name"
 							onchange="relationsearch()" class="form-control">
-
-							<select>
+							</select>
 					</div>
 					<div class="form-group" style="margin-top: 50px;">
 						<label>Type: </label>

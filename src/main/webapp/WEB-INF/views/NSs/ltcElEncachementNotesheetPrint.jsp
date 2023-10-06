@@ -1,11 +1,14 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="com.app.entity.LTC"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 	<%
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
@@ -58,15 +61,16 @@ function myFunction() {
 			<div class="col-md-12">
 				<div>
 				
-				<h6 style="text-align: center; font-weight: 50px;"> <b> Government of India </b> </h6>
-				<h6 style="text-align: center; font-weight: 50px;"> <b> Ministry of Electronics & Information Technology </b> </h6>
-				<h6 style="text-align: center; font-weight: 50px;"> <b> National Informatics Centre (APSC) </b> </h6>
-				<h6 style="text-align: center; font-weight: 50px;"> <b> Vijayawada - 520010 </b> </h6>
+				<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
+<br>
 				
 					<div>
 						<div style="text-align: right;">
-							Date:
-							<%=todaydate%>
+							 <%= localizationManager.getMessage("nic37") %> / Date:<b> <%=todaydate%></b> 
 						</div>
 					</div>
 					<br>
@@ -77,7 +81,7 @@ function myFunction() {
 					<%} %>
 					<br><br>
 					<table>
-						<tr> <td>1. Name of the Employee</td> <td>:  <b>${emp.name}</b></td> </tr>
+						<tr> <td>1. Name of the Employee</td> <td>:  <b>${emp.callSign}. ${emp.name}</b></td> </tr>
 						<tr> <td>2. Designation & Employee Code Number</td> <td>:  ${emp.designation }, ${emp.code}</td> </tr>
 						<tr> <td>3. Basic Pay</td> <td>:  &#8377; ${emp.basic_pay}/-</td> </tr>
 						<tr> <td>4. Block Year</td> <td>:   ${ltc.blockyear}</td> </tr>
@@ -105,20 +109,20 @@ function myFunction() {
 						(Rupees <span id="words" ></span>)</b>
 						<%} %>
 					</div>
-					<br><br><br>
+					<br><br><br><br>
 					<div style="text-align: right;">
 						<b>
-							 (BSN Murty)<br>
-							 Deputy Director
+							 (<%= localizationManager.getMessage("nic45") %>) / (BSN Murty)<br>
+							 <%= localizationManager.getMessage("DeputyDirector") %> / Deputy Director
 						</b>
 					</div>
 					
 					<div style="text-align: left;">
-						<b><u>HO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("HOAPSC") %> / HO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 					<div style="text-align: left;">
-						<b><u>SIO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("SIOAPSC") %> / SIO, APSC</u></b>
 					</div>
  
 				</div>

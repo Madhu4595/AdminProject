@@ -195,7 +195,7 @@
 	</div>
 	<div class="container mt-4 border font-weight-bolder"
 		style="background-color: #e6ffff;">
-		<form:form action="./empCEASave" modelAttribute="cea" method="post" onsubmit="return Validate()">
+		<form:form action="./empCEASave" modelAttribute="cea" method="post" enctype="multipart/form-data" onsubmit="return Validate()">
 			
 			<div class="row align-items-center m-2">
 				 
@@ -339,8 +339,8 @@
 						class="form-control" onChange="return amount_claValidation()"
 						  />
 					</div>
-					<div class="col-3"></div>
-					<div class="col-3"></div>
+					<div class="col-3"><label for="doument" class="col-form-label">Upload Documet:</label></div>
+					<div class="col-3"><input type="file" name="doc" id="doc"/></div>
 				</div>
 			 
 			 <div class="row m-1" id="submit">
@@ -354,11 +354,11 @@
 			 </div>
 		</form:form>
 	</div>
-	<center style="color: red;">
+	<div align="center" style="color: red;">
 		<h3>
 			<b> ${msg} </b>
 		</h3>
-	</center>
+	</div>
 	
 </body>
 </html>

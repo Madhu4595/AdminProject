@@ -237,7 +237,6 @@ public class GPF_Controller {
 				model.addAttribute("emp", emp);
 				
 				return "SOsPrints/generateGPFWithdrawSOPrints";
-				//return "SOs/generateGPFWithdrawSOPrint";
 			
 		}catch(Exception e) {
 			System.out.println("Exception from => generateGPFWithdrawNS");

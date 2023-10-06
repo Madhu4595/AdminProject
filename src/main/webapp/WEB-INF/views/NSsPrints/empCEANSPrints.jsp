@@ -1,14 +1,18 @@
+<%@page import="com.app.util.LocalizationManager"%>
+<%@page import="java.util.Locale"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="com.app.entity.CEA"%>
 <%@page import="com.app.entity.Employee"%>
 <%@page import="com.app.entity.Employee_allowance"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page contentType="text/html; charset=utf-8" language="java" %>
+	 <%
+        Locale locale = new Locale("hi", "IN"); // Hindi (India)
+        LocalizationManager localizationManager = new LocalizationManager(locale);
+    %>
 <%
 int i = 1;
 // String words =  request.getAttribute("totalAmout").toString();
@@ -78,18 +82,16 @@ function myFunction() {
 				<div>
 				
 				 
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b>NATIONAL INFORMATICS CENTRE </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b>ANDHRA PRADESH STATE CENTRE </b>
-					</h6>
-					<h6 style="text-align: center; font-weight: 50px;">
-						<b>VIJAYAWADA  </b>
-					</h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
+					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
+<br>
 					<div>
-
-						<div style="text-align: right;"><b>Date</b>: <%=formatDateTime %></div>
+						<div style="text-align: right;">
+							 <%= localizationManager.getMessage("date") %> / Date: <b><%=formatDateTime %></b>
+						</div>
 						<div style="text-align: left;">
 							<b><u> Subject: Reimbursement of Children's Education Allowance.</u></b>
 						</div>
@@ -130,7 +132,7 @@ function myFunction() {
 									String empNameandDesg = "";
 									for(Employee emp:empsList){
 										if(emp.getCode().equalsIgnoreCase(code)){
-											empNameandDesg = emp.getName()+", "+emp.getDesignation();
+											empNameandDesg = emp.getCallSign()+". "+ emp.getName()+", "+emp.getDesignation();
 											
 										}
 										
@@ -177,7 +179,7 @@ function myFunction() {
 									
 									for(Employee emp:empsList){
 										if(emp.getCode().equalsIgnoreCase(code)){
-											empNameandDesg = emp.getName()+", "+emp.getDesignation();
+											empNameandDesg = emp.getCallSign()+". "+ emp.getName()+", "+emp.getDesignation();
 										}
 									}
 									
@@ -254,9 +256,33 @@ function myFunction() {
 				<br>
 				<div>
 					The officers/officials have submitted the necessary bonafide certificate in the prescribed format from the School.
-					An amount of &#8377;2,250/- per month for CEA and  &#8377;6,750/- per month for Hostel Subsidy is eligible from 1st July
-					2017 as per the 7th pay commission recommendations. Hence the total amount of &#8377;2,250 &#10005; 12 = Rs. 27000/- for CEA and 
-					&#8377;6,750 &#10005; 12 = &#8377;81,000/- for hostel subsidy may be approved.
+					An amount of &#8377;2,250/- per month for CEA 
+					<%
+					for(CEA bean2: list){ 
+						System.out.println("in loop=>"+bean2.toString());
+						if(bean2.getCea_type_child1().equalsIgnoreCase("sfeehstl")){
+							System.out.println("in foreach loopppppppppppppppppppp");
+							%>
+							and  &#8377;6,750/- per month for Hostel Subsidy
+							<%
+						}
+					}
+					%> 
+					is eligible from 1st July
+					2017 as per the 7th pay commission recommendations. Hence the total amount of &#8377;2,250 &#10005; 12 = Rs. 27000/- for CEA 
+					<%
+					for(CEA bean2: list){ 
+						System.out.println("in loop=>"+bean2.toString());
+						if(bean2.getCea_type_child1().equalsIgnoreCase("sfeehstl")){
+							System.out.println("in foreach loopppppppppppppppppppp");
+							%>
+							and  &#8377;6,750 &#10005; 12 = &#8377;81,000/- for hostel subsidy 
+							<%
+						}
+					}
+					%>
+					
+					may be approved.
 				</div>
 				<br>
 				<div>
@@ -266,20 +292,20 @@ function myFunction() {
 				<div>
 					Necessary sanction order shave been prepared for approval and signature, please
 				</div>
-				<br>
+				<br><br><br><br>
 				<div style="text-align: right;">
 						<b>
-							 (BSN Murty)<br>
-							 Deputy Director
+							 (<%= localizationManager.getMessage("nic45") %>) / (BSN Murty)<br>
+							 <%= localizationManager.getMessage("DeputyDirector") %> / Deputy Director
 						</b>
 					</div>
 
 					<div style="text-align: left;">
-						<b><u>HO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("HOAPSC") %> / HO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 					<div style="text-align: left;">
-						<b><u>SIO, APSC</u></b>
+						<b><u><%= localizationManager.getMessage("SIOAPSC") %> / SIO, APSC</u></b>
 					</div>
 					<br> <br> <br>
 				</div></div></div></section>

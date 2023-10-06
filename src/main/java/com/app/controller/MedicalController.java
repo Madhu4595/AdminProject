@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.app.entity.Bills_Upload;
 import com.app.entity.Employee;
+import com.app.entity.Employee_Family;
 import com.app.entity.Medical_Bills;
 import com.app.entity.Medical_Bills_upload;
+import com.app.repo.Employee_Family_Repo;
 import com.app.repo.Medical_BillsRepo;
 import com.app.repo.Medical_Bills_uploadRepo;
-import com.app.service.IBills_UploadService;
 import com.app.service.IEmployeeService;
 import com.app.service.IMedical_Bills_uploadService;
 import com.app.service.SequenceService;
@@ -33,11 +33,11 @@ import com.app.util.MyUtil;
 public class MedicalController {
 	
 	@Autowired private IMedical_Bills_uploadService medical_Bills_uploadService;
-	@Autowired private IBills_UploadService bills_UploadService;
 	@Autowired private Medical_Bills_uploadRepo medical_Bills_uploadRepo;
 	@Autowired private Medical_BillsRepo medical_BillsRepo;
 	@Autowired private IEmployeeService empService;
 	@Autowired private SequenceService sequenceService;
+	@Autowired private Employee_Family_Repo employee_Family_Repo;
 	
 	// Medical
 		// New
@@ -85,29 +85,12 @@ public class MedicalController {
 				
 				medical_BillsRepo.save(medicalBills);
 			}
-			
-			Bills_Upload b_upload = new Bills_Upload();
-			b_upload.setEmp_code(medical_Bills_upload.getEmp_code());
-			b_upload.setType(medical_Bills_upload.getType());
-			b_upload.setCard_no(medical_Bills_upload.getCard_no());
-			b_upload.setDoctor_name(medical_Bills_upload.getDoctor_name());
-			b_upload.setDisease_name(medical_Bills_upload.getDisease_name());
-			b_upload.setHospital_name(medical_Bills_upload.getHospital_name());
-			b_upload.setPatient_name(medical_Bills_upload.getPatient_name());
-			b_upload.setBill_no(medical_Bills_upload.getBill_no());
-			b_upload.setBill_date(medical_Bills_upload.getBill_date());
-			b_upload.setAmount_claimed(medical_Bills_upload.getAmount_claimed());
-			b_upload.setLab_name(medical_Bills_upload.getLab_name());
-			b_upload.setPeriod_of_treatment(medical_Bills_upload.getPeriod_of_treatment());
-			b_upload.setRequest_no(medical_Bills_upload.getRequest_no());
-
 			for (int i = 0; i < totAmountClaimedArray.length; i++) {
 				totAmountClaimed = totAmountClaimed + Integer.parseInt(totAmountClaimedArray[i]);
 				System.out.println("totAmountClaimed=> " + totAmountClaimed);
 			}
 			medical_Bills_upload.setTotAmountClaimed(totAmountClaimed.toString());
 
-			bills_UploadService.saveBills_Upload(b_upload);
 			medical_Bills_uploadService.saveMedical_Bills_upload(medical_Bills_upload);
 
 			model.addAttribute("msg", "MEDICAL BILLS UPLOAD Saved Successfully");
@@ -122,7 +105,7 @@ public class MedicalController {
 
 		// Modify
 		@RequestMapping("/billsupload_edit")
-		public String billsupload_edit(Bills_Upload bills_Upload) throws SQLException {
+		public String billsupload_edit(Medical_Bills bills_Upload) throws SQLException {
 			return "billsupload_edit";
 		}
 
@@ -372,10 +355,11 @@ public class MedicalController {
 		
 		@RequestMapping("/medicalNSPrintsForm")
 		public String medicalNSPrints(Model model) {
-			model.addAttribute("medicalNsprintList", medical_BillsRepo.getMedicBillsForNSPrint());
+			model.addAttribute("medicalNsprintList", medical_BillsRepo.getMedicBillsForNSPrint2());
 		
 			return "NSsPrintForms/medicalNSPrintsForm";
 		}
+		
 		@RequestMapping("/generateMedicalNSPrints")
 		public String generateMedicalNSPrints(@RequestParam String ns_number,Model model) {
 			System.out.println("note_number=>"+ns_number);
@@ -417,7 +401,10 @@ public class MedicalController {
 				model.addAttribute("totAmountApproved", totAmountApproved);
 				model.addAttribute("totAmountClaimed", totAmountClaimed);
 				
+				System.out.println("------------------------------"+Integer.parseInt(strarray[0]));
+				
 				Optional<Medical_Bills_upload> medical_Bills_upload3 = medical_Bills_uploadRepo.findById(Integer.parseInt(strarray[0]));
+				
 				if(medical_Bills_upload3.isPresent()) {
 					model.addAttribute("medical_Bills_upload3", medical_Bills_upload3.get());
 				}else {
@@ -441,7 +428,7 @@ public class MedicalController {
 		//Sanction Order Print
 		@RequestMapping("/medicalSOPrintsForms")
 		public String medicalSOPrintsForms(Model model) {
-			model.addAttribute("medicalSOprintList", medical_BillsRepo.getMedicBillsForSOPrint());
+			model.addAttribute("medicalSOprintList", medical_BillsRepo.getMedicBillsForSOPrint2());
 			return "NSsPrintForms/medicalSOPrintsForms";
 		}
 		@RequestMapping("/generateMedicalSOPrints")

@@ -11,7 +11,7 @@
 <body>
 <%@include file="/WEB-INF/views/banner.jsp"%>
 	<%@include file="/WEB-INF/views/navbar.jsp"%>
-	
+	<div align="center" style="color: red;"><h6>AVAILABLE NOTESHEETS IN MEDICAL </h6></div>
 	<table class="table table-bordered table-striped" id="datatable">
 					<thead style="background-color: black; color: white;">
 						<tr>
@@ -31,7 +31,7 @@
 					<td>${medicalNsprintList.bill_no}</td>
 					<td>${medicalNsprintList.bill_date}</td>
 					<td>${medicalNsprintList.amount_approved}</td>
-					<td><a href="./generateMedicalNSPrints?ns_number=${medicalNsprintList.nsNumber}">Generate Notesheet</a></td>
+					<td><a href="./generateMedicalNSPrints?ns_number=${medicalNsprintList.ns_number}">Generate Notesheet</a></td>
 					
 					</tr>
 					
