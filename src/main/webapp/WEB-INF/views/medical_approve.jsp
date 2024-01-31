@@ -154,7 +154,7 @@
 
 		$
 				.getJSON(
-						'employeesearch.action?eno=' + eno,
+						'./employeesearch.action?eno=' + eno,
 						function(response) {
 							if (response) {
 								if (response.Error == 'Success') {
@@ -228,8 +228,8 @@
 
 </head>
 <body>
-	<%@include file="banner.jsp"%>
-	<%@include file="navbar.jsp"%>
+	<%@include file="banner2.jsp"%>
+	<%@include file="navbar2.jsp"%>
 
 	<form:form action="./medicalallowanceapprove" method="post"
 		modelAttribute="medical_Bills_upload" onsubmit="return validate()">

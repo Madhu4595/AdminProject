@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.entity.Employee;
-import com.app.entity.Employee_Family;
 import com.app.entity.Medical_Bills;
 import com.app.entity.Medical_Bills_upload;
-import com.app.repo.Employee_Family_Repo;
 import com.app.repo.Medical_BillsRepo;
 import com.app.repo.Medical_Bills_uploadRepo;
 import com.app.service.IEmployeeService;
@@ -37,7 +35,6 @@ public class MedicalController {
 	@Autowired private Medical_BillsRepo medical_BillsRepo;
 	@Autowired private IEmployeeService empService;
 	@Autowired private SequenceService sequenceService;
-	@Autowired private Employee_Family_Repo employee_Family_Repo;
 	
 	// Medical
 		// New

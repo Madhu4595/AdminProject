@@ -40,7 +40,7 @@ function myFunction() {
 	    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
 	    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
 	    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
-	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Only ' : '';
 	    document.getElementById("words").innerHTML = str;
 }
 </script>
@@ -143,8 +143,8 @@ body {
 		<br>
 		<div id="sign" align="right">
 			  <b>
-(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
-<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
+(<%= localizationManager.getMessage("nic46") %>) / (P. Lakshminarayana)<br>
+<%= localizationManager.getMessage("nic43") %> <br> State Informatics Office & Head of Office
 			</b>
 		</div>
 		<br>

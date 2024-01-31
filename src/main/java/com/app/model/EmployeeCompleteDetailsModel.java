@@ -18,6 +18,8 @@ public class EmployeeCompleteDetailsModel {
 	private String phno;
 	private String address;
 	private String wardEntitlement;
+	private String doj;
+	private String doa;
 	
 	private List<Employee_Family> family;
 
@@ -28,7 +30,7 @@ public class EmployeeCompleteDetailsModel {
 
 	public EmployeeCompleteDetailsModel(String code, String name, String designation, String basic_pay, String place,
 			String email, String date_of_retirement, String dob, String payscale, String callSign, String ecghsCode,
-			String phno, String address, String wardEntitlement, List<Employee_Family> family) {
+			String phno, String address, String wardEntitlement, String doj, String doa, List<Employee_Family> family) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -44,6 +46,8 @@ public class EmployeeCompleteDetailsModel {
 		this.phno = phno;
 		this.address = address;
 		this.wardEntitlement = wardEntitlement;
+		this.doj = doj;
+		this.doa = doa;
 		this.family = family;
 	}
 
@@ -159,6 +163,22 @@ public class EmployeeCompleteDetailsModel {
 		this.wardEntitlement = wardEntitlement;
 	}
 
+	public String getDoj() {
+		return doj;
+	}
+
+	public void setDoj(String doj) {
+		this.doj = doj;
+	}
+
+	public String getDoa() {
+		return doa;
+	}
+
+	public void setDoa(String doa) {
+		this.doa = doa;
+	}
+
 	public List<Employee_Family> getFamily() {
 		return family;
 	}
@@ -173,12 +193,7 @@ public class EmployeeCompleteDetailsModel {
 				+ ", basic_pay=" + basic_pay + ", place=" + place + ", email=" + email + ", date_of_retirement="
 				+ date_of_retirement + ", dob=" + dob + ", payscale=" + payscale + ", callSign=" + callSign
 				+ ", ecghsCode=" + ecghsCode + ", phno=" + phno + ", address=" + address + ", wardEntitlement="
-				+ wardEntitlement + ", family=" + family + "]";
+				+ wardEntitlement + ", doj=" + doj + ", doa=" + doa + ", family=" + family + "]";
 	}
 
-
-
-	 
-	
-	
 }

@@ -26,6 +26,8 @@ public class AppUser {
 	private String lastName;
 	private String email;
 	private String password;
+	private String userType;
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
 			name="user_roles",
@@ -83,12 +85,22 @@ public class AppUser {
 	public void setRoles(Collection<Roles> roles) {
 		this.roles = roles;
 	}
-	
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
 	@Override
 	public String toString() {
 		return "AppUser [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", roles=" + roles + "]";
+				+ ", password=" + password + ", userType=" + userType + ", roles=" + roles + "]";
 	}
+	
+	 
 	
 	
 }

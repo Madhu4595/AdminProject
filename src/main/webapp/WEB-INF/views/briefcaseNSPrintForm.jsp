@@ -9,7 +9,7 @@
 <script src="./js/jquery-3.3.1.min.js" type="text/javascript"></script>
 </head>
 <body>
-<%@include file="/WEB-INF/views/banner.jsp"%>
+<%@include file="/WEB-INF/views/banner2.jsp"%>
 	<%@include file="/WEB-INF/views/navbar.jsp"%>
 	
 	<div align="center" class="text-primary font-weight-bolder">

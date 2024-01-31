@@ -2,12 +2,14 @@ package com.app.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -17,12 +19,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.app.entity.AppUser;
 import com.app.entity.CGHS;
 import com.app.entity.CGHSBills;
+import com.app.entity.Employee;
 import com.app.entity.Employee_Family;
 import com.app.model.CGHSModel;
 import com.app.model.EmployeeCompleteDetailsModel;
 import com.app.repo.CGHSRepo;
+import com.app.repo.EmployeeRepo;
 import com.app.repo.Employee_Family_Repo;
 
 @Controller
@@ -31,11 +36,28 @@ public class CGHSController {
 	@Autowired private CGHSRepo cGHSRepo;
 	@Autowired private HomeRestController homeRestController;
 	@Autowired private Employee_Family_Repo employee_Family_Repo;
+	@Autowired private EmployeeRepo employeeRepo;
 	
 	@RequestMapping("/cghsForm")
-	public String cghsForm(Model model) {
+	public String cghsForm(Model model,HttpSession session) {
 		System.out.println("cghsForm");
 		model.addAttribute("cghs", new CGHS());
+		
+		AppUser user = (AppUser) session.getAttribute("user");
+		System.out.println("cghsForm=>user=>"+user.toString());
+		model.addAttribute("user", user);
+		
+		Optional<Employee> emp = employeeRepo.findById(String.valueOf(user.getId()));
+		if(emp.isPresent()) { model.addAttribute("emp", emp.get()); }
+		else { model.addAttribute("msg", "Employee Details or not founded"); }
+		
+		String photo = Base64.getEncoder().encodeToString(emp.get().getEmpPhoto());
+		model.addAttribute("photo", photo);
+		
+		List<Employee_Family> empFamily = employee_Family_Repo.getAllByEmpcode(String.valueOf(user.getId()));
+		System.out.println("empFamily=>"+empFamily.toString());
+		model.addAttribute("empFamily", empFamily);
+		
 		return "cghs/cghsForm";
 	}
  
@@ -84,7 +106,23 @@ public class CGHSController {
 	}
 	
 	@RequestMapping("/cghsmrcfPrintform")
-	public String cghsmrcfPrintform() {
+	public String cghsmrcfPrintform(HttpSession session, Model model) {
+		
+		AppUser user = (AppUser) session.getAttribute("user");
+		System.out.println("cghsForm=>user=>"+user.toString());
+		model.addAttribute("user", user);
+		
+		Optional<Employee> emp = employeeRepo.findById(String.valueOf(user.getId()));
+		if(emp.isPresent()) { model.addAttribute("emp", emp.get()); }
+		else { model.addAttribute("msg", "Employee Details or not founded"); }
+		
+		String photo = Base64.getEncoder().encodeToString(emp.get().getEmpPhoto());
+		model.addAttribute("photo", photo);
+		
+		List<Employee_Family> empFamily = employee_Family_Repo.getAllByEmpcode(String.valueOf(user.getId()));
+		System.out.println("empFamily=>"+empFamily.toString());
+		model.addAttribute("empFamily", empFamily);
+		
 		return "cghs/cghsmrcfPrintform";
 	}
 	
@@ -177,3 +215,4 @@ public class CGHSController {
 	}
 
 }
+

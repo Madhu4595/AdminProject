@@ -88,7 +88,7 @@ function myFunction() {
 	    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
 	    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
 	    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
-	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Only ' : '';
 	    document.getElementById("words").innerHTML = str;
 }
 </script>
@@ -166,15 +166,15 @@ function myFunction() {
 							</tr>
 						</tbody>
 					</table>
-					<center><b>(Rupees <span id="words" ></span> Only)</b></center>
+					<div align="center"><b>(Rupees <span id="words" ></span> )</b></div>
 					<br>
 					It is certified that <b>${emp.callSign}. ${emp.name}, ${designation.name} (Emp. Code No. ${emp.code})</b> is having more than
 					30 days of Earned Leave at his credit after taking into account the period of encashment.
 					<br><br><br><br>
 					<div id="sign">
 						<br> <br> <b>
-						(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
-							<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
+						(<%= localizationManager.getMessage("nic46") %>) / (P. Lakshminarayana)<br>
+							<%= localizationManager.getMessage("nic43") %> <br> State Informatics Office & Head of Office
 						</b>
 					</div>
 					<br>

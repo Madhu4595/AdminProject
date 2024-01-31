@@ -177,8 +177,8 @@
 </script>
 </head>
 <body>
-	<%@include file="banner.jsp"%>
-	<%@include file="navbar.jsp"%>
+	<%@include file="banner2.jsp"%>
+	<%@include file="navbar2.jsp"%>
 
 	<div class="container mt-4 border font-weight-bolder p-4"
 		style="background-color: #e6ffff;">

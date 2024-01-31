@@ -1,19 +1,62 @@
 package com.app.util;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import com.app.controller.HomeRestController;
+import com.app.empapplyforms.EmpGPFAdvanceApplyForm;
+import com.app.entity.Employee;
+import com.app.entity.Employee_Family;
+import com.app.model.EmployeeCompleteDetailsModel;
+import com.app.repo.EmpGPFAdvanceApplyFormRepo;
+import com.app.repo.EmployeeRepo;
+import com.app.repo.Employee_Family_Repo;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
+
+@Component
 public class MyUtil {
 
-	//@Autowired private IEmployeeService employeeService;
-
+	@Autowired private EmployeeRepo employeeRepo;
+	@Autowired private Employee_Family_Repo employee_Family_Repo;
+	
+	public String getFamilyMemberName(Integer id) {
+		System.out.println("getFamilyMemberName=>id=>"+id);
+		String familyMemberName = null;
+		Employee_Family employee_Family = employee_Family_Repo.findById(id).get();
+		familyMemberName = employee_Family.getPer_name();
+		return familyMemberName;
+	}
+	
+	public String getEmpName(String empCode) {
+		System.out.println("empCode=>"+empCode);
+		String empName = null;
+		Employee emps = employeeRepo.findById(empCode).get();
+		empName = emps.getName();
+		return empName;
+	}
+	
 	public static int hit_counter() throws SQLException {
 		int hit = 0;
 		Connection con = null;
@@ -377,6 +420,154 @@ public class MyUtil {
 	        return date;
 	    }
 		
+		//Calculating age based on dob
+		public static int calculateAge(LocalDate dob) {
+			// creating an instance of the LocalDate class and invoking the now() method
+			// now() method obtains the current date from the system clock in the default
+			// time zone
+			LocalDate curDate = LocalDate.now();
+			// calculates the amount of time between two dates and returns the years
+			if ((dob != null) && (curDate != null)) {
+				return Period.between(dob, curDate).getYears();
+			} else {
+				return 0;
+			}
+		}
+		
+		public static List<String> generateFinancialYears() {
+	        List<String> years = new ArrayList<>();
+	        Calendar now = Calendar.getInstance();
+	        int currentYear = now.get(Calendar.YEAR);
+	        for (int i = currentYear; i >= currentYear - 15; i--) {
+	            String financialYear = i + "-" + (i + 1);
+	            years.add(financialYear);
+	        }
+	        return years;
+	    }
+		
+		public static String dateConvert1(String inputDate ) {
+			DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate date = LocalDate.parse(inputDate , inputFormatter);
+			DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String outputDate = date.format(outputFormatter);
+
+	        System.out.println("Input Date (yyyy-MM-dd): " + inputDate);
+	        System.out.println("Output Date (dd-MM-yyyy): " + outputDate);
+	        
+	        return outputDate;
+		}
+		
+		
+		
+		
+		
+		
+		
+		@Autowired EmpGPFAdvanceApplyFormRepo empGPFAdvanceApplyFormRepo;
+		@Autowired HomeRestController homeRestController;
+		
+		public final  String hindifont="C:\\Users\\swamy\\Desktop\\APBOCWWB\\Krishna-MxYY.ttf";
+		
+		
+		public void empGPFAdvancePdf(String id) throws IOException {
+			
+			EmpGPFAdvanceApplyForm bean = empGPFAdvanceApplyFormRepo.findById(Long.valueOf(id)).get();
+			EmployeeCompleteDetailsModel emp = homeRestController
+					.getEmpDetails(String.valueOf(empGPFAdvanceApplyFormRepo.findById(Long.valueOf(id)).get().getEmpCode()));
+			
+			String filePath="C:\\Users\\swamy\\Desktop\\APBOCWWB\\hinditext.pdf";
+			
+			PdfWriter pdfWriter=new PdfWriter(filePath);
+			PdfDocument pdfDocument=new PdfDocument(pdfWriter);
+			pdfDocument.addNewPage();
+			
+			Document document=new Document(pdfDocument);
+			
+			PdfFont hindiFont=PdfFontFactory.createFont(hindifont, true);
+			
+			//rupaye
+			Paragraph rupaye=new Paragraph();   rupaye.add(new Text("#i;s").setFont(hindiFont)).setFontSize(8);
+			
+			//GOVERNMENT OF INDIA
+			Paragraph p=new Paragraph();
+			p.add("Hkkjr ljdkj ").setFont(hindiFont);
+			p.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER);
+			p.setFontSize(12);
+			Paragraph p2=new Paragraph();
+			p2.add(" / GOVERNMENT OF INDIA");
+			p2.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER);
+			p2.setFontSize(10);
+			Paragraph govtOfIndia=new Paragraph(); govtOfIndia.add(p); govtOfIndia.add(p2); govtOfIndia.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER); 
+			document.add(govtOfIndia);
+			
+			
+			//NATIONAL INFORMATICS CENTRE
+			Paragraph p3=new Paragraph();
+			p3.add("jk\"Vªh; lwpuk foKku dsaæ").setFont(hindiFont);
+			p3.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER);
+			p3.setFontSize(12);
+			Paragraph p4=new Paragraph();
+			p4.add(" / NATIONAL INFORMATICS CENTRE");
+			p4.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER);
+			p4.setFontSize(10);
+			Paragraph nic=new Paragraph(); nic.add(p3); nic.add(p4); nic.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER); 
+			document.add(nic);
+			
+			//APPLICATION FOR ADVANCE FROM GPF FUND
+			Paragraph afafgf1=new Paragraph();
+			afafgf1.add("lkekU; Hkfo\"; fuf/k esa ls vfxze ds fy, vkosnu ").setFont(hindiFont);
+			afafgf1.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER);
+			afafgf1.setFontSize(12);
+			Paragraph afafgf2=new Paragraph();
+			afafgf2.add(" / APPLICATION FOR ADVANCE FROM GPF FUND");
+			afafgf2.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER);
+			afafgf2.setFontSize(10);
+			Paragraph afafgf=new Paragraph(); afafgf.add(afafgf1); afafgf.add(afafgf2); afafgf.setTextAlignment(com.itextpdf.layout.property.TextAlignment.CENTER); 
+			document.add(afafgf);
+			
+			
+			Paragraph p6=new Paragraph(); p6.add(new Text("1.")).setFontSize(10); p6.add(new Text("uke").setFont(hindiFont)); p6.add(" / Name").setFontSize(8);
+			Paragraph p7=new Paragraph(); p7.add(new Text(" : "+emp.getName())).setFontSize(8).setPaddingLeft(200);
+			Paragraph p8=new Paragraph(); p8.add(p6); p8.add(p7);
+			document.add(p8);
+			
+			Paragraph designation1=new Paragraph(); designation1.add(new Text("2.")).setFontSize(10); designation1.add(new Text("inuke").setFont(hindiFont)); designation1.add(" / Designation").setFontSize(8);
+			Paragraph designation2=new Paragraph(); designation2.add(new Text(" : "+emp.getDesignation())).setFontSize(8).setPaddingLeft(200);
+			Paragraph designation=new Paragraph(); designation.add(designation1); designation.add(designation2);
+			document.add(designation);
+			
+			Paragraph accNo1=new Paragraph(); accNo1.add(new Text("3.")).setFontSize(10); accNo1.add(new Text("ysdk lSaD;q").setFont(hindiFont)); accNo1.add(" / Account No.").setFontSize(8);
+			Paragraph accNo2=new Paragraph(); accNo2.add(new Text(" : MIT / NIC / GPF / "+bean.getEmpCode()+" (Emp Code)")).setFontSize(8).setPaddingLeft(200);
+			Paragraph accNo=new Paragraph(); accNo.add(accNo1); accNo.add(accNo2);
+			document.add(accNo);
+			
+			Paragraph pay1=new Paragraph(); pay1.add(new Text("4.")).setFontSize(10); pay1.add(new Text(" osru").setFont(hindiFont)); pay1.add(" / Pay").setFontSize(8);
+			Paragraph pay2=new Paragraph(); pay2.add(new Text(" : "+emp.getBasic_pay())).setFontSize(8).setPaddingLeft(200);
+			Paragraph pay=new Paragraph(); pay.add(pay1); pay.add(pay2);
+			document.add(pay);
+			
+			Paragraph five1=new Paragraph(); five1.add(new Text("5.")).setFontSize(10); five1.add(new Text("vkosnu dh rkfjd dks va'knkrk ds [kkrs esa 'kki /kujkf'k fups nh x;h gs %").setFont(hindiFont)); 
+			document.add(five1);
+			Paragraph five2=new Paragraph(); five2.add(new Text(" Balance at the credit of the subscriber on the date of application as below.")).setFontSize(8).setPaddingLeft(10).setMarginTop(-5);
+			document.add(five2);
+			
+			Paragraph five11h=new Paragraph(); five11h.add(new Text("i.")).setFontSize(20); five11h.add(new Text("o\"kZ ds fooj.k ds vuqlkj vafre 'ks\"k").setFont(hindiFont)).setFontSize(12).setPaddingLeft(20);
+			Paragraph five11hv=new Paragraph(); five11hv.add(new Text(": .........................")).setFontSize(10).setPaddingLeft(180);
+			Paragraph five11hvc=new Paragraph(); five11hvc.add(five11h); five11hvc.add(five11hv); five11hvc.add(rupaye);
+			document.add(five11hvc);
+			
+			Paragraph five11e1=new Paragraph(); five11e1.add(new Text("Closing balance as per statement for the year "+bean.getFinancialYear())).setFontSize(10).setPaddingLeft(20).setMarginTop(-5); 
+			Paragraph five11e2=new Paragraph(); five11e2.add(new Text(": Rs. "+bean.getClosingBalance()+" /-")).setFontSize(10).setPaddingLeft(180).setMarginTop(-50);
+			Paragraph five11ec=new Paragraph(); five11ec.add(five11e1); five11ec.add(five11e2);  
+			document.add(five11ec);
+			
+ 
+			
+			
+			
+			document.close();
+			System.out.println("pdf created...");
+		}
 		
 		 
 		

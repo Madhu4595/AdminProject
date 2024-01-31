@@ -1,5 +1,24 @@
 package com.app.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 public class Test {
 
 	//user-defined static method that converts a number into words  
@@ -103,20 +122,73 @@ public class Test {
 	++x;  
 	}  
 	}  
+	
+	
 	//main() method  
 	public static void main(String args[])  
 	{  
 	//calling the user-defined method and that invokes another predefined method toCharArray()  
 	//the method toCharArray() converts the given number into character array  
-	numberToWords("111100".toCharArray());  
-	numberToWords("673".toCharArray());  
-	numberToWords("85".toCharArray());  
-	numberToWords("5".toCharArray());  
-	numberToWords("0".toCharArray());  
-	numberToWords("20".toCharArray());  
-	numberToWords("1000".toCharArray());  
-	numberToWords("12345".toCharArray());  
-	//passing empty string   
-	numberToWords("".toCharArray());  
+//	numberToWords("111100".toCharArray());  
+//	numberToWords("673".toCharArray());  
+//	numberToWords("85".toCharArray());  
+//	numberToWords("5".toCharArray());  
+//	numberToWords("0".toCharArray());  
+//	numberToWords("20".toCharArray());  
+//	numberToWords("1000".toCharArray());  
+//	numberToWords("12345".toCharArray());  
+//	//passing empty string   
+//	numberToWords("".toCharArray());  
+		
+		
+		
+		try {
+//			   String path = "C:\\Users\\swamy\\Desktop\\AdminProject-WS\\AdminProject\\src\\main\\resources\\Annexure.jrxml";
+//			   Map<String, Object> dataset1 = new HashMap<>();
+//			  
+//			   // Employee Data
+//			   Student student = new Student("N.Veerendranath", "6601", "SCIENTIST-B", "NIC, State Center, Vijayawada", "D.Lalitha");
+//			   List<Student> studentList = new ArrayList<>();
+//			   studentList.add(student);
+//			   JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(studentList);
+//			   dataset1.put("employeedataset", dataSource);
+//			   
+//			   
+//			   // Child Data
+//			   Child child=new Child(1L, "1st Child", "N.Mithun Gaurav", "29-07-2014", "9 years");
+//			   Child child1=new Child(2L, "2nd Child", "N.Jathin Gaurav", "19-03-2020", "3 years");
+//			   List<Child> childList = new ArrayList<>();
+//			   childList.add(child);
+//			   childList.add(child1);
+//
+//			   // Create a collection data source
+//			   JRBeanCollectionDataSource dataSourceChild = new JRBeanCollectionDataSource(childList);
+//			   JRBeanCollectionDataSource dataSourceChild1 = new JRBeanCollectionDataSource(childList);
+//			   dataset1.put("childDetails", dataSourceChild);
+//			   dataset1.put("childDataSet", dataSourceChild1);
+//			   // address data
+//			   School school=new School("2023,Kendriya Vidyalaya No.1,Vijayawada ,III rd class","");
+//			   List<School> schoolList=new ArrayList<>();
+//			   schoolList.add(school);
+//			   
+//			   JRBeanCollectionDataSource dataSourceschool = new JRBeanCollectionDataSource(schoolList);
+//			   dataset1.put("schoolDataSet",dataSourceschool);
+//			   
+//			   
+//			   
+//			   InputStream input = new FileInputStream(new File(path));
+//			   JasperDesign jasperDesign = JRXmlLoader.load(input);
+//			   JasperReport report = JasperCompileManager.compileReport(jasperDesign);
+//			   JasperPrint print = JasperFillManager.fillReport(report, dataset1, new JREmptyDataSource());
+//			   
+//			   JasperExportManager.exportReportToPdfFile(print, "C:\\Users\\swamy\\Desktop\\AdminProject-WS\\pdf\\Annexure.pdf");
+//			   JasperViewer.viewReport(print);
+//			   System.out.println("Report Created.");
+			} catch (Exception e) {
+			   e.printStackTrace();
+			   System.out.println("Exception occurred while creating reports: " + e);
+			}
+
+			 
 	}  
 }

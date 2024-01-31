@@ -1,17 +1,27 @@
 package com.app.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.entity.AppUser;
 import com.app.entity.BriefCase;
 import com.app.entity.CEA;
+import com.app.entity.CGHS;
 import com.app.entity.Employee;
 import com.app.entity.Employee_Family;
 import com.app.entity.Employee_allowance;
@@ -22,8 +32,10 @@ import com.app.entity.Medical_Bills;
 import com.app.model.DistinctNoteNumbers;
 import com.app.model.DistinctSanctionOrderNumbers;
 import com.app.model.EmployeeCompleteDetailsModel;
+import com.app.repo.AppUserRepo;
 import com.app.repo.BriefCaseRepo;
 import com.app.repo.CEARepo;
+import com.app.repo.CGHSRepo;
 import com.app.repo.EmployeeRepo;
 import com.app.repo.Employee_Family_Repo;
 import com.app.repo.Employee_allowanceRepo;
@@ -34,22 +46,130 @@ import com.app.repo.Medical_BillsRepo;
 import com.app.service.GEM_Service;
 import com.app.service.IEmployeeService;
 import com.app.service.LTCService;
+import com.app.util.MyUtil;
 
 @RestController
 public class HomeRestController {
 
-	@Autowired private Employee_Family_Repo employeeFamilyRepo;
-	@Autowired private LTCService ltcService;
-	@Autowired private Employee_allowanceRepo employee_allowanceRepo;
-	@Autowired private IEmployeeService employeeService;
-	@Autowired private GEM_Service gemService;
-	@Autowired private GEM_Repo gEM_Repo;
-	@Autowired private GPF_Repo gpfRepo;
-	@Autowired private Medical_BillsRepo medical_BillsRepo;
-	@Autowired private EmployeeRepo employeeRepo;
-	@Autowired private CEARepo cEARepo;
-	@Autowired private LTCRepo ltcRepo;
-	@Autowired private BriefCaseRepo briefCaseRepo;
+	@Autowired
+	private Employee_Family_Repo employeeFamilyRepo;
+	@Autowired
+	private LTCService ltcService;
+	@Autowired
+	private Employee_allowanceRepo employee_allowanceRepo;
+	@Autowired
+	private IEmployeeService employeeService;
+	@Autowired
+	private GEM_Service gemService;
+	@Autowired
+	private GEM_Repo gEM_Repo;
+	@Autowired
+	private GPF_Repo gpfRepo;
+	@Autowired
+	private Medical_BillsRepo medical_BillsRepo;
+	@Autowired
+	private EmployeeRepo employeeRepo;
+	@Autowired
+	private CEARepo cEARepo;
+	@Autowired
+	private LTCRepo ltcRepo;
+	@Autowired
+	private BriefCaseRepo briefCaseRepo;
+	@Autowired
+	private MyUtil myUtil;
+	@Autowired
+	private CGHSRepo cGHSRepo;
+	@Autowired
+	private AppUserRepo appUserRepo;
+	
+	@Autowired private BCryptPasswordEncoder passwordEncoder;
+
+	@GetMapping("/validateEmpLogin")
+	public ResponseEntity<?> validateEmpLogin(@RequestParam("username") String username,@RequestParam("doj") String doj) {
+		System.out.println("username=>" + username);
+		System.out.println("doj=>" + doj);
+
+		try {
+			AppUser user = appUserRepo.findByEmail(username);
+			if (user == null) {
+				return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+			} else {
+				Optional<Employee> employee = employeeRepo.findById(String.valueOf(user.getId()));
+				
+				if (employee.isPresent()) {
+					Employee emp = employee.get();
+					System.out.println("empempempemp=>" + emp.toString());
+					
+					DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					LocalDate dojFormat = LocalDate.parse(doj, dateTimeFormatter);
+					System.out.println("dojFormat=>"+dojFormat);
+					
+					DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+					String dobdate = dojFormat.format(dateTimeFormatter2);
+					System.out.println("dobdate=>"+dobdate);
+					
+					DateTimeFormatter dateTimeFormatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					String dojdate = dojFormat.format(dateTimeFormatter3);
+					System.out.println("dojdate=>"+dojdate);
+					
+					Map<String, String> map = new HashedMap();
+					
+					System.out.println(dobdate+"="+emp.getDob());
+					if(dobdate.equalsIgnoreCase(emp.getDob()) || dojdate.equalsIgnoreCase(emp.getDoj())) {
+						System.out.println("KICKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+						map.put("username", username);
+						map.put("found", "found");
+						return new ResponseEntity<Map<String, String>>(map,HttpStatus.OK);
+					}
+					
+//					System.out.println(dojdate+"="+emp.getDoj());
+//					if(dojdate.equalsIgnoreCase(emp.getDoj())){
+//						System.out.println("KIOOOOOOOOOOOOOOOOOOOOOO");
+//						return new ResponseEntity<String>("found",HttpStatus.OK);
+//					} 
+
+				} else {
+					return new ResponseEntity<String>("notfound", HttpStatus.BAD_REQUEST);
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+			
+		}
+		  return new ResponseEntity<String>("notfound",HttpStatus.OK);
+	}
+
+	@GetMapping("/getAllCghs")
+	public List<CGHS> getAllCghs() {
+		List<CGHS> cghs = cGHSRepo.findAll();
+		for (CGHS bean : cghs) {
+			if (bean.getPatientId().equalsIgnoreCase("self")) {
+				String empcode = bean.getEmpCode();
+				bean.setEmpCode(myUtil.getEmpName(empcode));
+				bean.setPatientId("self");
+			} else {
+				bean.setPatientId(myUtil.getFamilyMemberName(Integer.parseInt(bean.getPatientId())));
+			}
+		}
+		return cghs;
+	}
+
+	@GetMapping("/getAllCghsEmp")
+	public List<CGHS> getAllCghsEmp(String empCode) {
+		List<CGHS> cghs = cGHSRepo.findByEmpCode(empCode);
+		for (CGHS bean : cghs) {
+			if (bean.getPatientId().equalsIgnoreCase("self")) {
+				String empcode = bean.getEmpCode();
+				bean.setEmpCode(myUtil.getEmpName(empcode));
+				bean.setPatientId("self");
+			} else {
+				bean.setPatientId(myUtil.getFamilyMemberName(Integer.parseInt(bean.getPatientId())));
+			}
+		}
+		return cghs;
+	}
 
 	@GetMapping("/getFamilyDetails")
 	public List<Employee_Family> getFamilyDetails(@RequestParam("emp_code") String emp_code) {
@@ -77,39 +197,48 @@ public class HomeRestController {
 	public String checkSO(@RequestParam String siodate) {
 		System.out.println("checkSO=> " + siodate);
 		String find = "404";
-		
+
 		String ceaFind = "404";
 		String ltcFind = "404";
 		String gemFind = "404";
 		String briefcaseFind = "404";
-		
+
 		try {
 			List<CEA> cea = cEARepo.findBySanctionNumber(siodate);
-			if (cea.isEmpty()) { ceaFind = "404"; } 
-			else { ceaFind = "200"; }
-			
+			if (cea.isEmpty()) {
+				ceaFind = "404";
+			} else {
+				ceaFind = "200";
+			}
+
 			LTC ltc = ltcRepo.getLTCBySanctionorderno(siodate);
-			if(ltc == null) { ltcFind = "404"; }
-			else { ltcFind="200"; }
-			
+			if (ltc == null) {
+				ltcFind = "404";
+			} else {
+				ltcFind = "200";
+			}
+
 			GEM gem = gEM_Repo.getBySanctionNumber(siodate);
-			if(gem == null) { gemFind = "404"; }
-			else { gemFind="200"; }
-			
+			if (gem == null) {
+				gemFind = "404";
+			} else {
+				gemFind = "200";
+			}
+
 			BriefCase briefcase = briefCaseRepo.findBySanctionNumber(siodate);
-			if(briefcase == null) { briefcaseFind = "404"; }
-			else { briefcaseFind="200"; }
-			
-			
-			
-			
-			if(ceaFind.equalsIgnoreCase("200") || ltcFind.equalsIgnoreCase("200") || gemFind.equalsIgnoreCase("200") ||
-					briefcaseFind.equalsIgnoreCase("200")) {
+			if (briefcase == null) {
+				briefcaseFind = "404";
+			} else {
+				briefcaseFind = "200";
+			}
+
+			if (ceaFind.equalsIgnoreCase("200") || ltcFind.equalsIgnoreCase("200") || gemFind.equalsIgnoreCase("200")
+					|| briefcaseFind.equalsIgnoreCase("200")) {
 				find = "200";
-			}else {
+			} else {
 				find = "404";
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,7 +274,6 @@ public class HomeRestController {
 		return gem;
 	}
 
- 
 	// MEDICAL NOTESHEET
 
 	// Medical Bills Based on Request Number
@@ -165,12 +293,11 @@ public class HomeRestController {
 	public List<Medical_Bills> getByReqNoAndEmpcode(@RequestParam String requestNo, @RequestParam String emp_code) {
 		return medical_BillsRepo.getByReqNoAndEmpcodeNS(requestNo, emp_code);
 	}
-	
-	
+
 	@GetMapping("/getMedicBillsByPatienctName2")
-	public List<Medical_Bills> getMedicBillsByPatienctName2(String patient_name,@RequestParam String emp_code){
-		System.out.println("patient_name=> "+patient_name);
-		System.out.println("emp_code=> "+emp_code);
+	public List<Medical_Bills> getMedicBillsByPatienctName2(String patient_name, @RequestParam String emp_code) {
+		System.out.println("patient_name=> " + patient_name);
+		System.out.println("emp_code=> " + emp_code);
 		return medical_BillsRepo.getMedicBillsByPatienctName2(patient_name, emp_code);
 	}
 
@@ -200,6 +327,12 @@ public class HomeRestController {
 		return employeeRepo.findAll(Sort.by(Sort.Direction.ASC, "code"));
 	}
 
+	@GetMapping("/getEmpss")
+	public List<Employee> getEmpss() {
+		List<Employee> data = employeeRepo.findAll(Sort.by(Sort.Direction.ASC, "code"));
+		return data;
+	}
+
 	// GET ALL EMPLOYEE ALLOWANCES
 	@GetMapping("/getAllAllowancesForNS")
 	public List<Employee_allowance> getAllAllowancesForNS() {
@@ -218,29 +351,30 @@ public class HomeRestController {
 			Integer request_no) {
 		return medical_BillsRepo.getMedicBillsByPatienctNameandReqNo(emp_code, patient_name, request_no);
 	}
-	
-	//MedicalBills by Request No
+
+	// MedicalBills by Request No
 	@GetMapping("/getMedicBillsByReqNoNS2")
 	public List<Medical_Bills> getMedicBillsByReqNoNS2(@RequestParam String requestNo) {
 		return medical_BillsRepo.getMedicBillsByReqNoNS2(Integer.parseInt(requestNo));
 	}
-	
-	//All MedicalBills
-	//for notesheet
+
+	// All MedicalBills
+	// for notesheet
 	@GetMapping("/getAllMedicBills")
 	public List<Medical_Bills> getAllMedicBills() {
 		return medical_BillsRepo.getAllMedicBills();
 	}
-	
-	//All MedicalBills
-	//for sanction order
-		@GetMapping("/getAllMedicBillss")
-		public List<Medical_Bills> getAllMedicBillss() {
-			return medical_BillsRepo.getAllMedicBillss();
-		}
 
-	//==============================MEDICAL BILLS SANCTION ORDER=======================================
-	
+	// All MedicalBills
+	// for sanction order
+	@GetMapping("/getAllMedicBillss")
+	public List<Medical_Bills> getAllMedicBillss() {
+		return medical_BillsRepo.getAllMedicBillss();
+	}
+
+	// ==============================MEDICAL BILLS SANCTION
+	// ORDER=======================================
+
 	// MedicaBills by Patient Name
 	@GetMapping("/getMedicBillsByPatienctNameSO")
 	public List<Medical_Bills> getMedicBillsByPatienctNameSO(String patient_name) {
@@ -248,288 +382,331 @@ public class HomeRestController {
 		return medical_BillsRepo.getMedicBillsByPatienctNameSO(patient_name);
 	}
 
-	//MedicaBills by Patient Name and Request No
+	// MedicaBills by Patient Name and Request No
 	@GetMapping("/getMedicBillsByPatienctNameandReqNoSO")
 	public List<Medical_Bills> getMedicBillsByPatienctNameandReqNoSO(String emp_code, String patient_name,
 			Integer request_no) {
 		return medical_BillsRepo.getMedicBillsByPatienctNameandReqNoSO(emp_code, patient_name, request_no);
 	}
-	//MedicalBills by Request No
+
+	// MedicalBills by Request No
 	@GetMapping("/getMedicBillsByReqNoSO2")
 	public List<Medical_Bills> getMedicBillsByReqNoSO2(@RequestParam String requestNo) {
 		return medical_BillsRepo.getMedicBillsByReqNoSO2(Integer.parseInt(requestNo));
 	}
-	
+
 //	==============================CEA CEA CEA CEA CEA============================
-	
-	@Autowired private CEARepo ceaRepo;
-	
+
+	@Autowired
+	private CEARepo ceaRepo;
+
 	@GetMapping("/getAllCEAsForEdit")
-	public List<CEA> getAllCEAsForEdit(){
+	public List<CEA> getAllCEAsForEdit() {
 		return ceaRepo.getAllCEAsForEdit();
 	}
+
 	@GetMapping("/getCEAForEditById")
-	public CEA getCEAForEditById(String requestno){
+	public CEA getCEAForEditById(String requestno) {
 		return ceaRepo.getCEAForEditById(requestno);
 	}
-	
+
 	@GetMapping("/getCEAsForNS")
-	public List<CEA> getCEAsForNS(){
+	public List<CEA> getCEAsForNS() {
 		return ceaRepo.getCEAsForNS();
 	}
-	
+
 	@GetMapping("/getCEAsForSO")
-	public List<CEA> getCEAsForSO(){
+	public List<CEA> getCEAsForSO() {
 		return ceaRepo.getCEAsForSO();
 	}
-	
-	
-	
-	//=========================LTC========================
+
+	// =========================LTC========================
 	@GetMapping("/getLTCForNS")
-	public LTC getLTCForNS(String requestno){
+	public LTC getLTCForNS(String requestno) {
 		return ltcRepo.getLTCForNS(requestno);
 	}
+
 	@GetMapping("/getAllLTCForNS")
-	public List<LTC> getAllLTCForNS(){
+	public List<LTC> getAllLTCForNS() {
 		return ltcRepo.getAllLTCForNS();
 	}
+
 	@GetMapping("/getLTCForSO")
-	public LTC getLTCForSO(String requestno){
+	public LTC getLTCForSO(String requestno) {
 		return ltcRepo.getLTCForSO(requestno);
 	}
+
 	@GetMapping("/getAllLTCForSO")
-	public List<LTC> getAllLTCForSO(){
+	public List<LTC> getAllLTCForSO() {
 		return ltcRepo.getAllLTCForSO();
 	}
-	
-	//=========LTC ENCASHMENT EDIT
+
+	// =========LTC ENCASHMENT EDIT
 	@GetMapping("/getAllLTCEncashForEdit")
-	public List<LTC> getAllLTCEncashForEdit(){
+	public List<LTC> getAllLTCEncashForEdit() {
 		return ltcRepo.getAllLTCEncashForEdit();
 	}
+
 	@GetMapping("/getLTCEncashForEdit")
-	public LTC getLTCEncashForEdit(String requestno){
+	public LTC getLTCEncashForEdit(String requestno) {
 		return ltcRepo.getLTCEncashForEdit(requestno);
 	}
-	//==================Encashment===========NOTESHEET============
+
+	// ==================Encashment===========NOTESHEET============
 	@GetMapping("/getAllLTCEncashForNS")
-	public List<LTC> getAllLTCEncashForNS(){
+	public List<LTC> getAllLTCEncashForNS() {
 		return ltcRepo.getAllLTCEncashForNS();
 	}
+
 	@GetMapping("/getLTCEncashForNS")
-	public LTC getLTCEncashForNS(String requestno){
+	public LTC getLTCEncashForNS(String requestno) {
 		return ltcRepo.getLTCEncashForNS(requestno);
 	}
-	
-	//========PRINTS======LTC=========Encashment=======NOTESHEET=====
+
+	// ========PRINTS======LTC=========Encashment=======NOTESHEET=====
 	@GetMapping("/getAllLTCEncashForNSPrints")
-	public List<LTC> getAllLTCEncashForNSPrints(){
+	public List<LTC> getAllLTCEncashForNSPrints() {
 		return ltcRepo.getAllLTCEncashForNSPrints();
 	}
+
 	@GetMapping("/getLTCEncashForNSPrints")
-	public LTC getLTCEncashForNSPrints(String requestno){
+	public LTC getLTCEncashForNSPrints(String requestno) {
 		return ltcRepo.getLTCEncashForNSPrints(requestno);
 	}
-	//=====PRINTS=============Encashment===========SANCTION ORDER============
+
+	// =====PRINTS=============Encashment===========SANCTION ORDER============
 	@GetMapping("/getAllLTCEncashForSOPrints")
-	public List<LTC> getAllLTCEncashForSOPrints(){
+	public List<LTC> getAllLTCEncashForSOPrints() {
 		return ltcRepo.getAllLTCEncashForSOPrints();
 	}
+
 	@GetMapping("/getLTCEncashForSOPrints")
-	public LTC getLTCEncashForSOPrints(String requestno){
+	public LTC getLTCEncashForSOPrints(String requestno) {
 		return ltcRepo.getLTCEncashForSOPrints(requestno);
 	}
-	//========PRINTS======LTC=========Advance=======NOTESHEET=====
+
+	// ========PRINTS======LTC=========Advance=======NOTESHEET=====
 	@GetMapping("/getAllLTCAdvanceForNSPrints")
-	public List<LTC> getAllLTCAdvanceForNSPrints(){
+	public List<LTC> getAllLTCAdvanceForNSPrints() {
 		return ltcRepo.getAllLTCAdvanceForNSPrints();
 	}
+
 	@GetMapping("/getLTCAdvanceForNSPrints")
-	public LTC getLTCAdvanceForNSPrints(String requestno){
+	public LTC getLTCAdvanceForNSPrints(String requestno) {
 		return ltcRepo.getLTCAdvanceForNSPrints(requestno);
 	}
-	//========PRINTS======LTC=========Advance=======SANCTION ORDER 
+
+	// ========PRINTS======LTC=========Advance=======SANCTION ORDER
 	@GetMapping("/getAllLTCAdvanceForSOPrints")
-	public List<LTC> getAllLTCAdvanceForSOPrints(){
+	public List<LTC> getAllLTCAdvanceForSOPrints() {
 		return ltcRepo.getAllLTCAdvanceForSOPrints();
 	}
+
 	@GetMapping("/getLTCAdvanceForSOPrints")
-	public LTC getLTCAdvanceForSOPrints(String requestno){
+	public LTC getLTCAdvanceForSOPrints(String requestno) {
 		return ltcRepo.getLTCAdvanceForSOPrints(requestno);
 	}
-	
-	//========================Advance====================
+
+	// ========================Advance====================
 	@GetMapping("/getAllLTCAdvanceForEdit")
-	public List<LTC> getAllLTCAdvanceForEdit(){
+	public List<LTC> getAllLTCAdvanceForEdit() {
 		return ltcRepo.getAllLTCAdvanceForEdit();
 	}
+
 	@GetMapping("/getLTCAdvanceForEdit")
-	public LTC getLTCAdvanceForEdit(String requestno){
+	public LTC getLTCAdvanceForEdit(String requestno) {
 		return ltcRepo.getLTCAdvanceForEdit(requestno);
 	}
+
 	@GetMapping("/getAllLTCAdvanceForSO")
-	public List<LTC> getAllLTCAdvanceForSO(){
+	public List<LTC> getAllLTCAdvanceForSO() {
 		return ltcRepo.getAllLTCAdvanceForSO();
 	}
+
 	@GetMapping("/getLTCAdvanceForSO")
-	public LTC getLTCAdvanceForSO(String requestno){
+	public LTC getLTCAdvanceForSO(String requestno) {
 		return ltcRepo.getLTCAdvanceForSO(requestno);
 	}
-	
-	
-	
-	//======================GEM===VEHICLE=====================
+
+	// ======================GEM===VEHICLE=====================
 	@GetMapping("getAllGemVehicleForEdit")
-	public List<GEM> getAllGemVehicleForEdit(){
+	public List<GEM> getAllGemVehicleForEdit() {
 		return gEM_Repo.getAllGemVehicleForEdit();
 	}
+
 	@GetMapping("getGemVehicleForEdit")
-	public GEM getGemVehicleForEdit(String requestno){
+	public GEM getGemVehicleForEdit(String requestno) {
 		return gEM_Repo.getGemVehicleForEdit(requestno);
 	}
+
 	@GetMapping("getAllGemVehicleForNS")
-	public List<GEM> getAllGemVehicleForNS(){
+	public List<GEM> getAllGemVehicleForNS() {
 		return gEM_Repo.getAllGemVehicleForNS();
 	}
+
 	@GetMapping("getGemVehicleForNS")
-	public GEM getGemVehicleForNS(String requestno){
+	public GEM getGemVehicleForNS(String requestno) {
 		return gEM_Repo.getGemVehicleForNS(requestno);
 	}
+
 	@GetMapping("getAllGemVehicleForSO")
-	public List<GEM> getAllGemVehicleForSO(){
+	public List<GEM> getAllGemVehicleForSO() {
 		return gEM_Repo.getAllGemVehicleForSO();
 	}
+
 	@GetMapping("getGemVehicleForSO")
-	public GEM getGemVehicleForSO(String requestno){
+	public GEM getGemVehicleForSO(String requestno) {
 		return gEM_Repo.getGemVehicleForSO(requestno);
 	}
-	//======================PRINTS===VEHICLE=====NOTESHEET============
+
+	// ======================PRINTS===VEHICLE=====NOTESHEET============
 	@GetMapping("getAllGemVehicleForNSPrints")
-	public List<GEM> getAllGemVehicleForNSPrints(){
+	public List<GEM> getAllGemVehicleForNSPrints() {
 		return gEM_Repo.getAllGemVehicleForNSPrints();
 	}
+
 	@GetMapping("getGemVehicleForNSPrints")
-	public GEM getGemVehicleForNSPrints(String requestno){
+	public GEM getGemVehicleForNSPrints(String requestno) {
 		return gEM_Repo.getGemVehicleForNSPrints(requestno);
 	}
-	//======================PRINTS===VEHICLE=====SANCTION ORDER============
+
+	// ======================PRINTS===VEHICLE=====SANCTION ORDER============
 	@GetMapping("getAllGemVehicleForSOPrints")
-	public List<GEM> getAllGemVehicleForSOPrints(){
+	public List<GEM> getAllGemVehicleForSOPrints() {
 		return gEM_Repo.getAllGemVehicleForSOPrints();
 	}
+
 	@GetMapping("getGemVehicleForSOPrints")
-	public GEM getGemVehicleForSOPrints(String requestno){
+	public GEM getGemVehicleForSOPrints(String requestno) {
 		return gEM_Repo.getGemVehicleForSOPrints(requestno);
 	}
-	//==========GEM============PRINTS===OUTSOURCE=====NOTESHEET============
+
+	// ==========GEM============PRINTS===OUTSOURCE=====NOTESHEET============
 	@GetMapping("getAllGemOutsourceForNSPrints")
-	public List<GEM> getAllGemOutsourceForNSPrints(){
+	public List<GEM> getAllGemOutsourceForNSPrints() {
 		return gEM_Repo.getAllGemOutsourceForNSPrints();
 	}
+
 	@GetMapping("getGemOutsourceNSPrints")
-	public GEM getGemOutsourceNSPrints(String requestno){
+	public GEM getGemOutsourceNSPrints(String requestno) {
 		return gEM_Repo.getGemOutsourceNSPrints(requestno);
 	}
-	//=========GEM=============PRINTS===OUTSOURCE=====SANCTION ORDER============
+
+	// =========GEM=============PRINTS===OUTSOURCE=====SANCTION ORDER============
 	@GetMapping("getAllGemOutsourceForSOPrints")
-	public List<GEM> getAllGemOutsourceForSOPrints(){
+	public List<GEM> getAllGemOutsourceForSOPrints() {
 		return gEM_Repo.getAllGemOutsourceForSOPrints();
 	}
+
 	@GetMapping("getGemOutsourceSOPrints")
-	public GEM getGemOutsourceSOPrints(String requestno){
+	public GEM getGemOutsourceSOPrints(String requestno) {
 		return gEM_Repo.getGemOutsourceSOPrints(requestno);
 	}
-	//==================GEM====OUTSOURCE=====================
+
+	// ==================GEM====OUTSOURCE=====================
 	@GetMapping("getAllGemOutsourceForEdit")
-	public List<GEM> getAllGemOutsourceForEdit(){
+	public List<GEM> getAllGemOutsourceForEdit() {
 		return gEM_Repo.getAllGemOutsourceForEdit();
 	}
+
 	@GetMapping("getGemOutsourceForEdit")
-	public GEM getGemOutsourceForEdit(String requestno){
+	public GEM getGemOutsourceForEdit(String requestno) {
 		return gEM_Repo.getGemOutsourceForEdit(requestno);
 	}
+
 	@GetMapping("getAllGemOutsourceForNS")
-	public List<GEM> getAllGemOutsourceForNS(){
+	public List<GEM> getAllGemOutsourceForNS() {
 		return gEM_Repo.getAllGemOutsourceForNS();
 	}
+
 	@GetMapping("getGemOutsourceForNS")
-	public GEM getGemOutsourceForNS(String requestno){
+	public GEM getGemOutsourceForNS(String requestno) {
 		return gEM_Repo.getGemOutsourceForNS(requestno);
 	}
+
 	@GetMapping("getAllGemOutsourceForSO")
-	public List<GEM> getAllGemOutsourceForSO(){
+	public List<GEM> getAllGemOutsourceForSO() {
 		return gEM_Repo.getAllGemOutsourceForSO();
 	}
+
 	@GetMapping("getGemOutsourceForSO")
-	public GEM getGemOutsourceForSO(String requestno){
+	public GEM getGemOutsourceForSO(String requestno) {
 		return gEM_Repo.getGemOutsourceForSO(requestno);
 	}
-	
 
-	//=======================GPF===Withdraw====================
+	// =======================GPF===Withdraw====================
 	@GetMapping("getAllGPFWithdrawForEdit")
-	public List<GPF> getAllGPFWithdrawForEdit(){
+	public List<GPF> getAllGPFWithdrawForEdit() {
 		return gpfRepo.getAllGPFWithdrawForEdit();
 	}
+
 	@GetMapping("getGPFWithdrawForEdit")
-	public GPF getGPFWithdrawForEdit(String requestno){
+	public GPF getGPFWithdrawForEdit(String requestno) {
 		return gpfRepo.getGPFWithdrawForEdit(requestno);
 	}
+
 	@GetMapping("getAllGPFWithdrawForNS")
-	public List<GPF> getAllGPFWithdrawForNS(){
+	public List<GPF> getAllGPFWithdrawForNS() {
 		return gpfRepo.getAllGPFWithdrawForNS();
 	}
+
 	@GetMapping("getGPFWithdrawForNS")
-	public GPF getGPFWithdrawForNS(String requestno){
+	public GPF getGPFWithdrawForNS(String requestno) {
 		return gpfRepo.getGPFWithdrawForNS(requestno);
 	}
+
 	@GetMapping("getAllGPFWithdrawForSO")
-	public List<GPF> getAllGPFWithdrawForSO(){
+	public List<GPF> getAllGPFWithdrawForSO() {
 		return gpfRepo.getAllGPFWithdrawForSO();
 	}
+
 	@GetMapping("getGPFWithdrawForSO")
-	public GPF getGPFWithdrawForSO(String requestno){
+	public GPF getGPFWithdrawForSO(String requestno) {
 		return gpfRepo.getGPFWithdrawForSO(requestno);
 	}
+
 	@GetMapping("getAllGPFWithdrawForSOPrint")
-	public List<GPF> getAllGPFWithdrawForSOPrint(){
+	public List<GPF> getAllGPFWithdrawForSOPrint() {
 		return gpfRepo.getAllGPFWithdrawForSOPrint();
 	}
-	
-	@GetMapping("getAllGPFWithdrawForNSPrint") public List<GPF> getAllGPFWithdrawForNSPrint(){ return gpfRepo.getAllGPFWithdrawForNSPrint(); }
-	
-	//==============CEA REPORTS
-	//NOTESHEET
+
+	@GetMapping("getAllGPFWithdrawForNSPrint")
+	public List<GPF> getAllGPFWithdrawForNSPrint() {
+		return gpfRepo.getAllGPFWithdrawForNSPrint();
+	}
+
+	// ==============CEA REPORTS
+	// NOTESHEET
 	@GetMapping("/getDistinctNotenumbers")
-	public List<DistinctNoteNumbers> getDistinctNotenumbers(){
+	public List<DistinctNoteNumbers> getDistinctNotenumbers() {
 		return ceaRepo.getDistinctNotenumbers();
 	}
+
 	@GetMapping("/getDistinctSanctionOrderNumbers")
-	public List<DistinctSanctionOrderNumbers> getDistinctSanctionOrderNumbers(){
+	public List<DistinctSanctionOrderNumbers> getDistinctSanctionOrderNumbers() {
 		return ceaRepo.getDistinctSanctionOrderNumbers();
 	}
-	
-	
-	//============BRIEFCASE
+
+	// ============BRIEFCASE
 	@GetMapping("/findByNoteStatus")
-	public List<BriefCase> findByNoteStatus(Boolean noteStatus){
-		System.out.println("noteStatus=>"+noteStatus);
+	public List<BriefCase> findByNoteStatus(Boolean noteStatus) {
+		System.out.println("noteStatus=>" + noteStatus);
 		return briefCaseRepo.findByNoteStatus(noteStatus);
 	}
+
 	@GetMapping("/findByNoteStatusandSanctionStatus")
-	public List<BriefCase> findByNoteStatusandSanctionStatus(Boolean noteStatus,Boolean sanctionStatus){
-		System.out.println("noteStatus=>"+noteStatus);
-		System.out.println("noteStatus=>"+sanctionStatus);
-		return briefCaseRepo.findByNoteStatusandSanctionStatus(noteStatus,sanctionStatus);
+	public List<BriefCase> findByNoteStatusandSanctionStatus(Boolean noteStatus, Boolean sanctionStatus) {
+		System.out.println("noteStatus=>" + noteStatus);
+		System.out.println("noteStatus=>" + sanctionStatus);
+		return briefCaseRepo.findByNoteStatusandSanctionStatus(noteStatus, sanctionStatus);
 	}
-	
+
 	@GetMapping("getEmpDetails")
 	public EmployeeCompleteDetailsModel getEmpDetails(String code) {
-		System.out.println("UR in getEmpDetails"+code);
+		System.out.println("UR in getEmpDetails" + code);
 		Optional<Employee> employee = employeeRepo.findById(code);
 		EmployeeCompleteDetailsModel employeeCompleteDetailsModel = null;
-		if(employee.isPresent()) {
+		if (employee.isPresent()) {
 			employeeCompleteDetailsModel = new EmployeeCompleteDetailsModel();
 			employeeCompleteDetailsModel.setCode(employee.get().getCode());
 			employeeCompleteDetailsModel.setName(employee.get().getName());
@@ -545,14 +722,16 @@ public class HomeRestController {
 			employeeCompleteDetailsModel.setPhno(employee.get().getPhno());
 			employeeCompleteDetailsModel.setAddress(employee.get().getAddress());
 			employeeCompleteDetailsModel.setWardEntitlement(employee.get().getWardEntitlement());
-			
+			employeeCompleteDetailsModel.setDoj(employee.get().getDoj());
+			employeeCompleteDetailsModel.setDoa(employee.get().getDoa());
+
 			List<Employee_Family> empFamily = employeeFamilyRepo.getAllByEmpcode(code);
-			
-			if(empFamily.size() > 0) {
+
+			if (empFamily.size() > 0) {
 				com.app.model.Employee_Family empfamily = null;
 				List<com.app.model.Employee_Family> listempfamily = new ArrayList<com.app.model.Employee_Family>();
-				
-				for(Employee_Family emp: empFamily) {
+
+				for (Employee_Family emp : empFamily) {
 					empfamily = new com.app.model.Employee_Family();
 					empfamily.setId(emp.getId());
 					empfamily.setEmp_code(emp.getEmp_code());
@@ -563,14 +742,32 @@ public class HomeRestController {
 					empfamily.setCghsCode(emp.getCghsCode());
 					listempfamily.add(empfamily);
 				}
-				System.out.println("listempfamily=>"+listempfamily.size());
+				System.out.println("listempfamily=>" + listempfamily.size());
 				employeeCompleteDetailsModel.setFamily(listempfamily);
 			}
-			
+
 		}
 		return employeeCompleteDetailsModel;
 	}
- 
-	 
+
+	@GetMapping("/getFinancialYears")
+	public List<String> generateFinancialYears() {
+		return myUtil.generateFinancialYears();
+	}
 	
+	@GetMapping("/updatepassword")
+	public List<AppUser> updatepassword() {
+	List<AppUser> appUserList=	appUserRepo.getEmpDetails();
+	appUserList.stream().forEach(item -> {
+	    String[] parts = item.getEmail().split("@");
+        String firstPart = parts[0];
+	    appUserRepo.updatePwdDetails(item.getId(),passwordEncoder.encode(item.getEmail()));
+	});
+	
+		return appUserList;
+	}
+	
+	
+	
+
 }

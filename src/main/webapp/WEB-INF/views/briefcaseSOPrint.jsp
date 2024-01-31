@@ -38,7 +38,7 @@ function myFunction() {
 	    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
 	    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
 	    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
-	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Only ' : '';
 	    document.getElementById("words").innerHTML = str;
 }
 </script>
@@ -113,7 +113,7 @@ body {
 				under the powers delegated to him vide MInistry of Information
 				Technology vide order No. M-11017/1/2014-MS (O&M) dated 17.07.2014,
 				to the incurring of expenditure of <b>Rs. ${bean.amountApproved }/-
-					( Rupees <span id="words"></span> Only).
+					( Rupees <span id="words"></span> ).
 				</b> Reimbursement towards purchase of Brief Case to <b>${emp.name },${emp.designation },
 					Employee Code: ${emp.code }</b> ${emp.place }. from ${bean.shopName }
 				and Vide Invoice No. <b>${bean.invoiceNo }</b> dated <b><%=formattedDate %></b>.
@@ -149,8 +149,8 @@ body {
 		<div id="sign" align="right">
 			<br> <br> <b>
 			
-(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
-<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
+(<%= localizationManager.getMessage("nic46") %>) / (P. Lakshminarayana)<br>
+<%= localizationManager.getMessage("nic43") %> <br> State Informatics Office & Head of Office
 			</b>
 		</div>
 		<br>

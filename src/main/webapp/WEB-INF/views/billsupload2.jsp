@@ -310,7 +310,7 @@ $(document).ready(function(){
 
 		$
 				.getJSON(
-						'relationsearch.action?eno=' + eno + "&patient_name="
+						'./relationsearch.action?eno=' + eno + "&patient_name="
 								+ patient_name,
 						function(response) {
 							if (response) {
@@ -376,8 +376,8 @@ $(document).ready(function(){
 </head>
 
 <body>
-	<%@include file="banner.jsp"%>
-	<%@include file="navbar.jsp"%>
+	<%@include file="banner2.jsp"%>
+	<%@include file="navbar2.jsp"%>
 
 	<form:form action="./billsupload" method="post"
 		modelAttribute="medical_Bills_upload" enctype="multipart/form-data">

@@ -287,12 +287,12 @@ function vgstValidation()
 </head>
 <!DOCTYPE html>
 <body>
-	<%@include file="banner.jsp"%>
-	<%@include file="navbar.jsp"%>
+	<%@include file="banner2.jsp"%>
+	<%@include file="navbar2.jsp"%>
 	<section class="container mt-5 shadow py-5 " id="section">
 		<h4 align="center">VENDOR INSERT</h4>
 		<div align="left" style="padding-left: 50px;">
-			<form:form action="saveVendor" method="POST" modelAttribute="vendor"
+			<form:form action="./saveVendor" method="POST" modelAttribute="vendor"
 				onsubmit="return Validate();">
 				<div class="abc">
 

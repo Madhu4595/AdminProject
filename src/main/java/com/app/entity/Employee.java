@@ -31,6 +31,9 @@ public class Employee {
 	
 	private String wardEntitlement;
 	
+	private String doj;
+	private String doa;
+	
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -38,7 +41,7 @@ public class Employee {
 
 	public Employee(String code, String name, String designation, String basic_pay, String place, String email,
 			String date_of_retirement, String dob, String payscale, String callSign, String ecghsCode, byte[] empPhoto,
-			String phno, String address, String wardEntitlement) {
+			String phno, String address, String wardEntitlement, String doj, String doa) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -55,6 +58,8 @@ public class Employee {
 		this.phno = phno;
 		this.address = address;
 		this.wardEntitlement = wardEntitlement;
+		this.doj = doj;
+		this.doa = doa;
 	}
 
 	public String getCode() {
@@ -177,14 +182,31 @@ public class Employee {
 		this.wardEntitlement = wardEntitlement;
 	}
 
+	public String getDoj() {
+		return doj;
+	}
+
+	public void setDoj(String doj) {
+		this.doj = doj;
+	}
+
+	public String getDoa() {
+		return doa;
+	}
+
+	public void setDoa(String doa) {
+		this.doa = doa;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [code=" + code + ", name=" + name + ", designation=" + designation + ", basic_pay=" + basic_pay
 				+ ", place=" + place + ", email=" + email + ", date_of_retirement=" + date_of_retirement + ", dob="
 				+ dob + ", payscale=" + payscale + ", callSign=" + callSign + ", ecghsCode=" + ecghsCode + ", empPhoto="
 				+ Arrays.toString(empPhoto) + ", phno=" + phno + ", address=" + address + ", wardEntitlement="
-				+ wardEntitlement + "]";
+				+ wardEntitlement + ", doj=" + doj + ", doa=" + doa + "]";
 	}
+
 	
 
 

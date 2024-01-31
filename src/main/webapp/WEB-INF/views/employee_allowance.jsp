@@ -23,7 +23,7 @@
 <title>VENDOR</title>
 </head>
 <body>
-<%@include file="banner.jsp"%>
+<%@include file="banner2.jsp"%>
 	<%
 		Date date = new Date();
 	SimpleDateFormat format = new SimpleDateFormat("yyyy");
@@ -37,7 +37,7 @@
 	int substart_year2 = 2010;
 	int end_year2 = current_year + 1;
 	%>
-	<%@include file="navbar.jsp"%>
+	<%@include file="navbar2.jsp"%>
 
 
 	<!-- Intro Section  -->
@@ -47,7 +47,7 @@
 
 		<div align="left" style="padding-left: 50px;">
 
-			<form:form action="empAllowanceSave"
+			<form:form action="./empAllowanceSave"
 				modelAttribute="employee_allowance" method="post" name="RegForm"
 				onsubmit="return Validate()">
 

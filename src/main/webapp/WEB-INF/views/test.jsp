@@ -1,41 +1,84 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Vendor Creation</title>
- <script src="./js/jquery-3.3.1.min.js" type="text/javascript"></script>
- <script>
- 
- function getData(){
-	 alert(";")
-	 var emp_code = "3586";
-	 $.ajax({
-	     type: "get",
-	     contentType: "application/json",
-	     url: "getFamilyDetails?emp_code="+emp_code,
-	     dataType: 'json',
-	     cache: false,
-	     timeout: 600000,
-	     success: function (data) {
-	         alert("success"+JSON.stringify(data));
-	         document.location.href='/home';
+<title>Insert title here</title>
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-	     },
-	     error: function (data) {
-	     }
-	 });
- }
- 
+<!-- DataTables CSS and JS files -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
- </script>
+<script>
+//     $(document).ready(function() {
+    	
+
+//         // ... Your code here ...
+
+//         // Destroy DataTable before reinitializing
+//         dataTable.destroy();
+
+//         $('#example').DataTable();
+//     });
+</script>
+<script>
+//     $(document).ready(function() {
+//         $('#example').DataTable({
+//             ajax: {
+//                 url: './getEmps',
+//                 dataSrc: 'data'
+//             },
+//             columns: [
+//                 { data: 'code' },
+//                 { data: 'name' },
+//                 { data: 'designation' },
+//                 { data: 'basic_pay' },
+//                 { data: 'place' },
+//                 { data: 'email' }
+//             ]
+//         });
+//     });
+</script>
+<script>
+    $(document).ready(function() {
+//     	var dataTable = $('#example').DataTable();
+//     	dataTable.destroy();
+    	
+        $('#example').DataTable({
+            ajax: '../getEmpss',
+            columns: [
+                { data: 'code' },
+                { data: 'name' },
+                { data: 'designation' },
+                { data: 'basic_pay' },
+                { data: 'place' },
+                { data: 'email' }
+            ]
+        });
+    });
+</script>
+
+
 </head>
 <body>
-<%@include file="navbar.jsp" %>
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Table rows go here -->
+    </tbody>
+</table>
 
-<button onclick="getData();">click</button>
- 
 </body>
 </html>

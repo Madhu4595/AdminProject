@@ -9,19 +9,12 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class AdminProjectApplication extends SpringBootServletInitializer{
 	
 	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		// TODO Auto-generated method stub
-		return builder.sources(AdminProjectApplication.class);
-		
-		
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(AdminProjectApplication.class);
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(AdminProjectApplication.class, args);
-		
-		
-		
 	}
-	
 
 }

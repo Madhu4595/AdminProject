@@ -102,7 +102,7 @@ function myFunction() {
 		str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]])
 				+ 'Hundred ' : '';
 		str += (n[5] != 0) ? ((str != '') ? 'and ' : '')
-				+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only '
+				+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Only '
 				: '';
 		document.getElementById("words").innerHTML = str;
 	}
@@ -179,8 +179,8 @@ function myFunction() {
 					<br>
 					<div id="sign">
 						<br> <br> <b>
-						(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
-<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office</b>
+						(<%= localizationManager.getMessage("nic46") %>) / (P. Lakshminarayana)<br>
+<%= localizationManager.getMessage("nic43") %> <br> State Informatics Office & Head of Office</b>
 						</b>
 					</div>
 					<br>

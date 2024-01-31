@@ -81,8 +81,8 @@ $(document).ready(function(){
 </style>
 </head>
 <body>
-<%@include file="/WEB-INF/views/banner.jsp"%>
-	<%@include file="/WEB-INF/views/navbar.jsp"%>
+<%@include file="/WEB-INF/views/banner2.jsp"%>
+	<%@include file="/WEB-INF/views/navbar2.jsp"%>
 	
 	<center>
 	<span style="color:blue; font-weight:bolder;">APPROVED DETAILS FOR GEM - Vehicle</span><br>

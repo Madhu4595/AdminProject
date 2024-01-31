@@ -373,8 +373,8 @@ function callrequestno(a){
 </style>
 </head>
 <body>
-<%@include file="banner.jsp"%>
-	<%@include file="navbar.jsp"%>
+<%@include file="banner2.jsp"%>
+	<%@include file="navbar2.jsp"%>
 
 	<div align="center">
 		<h3 class="h5 font-weight-bolder">MEDICAL SANCTION ORDER FORM</h3>

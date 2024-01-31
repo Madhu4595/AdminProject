@@ -129,7 +129,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </style>
 </head>
 <body>
-	<%@include file="banner.jsp"%>
+	<%@include file="banner2.jsp"%>
 	<%@include file="navbar.jsp"%>
 
 	<div align="center">

@@ -61,7 +61,7 @@ function myFunction() {
 		str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]])
 				+ 'Hundred ' : '';
 		str += (n[5] != 0) ? ((str != '') ? 'and ' : '')
-				+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only '
+				+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Only '
 				: '';
 		document.getElementById("words").innerHTML = str;
 	}
@@ -135,8 +135,7 @@ body {
 			${emp.place } who submitted bill vide Invoice No. ${bean.invoiceNo }
 			<b>dt. </b>
 			<%=formattedDate%>
-			for <b>Rs. ${bean.amountApproved }/- ( Rupees <span id="words"></span>
-				Only)
+			for <b>Rs. ${bean.amountApproved }/- ( Rupees <span id="words"></span> )
 			</b> as per his entitlement.
 		</div>
 		<br>

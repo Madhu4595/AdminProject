@@ -75,7 +75,7 @@ function myFunction() {
 		str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]])
 				+ 'Hundred ' : '';
 		str += (n[5] != 0) ? ((str != '') ? 'and ' : '')
-				+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only '
+				+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Only '
 				: '';
 		document.getElementById("words").innerHTML = str;
 	}
@@ -243,7 +243,7 @@ function myFunction() {
 						17/07/2014. Head of State NIC Centre being the authority competent
 						if the claim admissible not exceeds Rupees Two Lakhs may kindly
 						approve the reimbursement of admissible amount for <b>&#8377;
-							${totAmountApproved }/- ( Rupees <span id="words"></span> Only
+							${totAmountApproved }/- ( Rupees <span id="words"></span> 
 							).
 						</b>
 					</div>

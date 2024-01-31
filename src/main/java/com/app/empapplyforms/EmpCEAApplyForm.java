@@ -24,10 +24,12 @@ public class EmpCEAApplyForm {
 	private String childId1;
 	private String childAcademicYear1;
 	private String childSchoolName1;
+	private String claimfor1;
 	
 	private String childId2;
 	private String childAcademicYear2;
 	private String childSchoolName2;
+	private String claimfor2;
 	
 	private String distanceHostel;
 	private String hostelSubsidy;
@@ -41,6 +43,8 @@ public class EmpCEAApplyForm {
 	private String bonafideAmtAttached;
 	private String bonafideAmt;
 	
+	private String financialYear;
+	
 	
 	public EmpCEAApplyForm() {
 		super();
@@ -50,10 +54,10 @@ public class EmpCEAApplyForm {
 
 	public EmpCEAApplyForm(Long id, Integer empCode, String spouseId, String spouseOrg, String spouseDesg,
 			String spouseAddress, String noOfChilds, String childId1, String childAcademicYear1,
-			String childSchoolName1, String childId2, String childAcademicYear2, String childSchoolName2,
-			String distanceHostel, String hostelSubsidy, String disableChild, String disableNature,
-			String disableCertificateDate, String disablePercentage, String bonafideCertificate,
-			String bonafideAmtAttached, String bonafideAmt) {
+			String childSchoolName1, String claimfor1, String childId2, String childAcademicYear2,
+			String childSchoolName2, String claimfor2, String distanceHostel, String hostelSubsidy, String disableChild,
+			String disableNature, String disableCertificateDate, String disablePercentage, String bonafideCertificate,
+			String bonafideAmtAttached, String bonafideAmt, String financialYear) {
 		super();
 		this.id = id;
 		this.empCode = empCode;
@@ -65,9 +69,11 @@ public class EmpCEAApplyForm {
 		this.childId1 = childId1;
 		this.childAcademicYear1 = childAcademicYear1;
 		this.childSchoolName1 = childSchoolName1;
+		this.claimfor1 = claimfor1;
 		this.childId2 = childId2;
 		this.childAcademicYear2 = childAcademicYear2;
 		this.childSchoolName2 = childSchoolName2;
+		this.claimfor2 = claimfor2;
 		this.distanceHostel = distanceHostel;
 		this.hostelSubsidy = hostelSubsidy;
 		this.disableChild = disableChild;
@@ -77,6 +83,7 @@ public class EmpCEAApplyForm {
 		this.bonafideCertificate = bonafideCertificate;
 		this.bonafideAmtAttached = bonafideAmtAttached;
 		this.bonafideAmt = bonafideAmt;
+		this.financialYear = financialYear;
 	}
 
 
@@ -180,6 +187,16 @@ public class EmpCEAApplyForm {
 	}
 
 
+	public String getClaimfor1() {
+		return claimfor1;
+	}
+
+
+	public void setClaimfor1(String claimfor1) {
+		this.claimfor1 = claimfor1;
+	}
+
+
 	public String getChildId2() {
 		return childId2;
 	}
@@ -207,6 +224,16 @@ public class EmpCEAApplyForm {
 
 	public void setChildSchoolName2(String childSchoolName2) {
 		this.childSchoolName2 = childSchoolName2;
+	}
+
+
+	public String getClaimfor2() {
+		return claimfor2;
+	}
+
+
+	public void setClaimfor2(String claimfor2) {
+		this.claimfor2 = claimfor2;
 	}
 
 
@@ -300,23 +327,29 @@ public class EmpCEAApplyForm {
 	}
 
 
+	public String getFinancialYear() {
+		return financialYear;
+	}
+
+
+	public void setFinancialYear(String financialYear) {
+		this.financialYear = financialYear;
+	}
+
+
 	@Override
 	public String toString() {
 		return "EmpCEAApplyForm [id=" + id + ", empCode=" + empCode + ", spouseId=" + spouseId + ", spouseOrg="
 				+ spouseOrg + ", spouseDesg=" + spouseDesg + ", spouseAddress=" + spouseAddress + ", noOfChilds="
 				+ noOfChilds + ", childId1=" + childId1 + ", childAcademicYear1=" + childAcademicYear1
-				+ ", childSchoolName1=" + childSchoolName1 + ", childId2=" + childId2 + ", childAcademicYear2="
-				+ childAcademicYear2 + ", childSchoolName2=" + childSchoolName2 + ", distanceHostel=" + distanceHostel
-				+ ", hostelSubsidy=" + hostelSubsidy + ", disableChild=" + disableChild + ", disableNature="
-				+ disableNature + ", disableCertificateDate=" + disableCertificateDate + ", disablePercentage="
-				+ disablePercentage + ", bonafideCertificate=" + bonafideCertificate + ", bonafideAmtAttached="
-				+ bonafideAmtAttached + ", bonafideAmt=" + bonafideAmt + "]";
+				+ ", childSchoolName1=" + childSchoolName1 + ", claimfor1=" + claimfor1 + ", childId2=" + childId2
+				+ ", childAcademicYear2=" + childAcademicYear2 + ", childSchoolName2=" + childSchoolName2
+				+ ", claimfor2=" + claimfor2 + ", distanceHostel=" + distanceHostel + ", hostelSubsidy=" + hostelSubsidy
+				+ ", disableChild=" + disableChild + ", disableNature=" + disableNature + ", disableCertificateDate="
+				+ disableCertificateDate + ", disablePercentage=" + disablePercentage + ", bonafideCertificate="
+				+ bonafideCertificate + ", bonafideAmtAttached=" + bonafideAmtAttached + ", bonafideAmt=" + bonafideAmt
+				+ ", financialYear=" + financialYear + "]";
 	}
 
-
-
-
-	
-	
 
 }

@@ -22,10 +22,10 @@ h4{
 
 </head>
 <body>
-<%@include file="banner.jsp" %>
+<%@include file="banner2.jsp" %>
 <%@include file="navbar.jsp" %>
 
-<form:form action="transactionsave" method="post" modelAttribute="transactions" > 
+<form:form action="./transactionsave" method="post" modelAttribute="transactions" > 
     <section class="container mt-5 shadow py-5" id="section">
 	<h4 align="center" >VENDOR BILL PROCESSING</h4>
 	

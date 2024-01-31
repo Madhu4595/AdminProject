@@ -148,7 +148,7 @@ function form_submit(){
   </head>
   <body>
   <div id="navbanner">
-  <%@include file="banner.jsp" %>
+  <%@include file="banner2.jsp" %>
   <%@include file="navbar.jsp" %>
 	</div>
 	<form:form action="" method="post" name="so_form" target="_blank"> 

@@ -44,8 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http
 			.authorizeRequests()
-			.antMatchers("/registration**","/js/**","/css/**","/img/**","/images/**","/boostrap/**","/customCSS/**","/customJS/**","/fonts/**","/sass/**").permitAll()
-			//.antMatchers("/approvals/**").hasRole("DD")
+			.antMatchers("/registration**","/js/**","/css/**","/img/**",
+					"/images/**","/boostrap/**","/customCSS/**","/customJS/**","/fonts/**",
+					"/sass/**","/getEmpss","/loginEmp","/empHome","/validateEmpLogin","/updatepassword").permitAll()
+			//.antMatchers("/cghsmrcfPrintform").hasRole("EMP")
 			.anyRequest().authenticated() 
 			.and()
 			.formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/",true)

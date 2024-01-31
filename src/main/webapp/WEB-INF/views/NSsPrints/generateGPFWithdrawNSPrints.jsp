@@ -66,7 +66,7 @@ System.out.println("nsdateprint==> "+nsdateprint);
 						+ 'Hundred ' : '';
 				str += (n[5] != 0) ? ((str != '') ? 'and ' : '')
 						+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]])
-						+ 'only ' : '';
+						+ 'Only ' : '';
 				document.getElementById("words").innerHTML = str;
 			});
 </script>
@@ -101,7 +101,7 @@ System.out.println("nsdateprint==> "+nsdateprint);
 					<div style="text-align: justify;">
 						${emp.callSign }. ${emp.name }, ${emp.designation }, ${emp.place }
 						has applied for withdrawal of Rs. <b>${gpf.withDrawAmt }/-</b> (
-						Rupees <span id="words"></span> Only) from the amount standing to his
+						Rupees <span id="words"></span> ) from the amount standing to his
 						credit in GPF account No.${gpf.gpfNo } towards expenditure in
 						connection with purchase of consumer durables in terms of Rule
 						15(1)(A) of General Provident Fund (Central Services) Rules, 1960.

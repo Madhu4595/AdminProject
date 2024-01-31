@@ -62,7 +62,7 @@ String words = gpf.getWithDrawAmt();
 						+ 'Hundred ' : '';
 				str += (n[5] != 0) ? ((str != '') ? 'and ' : '')
 						+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]])
-						+ 'only ' : '';
+						+ 'Only ' : '';
 				document.getElementById("words").innerHTML = str;
 			});
 </script>
@@ -103,7 +103,7 @@ String words = gpf.getWithDrawAmt();
 					
 					<div style="text-align: justify;">
 						1. Sanction of the competent Authority is hereby conveyed under Rule 15(1)(A) read with 16(1) and 16(2) of
-						GPF rules, to the withdrawal by ${emp.callSign } ${emp.name }, ${emp.designation }, ${emp.place }, <b>Rs. ${gpf.withDrawAmt }/- (Rupees <span id="words"></span> Only)
+						GPF rules, to the withdrawal by ${emp.callSign } ${emp.name }, ${emp.designation }, ${emp.place }, <b>Rs. ${gpf.withDrawAmt }/- (Rupees <span id="words"></span> )
 						</b> from his GPF Account No. ${gpf.gpfNo } to enable him to defray the expenses in connection with Purchase of consumer durable (Refrigerator).
 					</div><br>
 					
@@ -149,8 +149,8 @@ String words = gpf.getWithDrawAmt();
 				<br><br><br>
 					<div style="text-align: right">
 						<br> <br> <b>
-						(<%= localizationManager.getMessage("nic46") %>) / (S.V.Ch. Subba Rao)<br>
-<%= localizationManager.getMessage("nic43") %> / Scientist-F & Head of Office
+						(<%= localizationManager.getMessage("nic46") %>) / (P. Lakshminarayana)<br>
+<%= localizationManager.getMessage("nic43") %> <br> State Informatics Office & Head of Office
 						</b>
 					</div>
 					

@@ -1,3 +1,4 @@
+<%@page import="com.app.entity.AppUser"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -163,11 +164,17 @@
 <link rel="stylesheet" href="./customCSS/navbarCss.css" />
 
 </head>
+<%
+String role= (String)session.getAttribute("role");
+System.out.println("role=>"+role);
+AppUser user= (AppUser)session.getAttribute("user");
+System.out.println("user=>"+user.toString());
+%>
 
 <div id="menu_area" class="menu-area">
 	<div class="container">
 		<div class="row">
-			<nav class="navbar navbar-light navbar-expand-lg mainmenu">
+			<nav class="navbar navbar-light navbar-expand-lg mainmenu ">
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -182,6 +189,7 @@
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Allowance/Bills </a>
 							
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<% if(role.equalsIgnoreCase("ROLE_USER")){ %>
 								<li class="dropdown">
 									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> CEA </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -239,11 +247,16 @@
 										<li><a href="briefcaseEditForm">Modify</a></li>
 									</ul>
 								</li>
+								<% } %>
+								<% if(role.equalsIgnoreCase("ROLE_EMP")){ %>
 								<li><a href="cghsForm">CGHS MRCF Reibursement</a></li>
-								<li><a href="empCEAApplyForm">Employee CEA Apply Form</a></li>
+								<li><a href="empCEAApplyForm">CEA Apply Form</a></li>
+								<li><a href="empGpfApplyForm">GPF Withdraw Apply Form</a></li>
+								<li><a href="empGpf2ApplyForm">GPF Advance Apply Form</a></li>
+								<% } %>
 							</ul>
 						</li>
-					 
+					 <% if(role.equalsIgnoreCase("ROLE_USER")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Approval Details</a>
 
@@ -275,7 +288,8 @@
 
 							</ul>
 						</li>
-					 
+					 <% } %>
+					 <% if(role.equalsIgnoreCase("ROLE_USER")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sanction Order Generation</a>
 							
@@ -303,6 +317,8 @@
 								<li><a href="briefcaseSOForm">Briefcase</a></li>
 							</ul>
 						</li>
+						<% } %>
+						<% if(role.equalsIgnoreCase("ROLE_USER")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notesheet Prints</a>
 							
@@ -327,6 +343,8 @@
 								<li><a href="briefcaseNSPrintForm">BRIEF CASE</a></li>
 							</ul>
 						</li>
+						<%} %>
+						<% if(role.equalsIgnoreCase("ROLE_USER")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sanction Order Prints</a>
 							
@@ -351,15 +369,25 @@
 								<li><a href="briefcaseSOPrintForm">BRIEF CASE</a></li>
 							</ul>
 						</li>
+						<% } %>
+						<% if(role.equalsIgnoreCase("ROLE_EMP")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown">Prints</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li><a href="cghsmrcfPrintform">CGHS MRCF</a></li>
+								<li><a href="empCeaApplyPrintForm?code=<%=user.getId()%>">CEA APPLY PRINTS</a></li>
+								<li><a href="empGpfApplyPrintForm?code=<%=user.getId()%>">GPF Withdraw APPLY PRINTS</a></li>
+								<li><a href="empGpfAdvanceApplyPrintForm?code=<%=user.getId()%>">GPF Advance APPLY PRINTS</a></li>
 							</ul>
 						</li>
+						<% } %>
+						<% if(role.equalsIgnoreCase("ROLE_USER")){ %>
 						<li style="width: 100px;"><a href="employee_insert">Employee</a></li>
 						<li style="width: 100px;"><a href="vendor_insert">Vendor</a></li>
-						<li><a href="logout" style="font-weight: bolder; color: blue;">Logout</a></li>
+						<% } %>
+						
+						<li><span style="font-weight: bolder; color: blue;font-size: large;"><%= user.getFirstName() %></span></li>
+						<li><a href="logout" style="font-weight: bolder; color: red;">Logout</a></li>
 					</ul>
 				</div>
 			</nav>

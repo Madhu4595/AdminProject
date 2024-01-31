@@ -72,8 +72,8 @@
 </head>
 <body>
 
-	<%@include file="banner.jsp"%>
-	<%@include file="navbar.jsp"%>
+	<%@include file="banner2.jsp"%>
+	<%@include file="navbar2.jsp"%>
 	
 	<div align="center">
 		<h3 class="h3 font-weight-bolder">GPF - WithDraw Entry Form</h3>

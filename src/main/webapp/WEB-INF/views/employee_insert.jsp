@@ -130,6 +130,8 @@ function searchempno(){
 	     		 document.getElementById("address").value =response[9];
 	     		 document.getElementById("phno").value =response[8];
 	     		 document.getElementById("wardEntitlement").value =response[10];
+	     		 document.getElementById("doj").value =response[11];
+	     		 document.getElementById("doa").value =response[12];
 	     		
 	     		 $("#viewphoto").append('<img src="data:image/png;base64,'+response[7]+'" alt="Image" width="100px;" height="100px;" />')
 	     		
@@ -157,8 +159,8 @@ function searchempno(){
 </script>
 <body>
 
-	<%@include file="banner.jsp"%>
-	<%@include file="navbar.jsp"%>
+	<%@include file="banner2.jsp"%>
+	<%@include file="navbar2.jsp"%>
 
 	<div class="container-fluid shadow align-items-center">
 		<h4 align="center" class="sendhead">EMPLOYEE INSERT</h4>
@@ -212,6 +214,12 @@ function searchempno(){
 											</select></div>
 					<div class="col-sm-3" align="center">Address:</div>
 					<div class="col-sm-3"><textarea class="form-control"  rows="2" cols="40" name="address" id="address"></textarea></div>
+				</div>
+				<div class="row align-items-center m-1">
+					<div class="col-sm-3" align="center">Date of Joining:</div>
+					<div class="col-sm-3"><input type="date" class="form-control"  name="doj" id="doj" /></div>
+					<div class="col-sm-3" align="center">Date of Superannuation:</div>
+					<div class="col-sm-3"><input type="date" class="form-control"  name="doa" id="doa" /></div>
 				</div>
 				<div class="row align-items-center m-1">
 					<div class="col-sm-3" align="center">Photo:</div>

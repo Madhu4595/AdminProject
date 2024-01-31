@@ -52,7 +52,7 @@ String words = empallow.getAmount_approved().toString();
 		    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
 		    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
 		    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
-		    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+		    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Only ' : '';
 		    document.getElementById("words").innerHTML = str;
 	}
 	</script>
@@ -93,7 +93,7 @@ String words = empallow.getAmount_approved().toString();
       <div>
       I am directed to convey the sanction of the Director General, NIC under the powers delegated to him
 vide Ministry of Information Technology vide order No. M-11017/1/2014-MS (O&M) dated
-17.07.2014, to the incurring of expenditure of <b>Rs. ${employee_allowance.amount_approved} /- ( Rupees <span id="words" ></span> Only ) </b>. Reimbursement towards purchase of Brief Case to <b>${employee.name} ,
+17.07.2014, to the incurring of expenditure of <b>Rs. ${employee_allowance.amount_approved} /- ( Rupees <span id="words" ></span> ) </b>. Reimbursement towards purchase of Brief Case to <b>${employee.name} ,
  ${employee.designation }, Employee Code: </b> <b>${employee.code} </b> National Informatics Centre, Vijayawada,  from <b>${employee_allowance.shopname}</b> and Vide Invoice No.<b>${employee_allowance.billno} </b> dated <b> <%=MyUtil.ChDate(empallow.getBilldate()) %></b>.</div><br>
 <div>
 Sanction is also conveyed to the drawl of said amount through D.D/Cheque/NEFT in favor of Sri

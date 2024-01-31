@@ -91,8 +91,8 @@ function geneatens(a){
 </style>
 </head>
 <body>
-<%@include file="/WEB-INF/views/banner.jsp"%>
-	<%@include file="/WEB-INF/views/navbar.jsp"%>
+<%@include file="/WEB-INF/views/banner2.jsp"%>
+	<%@include file="/WEB-INF/views/navbar2.jsp"%>
 	
 	<form:form action="" method="post">
 	<input type="hidden" name="requestno" id="requestno"/>

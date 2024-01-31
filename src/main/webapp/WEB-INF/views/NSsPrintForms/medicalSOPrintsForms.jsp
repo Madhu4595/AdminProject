@@ -9,8 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@include file="/WEB-INF/views/banner.jsp"%>
-	<%@include file="/WEB-INF/views/navbar.jsp"%>
+<%@include file="/WEB-INF/views/banner2.jsp"%>
+	<%@include file="/WEB-INF/views/navbar2.jsp"%>
 	<div align="center" style="color: red;"><h6>AVAILABLE SANCTION ORDERS IN MEDICAL</h6></div>
 <table class="table table-bordered table-striped" id="datatable">
 					<thead style="background-color: black; color: white;">

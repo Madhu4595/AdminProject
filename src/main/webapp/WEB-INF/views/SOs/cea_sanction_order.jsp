@@ -64,7 +64,7 @@ function myFunction() {
 		str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]])
 				+ 'Hundred ' : '';
 		str += (n[5] != 0) ? ((str != '') ? 'and ' : '')
-				+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only '
+				+ (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Only '
 				: '';
 		document.getElementById("words").innerHTML = str;
 	}
@@ -163,7 +163,7 @@ function myFunction() {
 						</table>
 					</div>
 					<center style="font-weight: bolder;">
-						( Rupees <span id="words"></span> Only )
+						( Rupees <span id="words"></span> )
 					</center>
 
 					<br>
@@ -194,8 +194,8 @@ function myFunction() {
 					<br>
 					<div id="sign">
 						<br> <br> <b>
-						<%= localizationManager.getMessage("nic9") %>(S.V.Ch. Subba Rao)<br>
-							<%= localizationManager.getMessage("nic10") %>Scientist-F & Head of Office
+						<%= localizationManager.getMessage("nic9") %>(P. Lakshminarayana)<br>
+							<%= localizationManager.getMessage("nic10") %> <br> State Informatics Office & Head of Office
 						</b>
 					</div>
 					<br>

@@ -19,6 +19,9 @@ public interface Employee_Family_Repo extends JpaRepository<Employee_Family, Int
 	@Query(value="select * from emp_family where emp_code=:emp_code and per_name=:per_name", nativeQuery = true)
 	public  Employee_Family  getRelation(String emp_code, String per_name);
 	
+	@Query(value="select * from emp_family where emp_code=:emp_code and id=:id", nativeQuery = true)
+	public  Employee_Family  getByEmpcodeAndId(String emp_code, String id);
+	
 	@Modifying
 	@Transactional
 	@Query(value="delete from emp_family where emp_code=:emp_code", nativeQuery = true)

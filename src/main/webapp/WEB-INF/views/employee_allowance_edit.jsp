@@ -239,15 +239,15 @@
 </style>
 </head>
 <body>
-	<%@include file="banner.jsp"%>
-	<%@include file="navbar.jsp"%>
+	<%@include file="banner2.jsp"%>
+	<%@include file="navbar2.jsp"%>
 	<!-- Intro Section  -->
 	<section class="container mt-5 shadow py-5" id="section">
 		<h4 align="center">EMPLOYEE ALLOWANCES EDIT</h4>
 
 		<div align="left" style="padding-left: 50px;">
 
-			<form:form action="employee_allowance_update" method="post"
+			<form:form action="./employee_allowance_update" method="post"
 				onsubmit="return validate();" >
 
 				<div id="form1">

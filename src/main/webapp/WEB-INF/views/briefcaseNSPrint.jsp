@@ -38,7 +38,7 @@ function myFunction() {
 	    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'Lakh ' : '';
 	    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'Thousand ' : '';
 	    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'Hundred ' : '';
-	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+	    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'Only ' : '';
 	    document.getElementById("words").innerHTML = str;
 }
 </script>
@@ -68,7 +68,7 @@ function myFunction() {
 					<div>
 						Reimbursement towards Purchase of <b>Brief Case</b> in ${emp.callSign } <b>${emp.name }, ${emp.designation },
 						(Emp. Code: ${emp.code }),</b> ${emp.place } who submitted bill vide Invoice No. ${bean.invoiceNo } <b>dt. </b>
-						 ${bean.invoiceDate } for <b>Rs. ${bean.amountApproved }/- ( Rupees <span id="words" ></span> Only ) </b>
+						 ${bean.invoiceDate } for <b>Rs. ${bean.amountApproved }/- ( Rupees <span id="words" ></span> ) </b>
 						 as per his entitlement.
 					</div>
 					<br>

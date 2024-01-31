@@ -180,8 +180,8 @@ h4 {
 
 </head>
 <body>
-	<%@include file="banner.jsp"%>
-	<%@include file="navbar.jsp"%>
+	<%@include file="banner2.jsp"%>
+	<%@include file="navbar2.jsp"%>
 
 	<!-- Intro Section  -->
 	<section class="container mt-5 shadow py-5" id="section">

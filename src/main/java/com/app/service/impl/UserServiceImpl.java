@@ -53,7 +53,12 @@ public class UserServiceImpl implements UserService{
 		if(user == null) {
 			throw new UsernameNotFoundException("Invalid Email and Password "+username);
 		}
+		if(user.getUserType()==null) {
 		return new User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+		}
+		else {
+			return new User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+		}
 	}
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Roles> roles){
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());

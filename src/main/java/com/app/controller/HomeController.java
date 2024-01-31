@@ -1,5 +1,6 @@
 package com.app.controller;
 
+
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -77,6 +78,8 @@ public class HomeController {
 				saveEmployee.setPhno(employee.getPhno());
 				saveEmployee.setAddress(employee.getAddress());
 				saveEmployee.setWardEntitlement(employee.getWardEntitlement());
+				saveEmployee.setDoj(employee.getDoj());
+				saveEmployee.setDoa(employee.getDoa());
 
 				employee_Family_Repo.deleteAllFamilyDetailsByEmpCode(employee.getCode());
 
@@ -178,6 +181,8 @@ public class HomeController {
 		empDetails.add(phno);//8
 		empDetails.add(address);//9
 		empDetails.add(emp.getWardEntitlement()); //10
+		empDetails.add(emp.getDoj());//11
+		empDetails.add(emp.getDoa());//12
 		
 		return ResponseEntity.ok(empDetails);
 	}
@@ -279,3 +284,4 @@ public class HomeController {
 	}
 
 }
+
