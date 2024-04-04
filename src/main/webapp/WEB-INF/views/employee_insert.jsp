@@ -119,24 +119,59 @@ function searchempno(){
 	  //alert("searchempno()"+code);
   	  document.getElementById("code").readonly=true;
   	  
-  		$.get('./employeesearchnum',{code : code}, function (response) {
-	             document.getElementById("name").value =response[0];
-	           	 document.getElementById("edesignation").value =response[1];
-	           	 document.getElementById("basic_pay").value =response[2];
-	         	 document.getElementById("dob").value =response[3];  	         
-	     		 document.getElementById("egst").value =response[4];
-	     		 document.getElementById("place").value =response[5];
-	     		 document.getElementById("ecghsCode").value =response[6];
-	     		 document.getElementById("address").value =response[9];
-	     		 document.getElementById("phno").value =response[8];
-	     		 document.getElementById("wardEntitlement").value =response[10];
-	     		 document.getElementById("doj").value =response[11];
-	     		 document.getElementById("doa").value =response[12];
+  	
+  	  
+//   		$.get('./employeesearchnum',{code : code}, function (response) {
+	             
+//   				 document.getElementById("name").value =response[0];
+// 	           	 document.getElementById("edesignation").value =response[1];
+// 	           	 document.getElementById("basic_pay").value =response[2];
+// 	         	 document.getElementById("dob").value =response[3];  	         
+// 	     		 document.getElementById("egst").value =response[4];
+// 	     		 document.getElementById("place").value =response[5];
+// 	     		 document.getElementById("ecghsCode").value =response[6];
+// 	     		 document.getElementById("address").value =response[9];
+// 	     		 document.getElementById("phno").value =response[8];
+// 	     		 document.getElementById("wardEntitlement").value =response[10];
+// 	     		 document.getElementById("doj").value =response[11];
+// 	     		 document.getElementById("doa").value =response[12];
 	     		
-	     		 $("#viewphoto").append('<img src="data:image/png;base64,'+response[7]+'" alt="Image" width="100px;" height="100px;" />')
+// 	     		 $("#viewphoto").append('<img src="data:image/png;base64,'+response[7]+'" alt="Image" width="100px;" height="100px;" />');
+// 	     		 $("#cghsviewphoto").append('<img src="data:image/png;base64,'+response[13]+'" alt="Image" width="100px;" height="100px;" />');
+	     		 
+// 	     		 document.getElementById("gpfaccno").value =response[14];
 	     		
 	     		 
-		 });
+// 		 });
+  	
+  	$.ajax({
+		type: "get",
+	    url: "./getEmpDetails",
+	    data: "code=" + code,
+	    cache: false,
+	    success: function(resp) {
+	    	//alert("resp=>"+JSON.stringify(resp));
+	    	
+	    	$("#name").val(resp.name);
+	    	$("#edesignation").val(resp.designation);
+	    	$("#basic_pay").val(resp.basic_pay);
+	    	$("#dob").val(resp.dob);
+	    	$("#egst").val(resp.payscale);
+	    	$("#place").val(resp.place);
+	    	$("#phno").val(resp.phno);
+	    	$("#ecghsCode").val(resp.ecghsCode);
+	    	$("#wardEntitlement").val(resp.wardEntitlement);
+	    	$("#address").val(resp.address);
+	    	$("#doj").val(resp.doj);
+	    	$("#doa").val(resp.doa);
+	    	
+	    	$("#viewphoto").append('<img src="data:image/png;base64, '+resp.empPhoto+'" alt="Image" width="100px;" height="100px;" />')
+	    	$("#cghsviewphoto").append('<img src="data:image/png;base64, '+resp.empCghsPhoto+'" alt="Image" width="100px;" height="100px;" />')
+	    	 
+       },error:function(resp){
+    	   alert("err=>"+JSON.stringify(resp));
+       }
+	});
   		 
   		$.ajax({
 			type: "get",
@@ -190,7 +225,7 @@ function searchempno(){
 					<div class="col-sm-3" align="center">Basic Pay:</div>
 					<div class="col-sm-3"><form:input class="form-control"  path="basic_pay" id="basic_pay" maxlength="6" onkeypress="return isNumberKey(event)" onchange="return rupeeformat(this.value) "  /></div>
 					<div class="col-sm-3" align="center">Date of Birth:</div>
-					<div class="col-sm-3"><form:input class="form-control"  path="dob" id="dob" /></div>
+					<div class="col-sm-3"><input type="date" class="form-control"  name="dob" id="dob" /></div>
 				</div>
 				<div class="row align-items-center m-1">
 					<div class="col-sm-3" align="center">Pay Scale/Level:</div>
@@ -221,10 +256,19 @@ function searchempno(){
 					<div class="col-sm-3" align="center">Date of Superannuation:</div>
 					<div class="col-sm-3"><input type="date" class="form-control"  name="doa" id="doa" /></div>
 				</div>
+<!-- 				<div class="row align-items-center m-1"> -->
+<!-- 					<div class="col-sm-3" align="center">GPF Account No:</div> -->
+<!-- 					<div class="col-sm-3"><input type="text" class="form-control"  name="gpfaccno" id="gpfaccno" /></div> -->
+<!-- 				</div> -->
 				<div class="row align-items-center m-1">
-					<div class="col-sm-3" align="center">Photo:</div>
-					<div class="col-sm-3"><input type="file" class="form-control"  name="photo_doc" id="photo_doc" /></div>
-					<div class="col-sm-6"><span id="viewphoto"></span></div>
+					<div class="col-sm-2" align="center">Photo:</div>
+					<div class="col-sm-2"><span id="viewphoto"></span></div>
+					<div class="col-sm-2"><input type="file" class="form-control"  name="photo_doc" id="photo_doc" /></div>
+				</div>
+				<div class="row align-items-center m-1">
+					<div class="col-sm-2" align="center">CGHS Photo:</div>
+					<div class="col-sm-2"><span id="cghsviewphoto"></span></div>
+					<div class="col-sm-2"><input type="file" class="form-control"  name="cghsphoto_doc" id="cghsphoto_doc" /></div>
 				</div>
 				<br>
 
@@ -236,14 +280,9 @@ function searchempno(){
 
 
 				</div>
-				<table>
-
-					<tr>
-						<td><input type="submit" class="btn btn-warning px-3"
-							value="Submit" /></td>
-
-					</tr>
-				</table>
+				<div align="center"><input type="submit" class="btn btn-warning px-3"
+							value="Submit" /></div>
+				  
 			</form:form>
 		</div>
 

@@ -26,6 +26,9 @@ public class Employee {
 	@Column(length = 1000)
 	private byte[] empPhoto;
 	
+	@Column(length = 1000)
+	private byte[] empCghsPhoto;
+	
 	private String phno;
 	private String address;
 	
@@ -33,6 +36,7 @@ public class Employee {
 	
 	private String doj;
 	private String doa;
+	private String gpfaccno;
 	
 	public Employee() {
 		super();
@@ -41,7 +45,8 @@ public class Employee {
 
 	public Employee(String code, String name, String designation, String basic_pay, String place, String email,
 			String date_of_retirement, String dob, String payscale, String callSign, String ecghsCode, byte[] empPhoto,
-			String phno, String address, String wardEntitlement, String doj, String doa) {
+			byte[] empCghsPhoto, String phno, String address, String wardEntitlement, String doj, String doa,
+			String gpfaccno) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -55,11 +60,13 @@ public class Employee {
 		this.callSign = callSign;
 		this.ecghsCode = ecghsCode;
 		this.empPhoto = empPhoto;
+		this.empCghsPhoto = empCghsPhoto;
 		this.phno = phno;
 		this.address = address;
 		this.wardEntitlement = wardEntitlement;
 		this.doj = doj;
 		this.doa = doa;
+		this.gpfaccno = gpfaccno;
 	}
 
 	public String getCode() {
@@ -158,6 +165,14 @@ public class Employee {
 		this.empPhoto = empPhoto;
 	}
 
+	public byte[] getEmpCghsPhoto() {
+		return empCghsPhoto;
+	}
+
+	public void setEmpCghsPhoto(byte[] empCghsPhoto) {
+		this.empCghsPhoto = empCghsPhoto;
+	}
+
 	public String getPhno() {
 		return phno;
 	}
@@ -198,16 +213,22 @@ public class Employee {
 		this.doa = doa;
 	}
 
+	public String getGpfaccno() {
+		return gpfaccno;
+	}
+
+	public void setGpfaccno(String gpfaccno) {
+		this.gpfaccno = gpfaccno;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [code=" + code + ", name=" + name + ", designation=" + designation + ", basic_pay=" + basic_pay
 				+ ", place=" + place + ", email=" + email + ", date_of_retirement=" + date_of_retirement + ", dob="
 				+ dob + ", payscale=" + payscale + ", callSign=" + callSign + ", ecghsCode=" + ecghsCode + ", empPhoto="
-				+ Arrays.toString(empPhoto) + ", phno=" + phno + ", address=" + address + ", wardEntitlement="
-				+ wardEntitlement + ", doj=" + doj + ", doa=" + doa + "]";
+				+ Arrays.toString(empPhoto) + ", empCghsPhoto=" + Arrays.toString(empCghsPhoto) + ", phno=" + phno
+				+ ", address=" + address + ", wardEntitlement=" + wardEntitlement + ", doj=" + doj + ", doa=" + doa
+				+ ", gpfaccno=" + gpfaccno + "]";
 	}
-
-	
-
 
 }

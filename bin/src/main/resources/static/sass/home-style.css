@@ -1,0 +1,373 @@
+
+* {
+  margin: 0;
+  top: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+
+
+body
+{
+  overflow-x: auto !important;
+overflow-y: auto !important;
+}
+
+@media (max-width: 768px)
+{
+  .rootpadding
+{
+margin-left: 0px !important;
+margin-right: 0px !important;
+}
+
+.servarrowright
+{
+  margin-left: -120px;
+}
+
+.servarrowleft
+{
+  margin-right:-120px;
+}
+.footbg
+{
+  
+  margin-top: 0px !important;
+}
+#numberBlock {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+}
+
+
+
+@media (max-width: 768px) {
+  body h1 {
+    font-size: 26px !important;
+  }
+  body h2 {
+    font-size: 26px !important;
+  }
+  body h3 {
+    font-size: 22px !important;
+  }
+  body h4 {
+    font-size: 20px !important;
+  }
+  body h5 {
+    font-size: 18px !important;
+  }
+  body h6 {
+    font-size: 16px !important;
+    font-weight: 700;
+  }
+  body p {
+    font-size: 15px !important;
+  }
+
+
+
+
+}
+
+body .card ul {
+  padding-left: 30px !important;
+}
+
+body h2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 26px;
+}
+
+body h1 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+body h6 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+body h3 {
+  font-family: "Roboto", sans-serif;
+  color: black;
+  font-weight: 800;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+body h4 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 22px;
+}
+
+body h5 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+body li {
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+nav a {
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+}
+
+p {
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+  color: black;
+}
+
+td {
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+}
+
+th {
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+ul li
+{
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+body .container-fluid {
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+}
+
+.pageHighlightBtn {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold !important;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background-image: linear-gradient(45deg, #005bea, #00c6fb);
+  color: white;
+}
+
+.cg-logo img {
+  width: 200px;
+}
+
+@media (max-width: 991px) {
+  .main-menu {
+    display: none !important;
+  }
+}
+
+@media (min-width: 992px) {
+  #mobileMenu {
+    display: none !important;
+  }
+}
+
+.main-menu {
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  -webkit-box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  height: 70px;
+  background-color: #67c355 !important;
+    color: white !important;
+}
+
+.main-menu a {
+  color: white !important;
+  text-transform: uppercase !important;
+  
+  font-size: 13px;
+  font-family: "Roboto", sans-serif;
+}
+.logoname{
+ color: white !important;
+}
+
+.main-menu .signup-btn {
+  background-color: transparent;
+  
+  border: 1.5px solid #037cf1;
+  color: #037cf1;
+  padding: 5px 15px 5px 15px !important;
+}
+
+.main-menu .sign-in {
+  font-weight: 800 !important;
+}
+
+.main-menu .highlight-btn {
+  background-color: #fec30a;
+ 
+  
+  padding: 5px 15px 5px 15px !important;
+}
+
+.main-menu button {
+  text-transform: uppercase !important;
+ 
+  font-size: 13px;
+  font-family: "Roboto", sans-serif;
+}
+
+.main-menu .fa-bars {
+  color: #313E99;
+}
+
+.mobile-menu-height {
+  height: 70px !important;
+  padding-top: 0px !important;
+}
+
+.mobile-menu-height .navbar-collapse {
+  background-color: white;
+  margin-top: 28px !important;
+  -webkit-box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+        margin-top: -1px;
+    margin-left: -20px;
+    z-index: -1;
+     
+}
+
+#mobileMenu {
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  -webkit-box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  background-color: #07c357 !important;
+    color: white !important;
+}
+
+#mobileMenu img {
+  width: 160px;
+}
+
+#mobileMenu .fa-bars {
+  color: white !important;
+}
+
+#mobileMenu a {
+  color: black !important;
+  text-transform: uppercase !important;
+  font-weight: 500 !important;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+#mobileMenu .signup-btn {
+  background-color: transparent;
+  
+  border: 2px solid #037cf1;
+  color: #037cf1;
+}
+
+#mobileMenu .sign-in {
+  font-weight: 800 !important;
+}
+
+#mobileMenu .highlight-btn {
+  background-color: #fec30a;
+ 
+  
+}
+
+#mobileMenu button {
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+
+
+
+.fa-chevron-circle-left {
+  color: white !important;
+  font-size: 40px;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
+  margin-bottom: 40px;
+}
+
+.fa-chevron-circle-right {
+  color: white !important;
+  font-size: 40px;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
+  margin-bottom: 40px;
+
+}
+
+
+
+
+
+.servarrowright
+{
+  margin-left:  -120px;
+}
+
+.servarrowleft
+{
+  margin-right:-120px;
+}
+
+
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #027cae;
+}
+.nav-pills a {
+    color: black;
+    
+}
+
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.fade.in{
+	opacity:0.7;
+}
+  .abc{
+    border: 1px solid black;
+    padding: 20px;
+  }
+  .bb{
+    margin-top:-30px !important;
+    background-color: white !important;
+    width: 130px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }

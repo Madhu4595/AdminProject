@@ -64,16 +64,11 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 public class ApplyFormsController {
 	
 
-	@Autowired
-	private EmpCEAApplyFormRepo empCEAApplyFormRepo;
-	@Autowired
-	private HomeRestController homeRestController;
-	@Autowired
-	private MyUtil myUtil;
-	@Autowired
-	private EmpGPFApplyFormRepo empGPFApplyFormRepo;
+	@Autowired private EmpCEAApplyFormRepo empCEAApplyFormRepo;
+	@Autowired private HomeRestController homeRestController;
+	@Autowired private MyUtil myUtil;
+	@Autowired private EmpGPFApplyFormRepo empGPFApplyFormRepo;
 	@Autowired private EmployeeRepo employeeRepo;
-	
 	@Autowired private EmpGPFAdvanceApplyFormRepo empGPFAdvanceApplyFormRepo;
 	@Autowired private Employee_Family_Repo employee_Family_Repo;
 
@@ -81,73 +76,46 @@ public class ApplyFormsController {
 
 	@RequestMapping("/empCEAApplyForm")
 	public String empCEAApplyForm(Model model,HttpSession session) {
-		AppUser user = (AppUser) session.getAttribute("user");
-		System.out.println("cghsForm=>user=>"+user.toString());
-		model.addAttribute("user", user);
 		
-		Optional<Employee> emp = employeeRepo.findById(String.valueOf(user.getId()));
-		if(emp.isPresent()) { model.addAttribute("emp", emp.get()); }
-		else { model.addAttribute("msg", "Employee Details or not founded"); }
-		
-		String photo = Base64.getEncoder().encodeToString(emp.get().getEmpPhoto());
-		model.addAttribute("photo", photo);
-		
-		List<com.app.entity.Employee_Family> empFamily = employee_Family_Repo.getAllByEmpcode(String.valueOf(user.getId()));
-		System.out.println("empFamily=>"+empFamily.toString());
-		model.addAttribute("empFamily", empFamily);
 		return "empApplyForms/empCEAApplyForm";
 	}
 
 	@RequestMapping("/saveempCEAApply")
-	public String saveempCEAApply(HttpServletRequest request, Model model) {
+	public String saveempCEAApply(HttpServletRequest request, Model model,RedirectAttributes redirectAttributes,HttpSession session) {
+		
+		AppUser user = (AppUser) session.getAttribute("user");
+		String empId = String.valueOf(user.getId());
+		System.out.println("saveempCEAApply=>user=>"+user.toString());
 
-		String empCode = request.getParameter("empCode");
-		System.out.println("empCode=>" + empCode);
+		 
 		String financialYear = request.getParameter("financialYear");
 		System.out.println("financialYear=>" + financialYear);
 
-		String spousId = request.getParameter("spouseNamee");
-		System.out.println("spouseNamee=>" + spousId);
-		String spouseOrg = request.getParameter("spouseOrg");
-		System.out.println("spouseOrg=>" + spouseOrg);
-		String spouseDesg = request.getParameter("spouseDesg");
-		System.out.println("spouseDesg=>" + spouseDesg);
-		String spouseJobAddress = request.getParameter("spouseAddress");
-		System.out.println("spouseJobAddress=>" + spouseJobAddress);
+		String spousId = request.getParameter("spouseNamee"); 									System.out.println("spouseNamee=>" + spousId);
+		String spouseOrg = request.getParameter("spouseOrg"); 									System.out.println("spouseOrg=>" + spouseOrg);
+		String spouseDesg = request.getParameter("spouseDesg"); 								System.out.println("spouseDesg=>" + spouseDesg);
+		String spouseJobAddress = request.getParameter("spouseAddress"); 						System.out.println("spouseJobAddress=>" + spouseJobAddress);
 
-		String[] childsIds = request.getParameter("childIdd").split(",");
-		System.out.println("childsIds=>" + childsIds.length);
-		String[] childSchoolNamee = request.getParameter("childSchoolNamee").split(",");
-		System.out.println("childSchoolNamee=>" + childSchoolNamee.length);
-		String[] childAcademicYearr = request.getParameter("childAcademicYearr").split(",");
-		System.out.println("childAcademicYearr=>" + childAcademicYearr.length);
-		String[] claimforr = request.getParameter("claimforr").split(",");
-		System.out.println("claimforr=>" + claimforr.length);
+		String[] childsIds = request.getParameter("childIdd").split(","); 						System.out.println("childsIds=>" + childsIds.length);
+		String[] childSchoolNamee = request.getParameter("childSchoolNamee").split(","); 		System.out.println("childSchoolNamee=>" + childSchoolNamee.length);
+		String[] childAcademicYearr = request.getParameter("childAcademicYearr").split(","); 	System.out.println("childAcademicYearr=>" + childAcademicYearr.length);
+		String[] claimforr = request.getParameter("claimforr").split(","); 						System.out.println("claimforr=>" + claimforr.length);
 
-		String distanceHostel = request.getParameter("distanceHostel");
-		System.out.println("distanceHostel=>" + distanceHostel);
-		String hostelSubsidy = request.getParameter("hostelSubsidy");
-		System.out.println("hostelSubsidy=>" + hostelSubsidy);
+		String distanceHostel = request.getParameter("distanceHostel"); 						System.out.println("distanceHostel=>" + distanceHostel);
+		String hostelSubsidy = request.getParameter("hostelSubsidy"); 							System.out.println("hostelSubsidy=>" + hostelSubsidy);
 
-		String phd = request.getParameter("phd");
-		System.out.println("phd=>" + phd);
-		String phdNature = request.getParameter("phdNature");
-		System.out.println("phdNature=>" + phdNature);
-		String phdDate = request.getParameter("phdDate");
-		System.out.println("phdDate=>" + phdDate);
-		String phdPercentage = request.getParameter("phdPercentage");
-		System.out.println("phdPercentage=>" + phdPercentage);
+		String phd = request.getParameter("phd"); 												System.out.println("phd=>" + phd);
+		String phdNature = request.getParameter("phdNature"); 									System.out.println("phdNature=>" + phdNature);
+		String phdDate = request.getParameter("phdDate"); 										System.out.println("phdDate=>" + phdDate);
+		String phdPercentage = request.getParameter("phdPercentage"); 							System.out.println("phdPercentage=>" + phdPercentage);
 
-		String bonafideCertificate = request.getParameter("bonafideCertificate");
-		System.out.println("bonafideCertificate=>" + bonafideCertificate);
-		String bonafideAmtAttached = request.getParameter("bonafideAmtAttached");
-		System.out.println("bonafideAmtAttached=>" + bonafideAmtAttached);
-		String bonafideAmt = request.getParameter("bonafideAmt");
-		System.out.println("bonafideAmt=>" + bonafideAmt);
+		String bonafideCertificate = request.getParameter("bonafideCertificate"); 				System.out.println("bonafideCertificate=>" + bonafideCertificate);
+		String bonafideAmtAttached = request.getParameter("bonafideAmtAttached"); 				System.out.println("bonafideAmtAttached=>" + bonafideAmtAttached);
+		String bonafideAmt = request.getParameter("bonafideAmt"); 								System.out.println("bonafideAmt=>" + bonafideAmt);
 
 		EmpCEAApplyForm bean = new EmpCEAApplyForm();
 
-		bean.setEmpCode(Integer.parseInt(empCode));
+		bean.setEmpCode(Integer.parseInt(empId));
 		bean.setSpouseId(spousId);
 		bean.setSpouseOrg(spouseOrg);
 		bean.setSpouseDesg(spouseDesg);
@@ -199,9 +167,9 @@ public class ApplyFormsController {
 		}
 
 		EmpCEAApplyForm emp = empCEAApplyFormRepo.save(bean);
-		model.addAttribute("msg", "APPLICATION IS SAVED SUCCESSFULLY WITH APPLICATION ID:" + emp.getId());
-
-		return "home";
+		//model.addAttribute("msg", "APPLICATION IS SAVED SUCCESSFULLY WITH APPLICATION ID:" + emp.getId());
+		redirectAttributes.addAttribute("id", emp.getId());
+		return "redirect:/empCeaPrint";
 	}
 
 	@RequestMapping("/empCeaApplyPrintForm")
@@ -612,7 +580,9 @@ public class ApplyFormsController {
 		model.addAttribute("user", user);
 		
 		Optional<Employee> emp = employeeRepo.findById(String.valueOf(user.getId()));
-		if(emp.isPresent()) { model.addAttribute("emp", emp.get()); }
+		if(emp.isPresent()) { 
+			model.addAttribute("emp", emp.get()); 
+		}
 		else { model.addAttribute("msg", "Employee Details or not founded"); }
 		
 		String photo = Base64.getEncoder().encodeToString(emp.get().getEmpPhoto());
@@ -629,9 +599,8 @@ public class ApplyFormsController {
 	public String saveEmpGpfApplyForm(@ModelAttribute("bean") EmpGPFApplyForm bean,
 			RedirectAttributes redirectAttributes) {
 		EmpGPFApplyForm savedBean = empGPFApplyFormRepo.save(bean);
-		redirectAttributes.addFlashAttribute("msg",
-				"Your GPF Withdrawal details are saved Successfully with ID:" + savedBean.getId());
-		return "redirect:/empGpfApplyForm";
+		redirectAttributes.addAttribute("id", savedBean.getId());
+		return "redirect:/empGpfPrint";
 	}
 
 	@RequestMapping("/empGpfApplyPrintForm")
@@ -696,15 +665,20 @@ public class ApplyFormsController {
 		System.out.println("empFamily=>"+empFamily.toString());
 		model.addAttribute("empFamily", empFamily);
 		
+		List<String> yearsList = myUtil.generateFinancialYears();
+		model.addAttribute("yearsList", yearsList);
+		
 		return "empApplyForms/empGpf2ApplyForm";
 	}
 
 	@RequestMapping("/saveEmpGpfAdvanceApplyForms")
-	public String saveEmpGpfAdvanceApplyForms(@ModelAttribute("bean") EmpGPFAdvanceApplyForm bean, Model model) {
+	public String saveEmpGpfAdvanceApplyForms(@ModelAttribute("bean") EmpGPFAdvanceApplyForm bean, Model model,RedirectAttributes redirectAttributes) {
 		System.out.println("bean=>"+bean.toString());
 		EmpGPFAdvanceApplyForm savedBean = empGPFAdvanceApplyFormRepo.save(bean);
 		model.addAttribute("msg", "GPF Advance details are saved Successfullly with ID: "+savedBean.getId());
-		return "home";
+		
+		redirectAttributes.addAttribute("id", savedBean.getId());
+		return "redirect:/empGpfAdvaceApplyFormPrint";
 	}
 	
 	@RequestMapping("/empGpfAdvanceApplyPrintForm")

@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.entity.Employee;
+import com.app.entity.Employee_Family;
 import com.app.entity.Medical_Bills;
 import com.app.entity.Medical_Bills_upload;
+import com.app.repo.Employee_Family_Repo;
 import com.app.repo.Medical_BillsRepo;
 import com.app.repo.Medical_Bills_uploadRepo;
 import com.app.service.IEmployeeService;
@@ -35,6 +37,7 @@ public class MedicalController {
 	@Autowired private Medical_BillsRepo medical_BillsRepo;
 	@Autowired private IEmployeeService empService;
 	@Autowired private SequenceService sequenceService;
+	@Autowired private Employee_Family_Repo employee_Family_Repo;
 	
 	// Medical
 		// New
@@ -275,6 +278,27 @@ public class MedicalController {
 				
 				Optional<Medical_Bills_upload> medical_Bills_upload3 = medical_Bills_uploadRepo.findById(Integer.parseInt(request_no));
 				if(medical_Bills_upload3.isPresent()) {
+					
+					if(medical_Bills_upload3.get().getType().equalsIgnoreCase("CGHS")) {
+						
+						if(medical_Bills_upload3.get().getPatient_name().equalsIgnoreCase("self")) {
+							Employee emp = empService.getById(medical_Bills_upload3.get().getEmp_code());
+							System.out.println("employee cghs code=>"+emp.getEcghsCode());
+							model.addAttribute("typecghsno", emp.getEcghsCode());
+							model.addAttribute("relationn", "self");
+						}else {
+							List<Employee_Family> empfamilies = employee_Family_Repo.getAllByEmpcode(medical_Bills_upload3.get().getEmp_code());
+							for(Employee_Family bean: empfamilies) {
+								if(bean.getPer_name().equalsIgnoreCase(medical_Bills_upload3.get().getPatient_name())) {
+									System.out.println("empfamilies cghs code=>"+bean.getCghsCode());
+									model.addAttribute("typecghsno", bean.getCghsCode());
+									System.out.println("relation=>>>>"+bean.getPer_name()+" ("+bean.getRelation()+")");
+									model.addAttribute("relationn", bean.getPer_name()+" ("+bean.getRelation()+")");
+								}
+							}
+						}
+					}
+					
 					model.addAttribute("medical_Bills_upload3", medical_Bills_upload3.get());
 				}else {
 					model.addAttribute("msg", "Medical Bills Upload is not found with Given Request Number");

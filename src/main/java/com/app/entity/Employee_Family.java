@@ -1,10 +1,14 @@
 package com.app.entity;
 
+import java.util.Arrays;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="emp_family")
@@ -19,6 +23,11 @@ public class Employee_Family {
 	private String dob;
 	private String dependency;
 	private String cghsCode;
+	@Column(length = 1000)
+	private byte[] cghsPhoto;
+	
+	@Transient
+	private String familyCghsPhoto;
 	
 	
 	public Employee_Family() {
@@ -28,7 +37,7 @@ public class Employee_Family {
 
 
 	public Employee_Family(Integer id, String emp_code, String per_name, String relation, String dob, String dependency,
-			String cghsCode) {
+			String cghsCode, byte[] cghsPhoto, String familyCghsPhoto) {
 		super();
 		this.id = id;
 		this.emp_code = emp_code;
@@ -37,6 +46,8 @@ public class Employee_Family {
 		this.dob = dob;
 		this.dependency = dependency;
 		this.cghsCode = cghsCode;
+		this.cghsPhoto = cghsPhoto;
+		this.familyCghsPhoto = familyCghsPhoto;
 	}
 
 
@@ -110,10 +121,35 @@ public class Employee_Family {
 	}
 
 
+	public byte[] getCghsPhoto() {
+		return cghsPhoto;
+	}
+
+
+	public void setCghsPhoto(byte[] cghsPhoto) {
+		this.cghsPhoto = cghsPhoto;
+	}
+
+
+	public String getFamilyCghsPhoto() {
+		return familyCghsPhoto;
+	}
+
+
+	public void setFamilyCghsPhoto(String familyCghsPhoto) {
+		this.familyCghsPhoto = familyCghsPhoto;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Employee_Family [id=" + id + ", emp_code=" + emp_code + ", per_name=" + per_name + ", relation="
-				+ relation + ", dob=" + dob + ", dependency=" + dependency + ", cghsCode=" + cghsCode + "]";
+				+ relation + ", dob=" + dob + ", dependency=" + dependency + ", cghsCode=" + cghsCode + ", cghsPhoto="
+				+ Arrays.toString(cghsPhoto) + ", familyCghsPhoto=" + familyCghsPhoto + "]";
 	}
+
+
+
+
 
 }

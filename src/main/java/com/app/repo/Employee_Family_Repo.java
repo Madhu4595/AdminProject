@@ -12,6 +12,8 @@ import com.app.entity.Employee_Family;
 
 public interface Employee_Family_Repo extends JpaRepository<Employee_Family, Integer>{
 	
+	
+	
 	@Query(value="select * from emp_family where emp_code=:emp_code", nativeQuery = true)
 	public List<Employee_Family> getAllByEmpcode(String emp_code);
 	

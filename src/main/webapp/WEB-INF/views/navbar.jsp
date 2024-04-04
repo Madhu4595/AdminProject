@@ -184,7 +184,7 @@ System.out.println("user=>"+user.toString());
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-						<li><a href="/">Home</a></li>
+						<li><a href="./">Home</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Allowance/Bills </a>
 							

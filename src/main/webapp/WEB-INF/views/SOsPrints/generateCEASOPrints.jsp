@@ -70,7 +70,7 @@ function myFunction() {
 </script>
 </head>
 <body onload="myFunction();">
- <section class="container mt-5 pt-2 border">
+ <section class="container mt-5 pt-2 border"><div align="center">No: 1(18) NIC-APSC/2019/Admin</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div>
@@ -252,7 +252,10 @@ function myFunction() {
 							<%= localizationManager.getMessage("nic43") %> <br> State Informatics Office & Head of Office
 						</b>
 					</div>
-
+<br>
+Copy to:<br>
+1. Drawing and Disbursing Officer, National Informatics Centre, Hyderabad. (2 copies)<br>
+2. Sanction File.
 
 					 
 				</div></div></div></section>

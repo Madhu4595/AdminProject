@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService{
 				userRegistrationDto.getLastName(),
 				userRegistrationDto.getEmail(),
 				passwordEncoder.encode(userRegistrationDto.getPassword()),
-				Arrays.asList(new Roles("ROLE_DD"))
+				Arrays.asList(new Roles("ROLE_EMP"))
 				);
 		
 		return appUserRepo.save(user);

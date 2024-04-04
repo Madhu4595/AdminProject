@@ -21,6 +21,10 @@ public class EmployeeCompleteDetailsModel {
 	private String doj;
 	private String doa;
 	
+	private String empPhoto;
+	private String empCghsPhoto;
+	
+	
 	private List<Employee_Family> family;
 
 	public EmployeeCompleteDetailsModel() {
@@ -30,7 +34,8 @@ public class EmployeeCompleteDetailsModel {
 
 	public EmployeeCompleteDetailsModel(String code, String name, String designation, String basic_pay, String place,
 			String email, String date_of_retirement, String dob, String payscale, String callSign, String ecghsCode,
-			String phno, String address, String wardEntitlement, String doj, String doa, List<Employee_Family> family) {
+			String phno, String address, String wardEntitlement, String doj, String doa, String empPhoto,
+			String empCghsPhoto, List<Employee_Family> family) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -48,6 +53,8 @@ public class EmployeeCompleteDetailsModel {
 		this.wardEntitlement = wardEntitlement;
 		this.doj = doj;
 		this.doa = doa;
+		this.empPhoto = empPhoto;
+		this.empCghsPhoto = empCghsPhoto;
 		this.family = family;
 	}
 
@@ -179,6 +186,22 @@ public class EmployeeCompleteDetailsModel {
 		this.doa = doa;
 	}
 
+	public String getEmpPhoto() {
+		return empPhoto;
+	}
+
+	public void setEmpPhoto(String empPhoto) {
+		this.empPhoto = empPhoto;
+	}
+
+	public String getEmpCghsPhoto() {
+		return empCghsPhoto;
+	}
+
+	public void setEmpCghsPhoto(String empCghsPhoto) {
+		this.empCghsPhoto = empCghsPhoto;
+	}
+
 	public List<Employee_Family> getFamily() {
 		return family;
 	}
@@ -193,7 +216,11 @@ public class EmployeeCompleteDetailsModel {
 				+ ", basic_pay=" + basic_pay + ", place=" + place + ", email=" + email + ", date_of_retirement="
 				+ date_of_retirement + ", dob=" + dob + ", payscale=" + payscale + ", callSign=" + callSign
 				+ ", ecghsCode=" + ecghsCode + ", phno=" + phno + ", address=" + address + ", wardEntitlement="
-				+ wardEntitlement + ", doj=" + doj + ", doa=" + doa + ", family=" + family + "]";
+				+ wardEntitlement + ", doj=" + doj + ", doa=" + doa + ", empPhoto=" + empPhoto + ", empCghsPhoto="
+				+ empCghsPhoto + ", family=" + family + "]";
 	}
+
+
+
 
 }

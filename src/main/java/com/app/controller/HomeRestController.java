@@ -3,6 +3,7 @@ package com.app.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -83,9 +83,13 @@ public class HomeRestController {
 	private AppUserRepo appUserRepo;
 	
 	@Autowired private BCryptPasswordEncoder passwordEncoder;
+	
+	
+	
 
 	@GetMapping("/validateEmpLogin")
 	public ResponseEntity<?> validateEmpLogin(@RequestParam("username") String username,@RequestParam("doj") String doj) {
+		
 		System.out.println("username=>" + username);
 		System.out.println("doj=>" + doj);
 
@@ -104,7 +108,7 @@ public class HomeRestController {
 					LocalDate dojFormat = LocalDate.parse(doj, dateTimeFormatter);
 					System.out.println("dojFormat=>"+dojFormat);
 					
-					DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+					DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 					String dobdate = dojFormat.format(dateTimeFormatter2);
 					System.out.println("dobdate=>"+dobdate);
 					
@@ -703,9 +707,12 @@ public class HomeRestController {
 
 	@GetMapping("getEmpDetails")
 	public EmployeeCompleteDetailsModel getEmpDetails(String code) {
+		
 		System.out.println("UR in getEmpDetails" + code);
+		
 		Optional<Employee> employee = employeeRepo.findById(code);
 		EmployeeCompleteDetailsModel employeeCompleteDetailsModel = null;
+		
 		if (employee.isPresent()) {
 			employeeCompleteDetailsModel = new EmployeeCompleteDetailsModel();
 			employeeCompleteDetailsModel.setCode(employee.get().getCode());
@@ -724,6 +731,17 @@ public class HomeRestController {
 			employeeCompleteDetailsModel.setWardEntitlement(employee.get().getWardEntitlement());
 			employeeCompleteDetailsModel.setDoj(employee.get().getDoj());
 			employeeCompleteDetailsModel.setDoa(employee.get().getDoa());
+			
+			String photo = "";
+			if(employee.get().getEmpPhoto() == null) { photo = ""; }else 
+			{ photo = Base64.getEncoder().encodeToString(employee.get().getEmpPhoto()); }
+			
+			String cghsPhoto = "";
+			if(employee.get().getEmpCghsPhoto() == null) { cghsPhoto = ""; }else 
+			{ cghsPhoto = Base64.getEncoder().encodeToString(employee.get().getEmpCghsPhoto()); }
+			
+			employeeCompleteDetailsModel.setEmpPhoto(photo);
+			employeeCompleteDetailsModel.setEmpCghsPhoto(cghsPhoto);
 
 			List<Employee_Family> empFamily = employeeFamilyRepo.getAllByEmpcode(code);
 
@@ -759,8 +777,8 @@ public class HomeRestController {
 	public List<AppUser> updatepassword() {
 	List<AppUser> appUserList=	appUserRepo.getEmpDetails();
 	appUserList.stream().forEach(item -> {
-	    String[] parts = item.getEmail().split("@");
-        String firstPart = parts[0];
+	  //  String[] parts = item.getEmail().split("@");
+      //  String firstPart = parts[0];
 	    appUserRepo.updatePwdDetails(item.getId(),passwordEncoder.encode(item.getEmail()));
 	});
 	

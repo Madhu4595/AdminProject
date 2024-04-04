@@ -26,7 +26,7 @@
 <script type="text/javascript">
 	
 $( document ).ready(function() {
-	document.getElementById("username_label").innerHTML='Username (Official Email Id):';
+	document.getElementById("username_label").innerHTML='Username :';
 });
 	
 		function loginaction(){
@@ -41,10 +41,10 @@ $( document ).ready(function() {
 				}
 			});
 			if(selectedLogin=='admin'){
-				document.getElementById("username_label").innerHTML='Username (Official Email Id):';
+				document.getElementById("username_label").innerHTML='Username :';
 			}
 			if(selectedLogin == 'employee'){
-				document.getElementById("username_label").innerHTML='Username:';
+				document.getElementById("username_label").innerHTML='Username (Official NIC Mail ID):';
 				$("#passworddiv").empty();
 				
 				$("#passworddiv").append('<label for="password"> Date of Joining / Date of Birth: </label> <input type="date"'
@@ -120,6 +120,9 @@ $( document ).ready(function() {
 	<%@include file="banner2.jsp"%>
 	<br>
 	<!-- 	Login Form -->
+	<div
+					style="text-decoration: underline; color: blue; font-weight: bolder;"
+					align="center">LOGIN HERE</div>
 	<div class="container   ">
 
 		<div class="row">
@@ -128,9 +131,7 @@ $( document ).ready(function() {
 
 			<div class="col-md-6 col-md-offset-3 border  "
 				style="background-color: #e6ffff; border-radius: 20px;">
-				<div
-					style="text-decoration: underline; color: blue; font-weight: bolder;"
-					align="center">LOGIN HERE</div>
+				
 					<div ><c:if test="${param.error!= null}">
 						<div class="alert alert-danger">Invalid username or password. Please try again.</div>
 						</c:if>
@@ -153,7 +154,7 @@ $( document ).ready(function() {
 					<div class="form-group">
 						<label for="username"> <span id="username_label"></span> </label> <input type="text"
 							class="form-control" id="username" name="username"
-							autofocus="autofocus" />
+							autofocus="autofocus" placeholder="abc@nic.in" />
 					</div>
 					<div class="form-group" id="passworddiv">
 						<label for="password"> Password: </label> <input type="password"
@@ -179,6 +180,12 @@ $( document ).ready(function() {
 	
 <!-- 	<div class="col-md-3" align="center" style="color: red;"><span id="userError"></span></div> -->
 <!-- 											<span>New User? <a href="registration">Register Here</a></span>  -->
+
+<br>
+<br>
+<br>
+<br>
+<%@include file="footer.jsp"%>
 
 </body>
 </html>

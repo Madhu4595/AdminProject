@@ -52,7 +52,7 @@ function myFunction() {
 </script>
 </head>
 <body onload="myFunction();">
- <section class="container mt-5 pt-2 border">
+ <section class="container mt-5 pt-2 border"><div align="center">No: 1(18) NIC-APSC/2019/Admin</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div>
@@ -213,7 +213,7 @@ function myFunction() {
 				<br><br><br><br>
 				<div style="text-align: right;">
 								<b>
-								<%= localizationManager.getMessage("nic9") %> / (S.V. Ch. Subba Rao)<br>
+								<%= localizationManager.getMessage("nic9") %> / (P. Lakshminarayana)<br>
 								<%= localizationManager.getMessage("nic43") %> <br> State Informatics Office & Head of Office
 								</b>
 					</div>

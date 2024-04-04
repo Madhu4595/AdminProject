@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Home</title>
 
 <script src="./js/ajax.js" type="text/javascript"></script>
 <script src="./js/jquery-3.3.1.min.js" type="text/javascript"></script>
@@ -34,6 +34,9 @@
 #titlee {
 	font-size: 45px;
 }
+.spannames{
+	font-weight: bold;
+}
 
 #bannnersection {
 	border: 2px solid black;
@@ -57,84 +60,95 @@
 <!-- 		</div> -->
 <!-- 	</section> -->
 	<%@include file="banner2.jsp"%>
-	<%@include file="navbar2.jsp"%>
+ 	<%
+String role= (String)session.getAttribute("role");
+System.out.println("role=>"+role);
+AppUser user= (AppUser)session.getAttribute("user");
+System.out.println("user=>"+user.toString());
+%>
+
 
 	<%
 if(role.equalsIgnoreCase("ROLE_EMP")){
 	%>
-	<div class="container-fluid">
+	<%@include file="empLogin.jsp" %>
+	
+	<div class="container">
+	<div class="card"
+					style="background-color: #e6ffff; border-radius: 20px; border: 2px solid black;">
 		<div class="row">
 			<div class="col-3">
-				<div class="card"
-					style="background-color: #e6ffff; border-radius: 20px; border: 2px solid black;">
+				
 					<!-- 					<div class="card-header"> -->
-
 					<!-- 					</div> -->
 					<div class="card-body">
 						<img src="data:image/png;base64,${photo }" alt="Image"
-							width="100px;" height="100px;" /><br> <span
-							style="color: blue;">Employee Details</span><br>
-						<table>
+							width="100%;" height="70%;" /><br> 
+<!-- 							<span -->
+<!-- 							style="color: blue;">Employee Details</span><br> -->
+						
+					</div>
+<!-- 										<div class="card-footer" align="center"> -->
+<!-- 									<a href="./editEmpDetails" style=" padding: 2px;border-radius: 5px;">Edit Details</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
+<!-- 										</div> -->
+				
+			</div>
+ 			<div class="col-9">
+ 			<table class="table table-borderless">
 							<tr>
 								<td>Code</td>
-								<td>: ${emp.code }</td>
-							</tr>
-							<tr>
+								<td>: <span class="spannames">${emp.code }</span></td>
 								<td>Name</td>
-								<td>: ${emp.name }</td>
+								<td>: <span class="spannames">${emp.name }</span></td>
 							</tr>
+							 
 							<tr>
 								<td>Designation</td>
-								<td>: ${emp.designation }</td>
-							</tr>
-							<tr>
+								<td>: <span class="spannames">${emp.designation }</span></td>
 								<td>Basic Pay</td>
-								<td>: ${emp.basic_pay }</td>
+								<td>: <span class="spannames">${emp.basic_pay } /-</span></td>
 							</tr>
 							<tr>
 								<td>Place</td>
-								<td>: ${emp.place }</td>
-							</tr>
-							<tr>
+								<td>: <span class="spannames">${emp.place }</span></td>
 								<td>E-Mail</td>
-								<td>: ${emp.email }</td>
+								<td>: <span class="spannames">${emp.email }</span></td>
 							</tr>
 							<tr>
 								<td>Phone No</td>
-								<td>: ${emp.phno }</td>
-							</tr>
-							<tr>
+								<td>: <span class="spannames">${emp.phno }</span></td>
 								<td>DO Joining</td>
-								<td>: ${emp.doj }</td>
+								<td>: <span class="spannames">${emp.doj }</span></td>
 							</tr>
+							 
 							<tr>
 								<td>DO Retirement</td>
-								<td>: ${emp.date_of_retirement }</td>
-							</tr>
-							<tr>
+								<td>: <span class="spannames">${emp.date_of_retirement }</span></td>
 								<td>DOB</td>
-								<td>: ${emp.dob }</td>
+								<td>: <span class="spannames">${emp.dob }</span></td>
 							</tr>
+							 
 							<tr>
 								<td>Payscale</td>
-								<td>: ${emp.payscale }</td>
-							</tr>
-							<tr>
+								<td>: <span class="spannames">${emp.payscale }</span></td>
 								<td>CGHS Code</td>
-								<td>: ${emp.ecghsCode }</td>
+								<td>: <span class="spannames">${emp.ecghsCode }</span></td>
 							</tr>
+							
+							<tr>
+								<td colspan="4" style="text-align: center;"><a href="./editEmpDetails" style=" padding: 2px;border-radius: 5px;">Edit Details</a></td>
+							</tr>
+							
 						</table>
-					</div>
-					<!-- 					<div class="card-footer"> -->
-					<!-- 				<a href="#" style="border: 1px solid black;padding: 2px;border-radius: 5px;font-weight: bold;">VIEW MORE</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
-					<!-- 				<a href="#" style="border: 1px solid black;padding: 2px;border-radius: 5px;font-weight: bold;">EDIT DETAILS</a> -->
-					<!-- 					</div> -->
-				</div>
-			</div>
-			<div class="col-9"></div>
+ 			</div> 
+		</div>
 		</div>
 	</div>
 	<%
+}else{
+%>
+<%@include file="navbar2.jsp"%> 
+<%
 }
 %>
 
@@ -143,6 +157,13 @@ if(role.equalsIgnoreCase("ROLE_EMP")){
 	</div>
 
 
+
+
+<br>
+<br>
+<br>
+<br>
+<%@include file="footer.jsp"%>
 
 </body>
 </html>

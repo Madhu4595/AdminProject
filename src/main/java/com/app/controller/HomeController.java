@@ -1,6 +1,7 @@
 package com.app.controller;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -43,11 +44,15 @@ public class HomeController {
 	}
 
 	@RequestMapping("/saveEmp")
-	public String saveEmp(@ModelAttribute("employee") Employee employee, Model model, HttpServletRequest request,
-			MultipartFile photo_doc) {
+	public String saveEmp(
+			@ModelAttribute("employee") Employee employee, Model model, HttpServletRequest request,
+			MultipartFile photo_doc, MultipartFile cghsphoto_doc  ) throws IOException {
 
 		System.out.println("UR in====saveEmp=====");
 		System.out.println("employee=====" + employee.toString());
+		
+		System.out.println("photo_doc=====" + photo_doc);
+		System.out.println("employee=====" + photo_doc);
 
 		try {
 
@@ -73,13 +78,18 @@ public class HomeController {
 				saveEmployee.setPayscale(payscale);
 				saveEmployee.setPlace(employee.getPlace());
 				saveEmployee.setEcghsCode(employee.getEcghsCode());
-				if(photo_doc.isEmpty()) { System.out.println("phot is nullllllllll"); }
+				
+				if(photo_doc.isEmpty()) { System.out.println("emp photo is nullllllllll"); }
 				else { saveEmployee.setEmpPhoto(photo_doc.getBytes()); }
+				if(cghsphoto_doc.isEmpty()) {System.out.println("cghs photo is nullllllllll");}
+				else { saveEmployee.setEmpCghsPhoto(cghsphoto_doc.getBytes()); }
 				saveEmployee.setPhno(employee.getPhno());
+				
 				saveEmployee.setAddress(employee.getAddress());
 				saveEmployee.setWardEntitlement(employee.getWardEntitlement());
 				saveEmployee.setDoj(employee.getDoj());
 				saveEmployee.setDoa(employee.getDoa());
+				saveEmployee.setGpfaccno(employee.getGpfaccno());
 
 				employee_Family_Repo.deleteAllFamilyDetailsByEmpCode(employee.getCode());
 
@@ -96,6 +106,7 @@ public class HomeController {
 						family.setDob(editdob[i]);
 						family.setDependency(editdependency[i]);
 						family.setCghsCode(cghsCode[i]);
+						
 						employee_Family_Service.saveEmployee_Family(family);
 					}
 				}
@@ -112,6 +123,7 @@ public class HomeController {
 				saveEmployee.setEcghsCode(employee.getEcghsCode());
 				saveEmployee.setAddress(employee.getAddress());
 				saveEmployee.setWardEntitlement(employee.getWardEntitlement());
+				saveEmployee.setGpfaccno(employee.getGpfaccno());
 				
 				if(photo_doc == null) { }
 				else { saveEmployee.setEmpPhoto(photo_doc.getBytes()); }
@@ -129,6 +141,7 @@ public class HomeController {
 						family.setDob(editdob[i]);
 						family.setDependency(editdependency[i]);
 						family.setCghsCode(cghsCode[i]);
+						
 						employee_Family_Service.saveEmployee_Family(family);
 					}
 				}
@@ -160,11 +173,12 @@ public class HomeController {
 		String empDesg = emp.getDesignation();
 		
 		String photo = "";
-		if(emp.getEmpPhoto() == null) {
-			photo = "";
-		}else {
-			photo = Base64.getEncoder().encodeToString(emp.getEmpPhoto());
-		}
+		if(emp.getEmpPhoto() == null) { photo = ""; }else 
+		{ photo = Base64.getEncoder().encodeToString(emp.getEmpPhoto()); }
+		
+		String cghsPhoto = "";
+		if(emp.getEmpCghsPhoto() == null) { cghsPhoto = ""; }else 
+		{ cghsPhoto = Base64.getEncoder().encodeToString(emp.getEmpCghsPhoto()); }
 		
 		String phno = emp.getPhno();
 		String address = emp.getAddress();
@@ -183,6 +197,8 @@ public class HomeController {
 		empDetails.add(emp.getWardEntitlement()); //10
 		empDetails.add(emp.getDoj());//11
 		empDetails.add(emp.getDoa());//12
+		empDetails.add(cghsPhoto);//13
+		empDetails.add(emp.getGpfaccno()); //14
 		
 		return ResponseEntity.ok(empDetails);
 	}
@@ -194,8 +210,17 @@ public class HomeController {
 
 		List<Employee_Family> emp_family = employee_Family_Repo.getAllByEmpcode(code);
 		System.out.println("==emp_family===" + emp_family.size());
+		
+		for(Employee_Family bean:emp_family) {
+			if(bean.getCghsPhoto() != null) {
+				bean.setFamilyCghsPhoto(Base64.getEncoder().encodeToString(bean.getCghsPhoto()));
+			}else {
+				bean.setFamilyCghsPhoto("");
+			}
+		}
+		
 		model.addAttribute("emp_family", emp_family);
-
+		
 		return "employee_family_data";
 	}
 

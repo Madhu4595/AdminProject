@@ -36,9 +36,12 @@ public class CGHSModel {
 	private Integer opdTotal;
 	private Integer indoorTotal;
 	private Integer testsTotal;
+	private Integer procedureTotal;
 	
 	private String date;
 	private String place;
+	
+	private String strDoc;
 	
 	public CGHSModel() {
 		super();
@@ -50,7 +53,8 @@ public class CGHSModel {
 			String hospitalName, String empalledUnderCGHS, String opdTreatment, String indoorTreatment,
 			String emergencyTreatment, String treatmentPermission, String medicalAdvanceDetails,
 			String healthMedicalInsuranceScheme, String healthMedicalInsuranceSchemeIfYes, Set<CGHSBills> cGHSBills,
-			Integer opdTotal, Integer indoorTotal, Integer testsTotal, String date, String place) {
+			Integer opdTotal, Integer indoorTotal, Integer testsTotal, Integer procedureTotal, String date,
+			String place, String strDoc) {
 		super();
 		this.cghsId = cghsId;
 		this.empCode = empCode;
@@ -75,8 +79,10 @@ public class CGHSModel {
 		this.opdTotal = opdTotal;
 		this.indoorTotal = indoorTotal;
 		this.testsTotal = testsTotal;
+		this.procedureTotal = procedureTotal;
 		this.date = date;
 		this.place = place;
+		this.strDoc = strDoc;
 	}
 
 	public String getCghsId() {
@@ -263,6 +269,14 @@ public class CGHSModel {
 		this.testsTotal = testsTotal;
 	}
 
+	public Integer getProcedureTotal() {
+		return procedureTotal;
+	}
+
+	public void setProcedureTotal(Integer procedureTotal) {
+		this.procedureTotal = procedureTotal;
+	}
+
 	public String getDate() {
 		return date;
 	}
@@ -279,6 +293,14 @@ public class CGHSModel {
 		this.place = place;
 	}
 
+	public String getStrDoc() {
+		return strDoc;
+	}
+
+	public void setStrDoc(String strDoc) {
+		this.strDoc = strDoc;
+	}
+
 	@Override
 	public String toString() {
 		return "CGHSModel [cghsId=" + cghsId + ", empCode=" + empCode + ", empName=" + empName + ", ecghsCode="
@@ -290,6 +312,10 @@ public class CGHSModel {
 				+ medicalAdvanceDetails + ", healthMedicalInsuranceScheme=" + healthMedicalInsuranceScheme
 				+ ", healthMedicalInsuranceSchemeIfYes=" + healthMedicalInsuranceSchemeIfYes + ", cGHSBills="
 				+ cGHSBills + ", opdTotal=" + opdTotal + ", indoorTotal=" + indoorTotal + ", testsTotal=" + testsTotal
-				+ ", date=" + date + ", place=" + place + "]";
+				+ ", procedureTotal=" + procedureTotal + ", date=" + date + ", place=" + place + ", strDoc=" + strDoc
+				+ "]";
 	}
+
+	
+
 }

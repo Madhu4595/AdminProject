@@ -91,32 +91,41 @@ $(document).ready(function(){
 td {
 	padding: 15px;
 }
+
+
+/* styles.css */
+
+body,.universeStyle {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+}
+
 </style>
 </head>
 <body>
 
 	<section class="container mt-5 pt-2 border">
+	<div align="center">No: 1(27) NIC-APSC/2019/Admin</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div>
-
-
-					<div id="header">
-						<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA</b> </h6>
-					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY </b> </h6>
-					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE </b></h6>
-					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE </b></h6>
-					<h6 style="text-align: center; font-weight: 50px;"> <b> <%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010 </b></h6>
-
+					<div style="font-family: 'Times New Roman', Times, serif;font-size: 10pt;margin: 0;padding: 0;"   align="center">
+						<%= localizationManager.getMessage("nic1") %> / GOVERNMENT OF INDIA<br>
+						<%= localizationManager.getMessage("nic32") %> / MINISTRY OF ELECTRONICS & INFORMATION TECHNOLOGY<br>
+						<%= localizationManager.getMessage("nic33") %> / NATIONAL INFORMATICS CENTRE<br>
+						<%= localizationManager.getMessage("nic34") %> / ANDHRA PRADESH STATE CENTRE<br>
+						<%= localizationManager.getMessage("nic35") %> - <%= localizationManager.getMessage("nic17") %> /  VIJAYAWADA - 520010
 					</div>
 <br>
-					<div>
+					<div style="font-family: 'Times New Roman', Times, serif;font-size: 10pt;margin: 0;padding: 0;">
 						<%= localizationManager.getMessage("nic36") %> / Sanction Order No <b> : ${siodate } </b> 
 						<span style="margin-left: 550px;"><%= localizationManager.getMessage("nic37") %> / Date  : <b>${todaydate}</b></span>
 					</div>
 					<br>
 
-					<div>
+					<div style="font-family: 'Times New Roman', Times, serif;font-size: 10pt;margin: 0;padding: 0;">
 						<%= localizationManager.getMessage("nic5") %> / To,<br>
 							<%= localizationManager.getMessage("nic38") %> / The Accounts Officer,<br>
 							<%= localizationManager.getMessage("nic39") %> / Pay and Accounts Office,<br>
@@ -126,7 +135,7 @@ td {
 					</div>
 					<br>
 
-					<div>
+					<div style="font-family: 'Times New Roman', Times, serif;font-size: 10pt;margin: 0;padding: 0;">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Subject: -</b>
 						Reimbursement of medical expense in r/o <b>${employee.callSign}
 							${employee.name }, ${employee.designation } (Emp. Code:
@@ -136,7 +145,7 @@ td {
 					</div>
 					<br> Sir, <br>
 					<br>
-					<div id="para1">
+					<div id="para1" style="font-family: 'Times New Roman', Times, serif;font-size: 10pt;margin: 0;padding: 0;">
 						1. I am directed to convey the sanction of the Director General,
 						National Informatics Centre under the powers delegated to him vide
 						O.M.No.M-11017/1/2014-MS (O&M) dated 17.7.2014 of Ministry of
@@ -155,15 +164,18 @@ td {
 					</div>
 					<br>
 
-					<div id="para2">
+					<div id="para2" style="font-family: 'Times New Roman', Times, serif;font-size: 10pt;margin: 0;padding: 0;">
 						2. The expenditure involved is debitable as under: Demand No: 27,
 						during the year 2023-2024 <br>
 					</div>
-					<br> '3451' Secretariat-Economic Services (Major Head)<br>
+					<br> 
+					<div style="font-family: 'Times New Roman', Times, serif;font-size: 10pt;margin: 0;padding: 0;">
+					'3451' Secretariat-Economic Services (Major Head)<br>
 					00.091 Secretariat-(Minor Head)<br> .13 National Informatics
 					Centre<br> .13.01 Establishment<br> <b>.13.01.06
 						Medical Treatment.</b> <br>
-					<div id="sign">
+					</div>
+					<div id="sign" style="font-family: 'Times New Roman', Times, serif;font-size: 10pt;margin: 0;padding: 0;font-weight: bold;">
 						<br><br><br><br>
 						<b> 
 						<%= localizationManager.getMessage("nic9") %> / (P. Lakshminarayana)<br> 
@@ -171,9 +183,11 @@ td {
 						</b>
 					</div>
 					<br> <br>
-					<br> Copy to:<br> 1. Drawing and Disbursing Officer,
+					<br> 
+					<div style="font-family: 'Times New Roman', Times, serif;font-size: 10pt;margin: 0;padding: 0;">
+					Copy to:<br> 1. Drawing and Disbursing Officer,
 					National Informatics Centre, Hyderabad. (2 copies) <br> 2.
-					Sanction File.
+					Sanction File.</div>
 
 				</div>
 			</div>

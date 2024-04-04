@@ -182,6 +182,28 @@
 				<tr><td><%= localizationManager.getMessage("nic89") %></td><td> / E-Mail:-------------------------------------</td><td> </td></tr>
 				</table>
 		</div>
+		
+		<br><br><br><br><br><br><br><br><br><br>
+		
+		<div align="center"> <span style="text-decoration: underline;font-weight: bold;">Declaration Form</span></div><br>
+			
+			I hereby declare that the GPF advance is required for the purpose &#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95; <br> 
+			&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;&#95;.
+			<br><br>
+			The above said purpose is genuine and correct to the best of my knowledge.
+			<br><br><br><br>
+			<div align="right">
+			<table>
+				<tr><td> </td><td>Signature _____________________________</td><td> </td></tr>
+				<tr><td> </td><td>Name _________________________________</td><td> </td></tr>
+				<tr><td> </td><td>Designation ___________________________</td><td> </td></tr>
+				</table>
+		</div>
+		
+		<br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		
+		
 		 
 </div>
 </body>

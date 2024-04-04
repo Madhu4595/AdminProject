@@ -1,23 +1,33 @@
 package com.app.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.app.entity.AppUser;
+import com.app.entity.Employee;
+import com.app.entity.Employee_Family;
 import com.app.entity.Employee_allowance;
 import com.app.repo.EmployeeRepo;
+import com.app.repo.Employee_Family_Repo;
 import com.app.repo.Employee_allowanceRepo;
 
 @Controller
@@ -27,6 +37,8 @@ public class EmployeeController {
 	private Employee_allowanceRepo employee_allowanceRepo;
 	@Autowired
 	private EmployeeRepo employeeRepo;
+	@Autowired
+	private Employee_Family_Repo employee_Family_Repo;
 
 	@RequestMapping("/empNSForm")
 	public String empNSForm() {
@@ -218,5 +230,130 @@ public class EmployeeController {
 
 		return "SOs/empSOPrint";
 	}
+	
+	@RequestMapping("editEmpDetails")
+	public String editEmpDetails(HttpSession session,Model model) {
+		
+		AppUser user = (AppUser) session.getAttribute("user");
+		System.out.println("cghsForm=>user=>"+user.toString());
+		model.addAttribute("user", user);
+		
+		Optional<Employee> emp = employeeRepo.findById(String.valueOf(user.getId()));
+		if(emp.isPresent()) { model.addAttribute("emp", emp.get()); }
+		else { model.addAttribute("msg", "Employee Details or not founded"); }
+		
+		if(emp.get().getEmpPhoto() == null) {
+			model.addAttribute("photo", "");
+		}else {
+			String photo = Base64.getEncoder().encodeToString(emp.get().getEmpPhoto());
+			model.addAttribute("photo", photo);
+		}
+		
+		if(emp.get().getEmpCghsPhoto() == null) {
+			model.addAttribute("empCghsPhoto", "");
+		}else {
+			String empCghsPhoto = Base64.getEncoder().encodeToString(emp.get().getEmpCghsPhoto());
+			model.addAttribute("empCghsPhoto", empCghsPhoto);
+		}
+		
+		List<Employee_Family> empFamily = employee_Family_Repo.getAllByEmpcode(String.valueOf(user.getId()));
+		System.out.println("empFamily=>"+empFamily.toString());
+		
+		for(Employee_Family bean: empFamily) {
+			
+			if(bean.getCghsPhoto() == null || bean.getCghsPhoto().length == 0) {
+				bean.setFamilyCghsPhoto("");
+			}else {
+				bean.setFamilyCghsPhoto(Base64.getEncoder().encodeToString(bean.getCghsPhoto()));
+			}
+		}
+		model.addAttribute("empFamily", empFamily);
+		
+		return "editEmpDetails";
+	}
+	
+	
+	@RequestMapping("updateEmp")
+	public String updateEmp(@ModelAttribute("employee") Employee employee, Model model, HttpServletRequest request,
+			MultipartFile photo_doc,MultipartFile cghsphoto_doc, MultipartFile[] familycghsphoto,
+			HttpSession session, RedirectAttributes redirectAttributes) throws IOException {
+		
+		System.out.println("updateEmp");
+		System.out.println("employee=>"+employee.toString());
+		AppUser appUser = (AppUser)session.getAttribute("user");
+		System.out.println("appUser=>"+appUser);
+		
+		Optional<Employee> emp = employeeRepo.findById(String.valueOf(appUser.getId()));
+		if(emp.isPresent()) {
+			
+			
+			try {
+				Employee bean = emp.get();
+				
+				bean.setName(employee.getName());
+				bean.setDesignation(employee.getDesignation());
+				bean.setBasic_pay(employee.getBasic_pay());
+				bean.setDob(employee.getDob());
+				bean.setPayscale(employee.getPayscale());
+				bean.setPlace(employee.getPlace());
+				bean.setPhno(employee.getPhno());
+				bean.setEcghsCode(employee.getEcghsCode());
+				bean.setDoj(employee.getDoj());
+				bean.setDoa(employee.getDoa());
+				bean.setGpfaccno(employee.getGpfaccno());
+				
+				if(!photo_doc.isEmpty()) { bean.setEmpPhoto(photo_doc.getBytes()); }
+				if(!cghsphoto_doc.isEmpty()) { bean.setEmpCghsPhoto(cghsphoto_doc.getBytes()); }
+				
+				employeeRepo.save(bean);
+				
+				String[] id = request.getParameterValues("id");
+				String[] per_name = request.getParameterValues("per_name");
+				String[] relation = request.getParameterValues("relation");
+				String[] dob = request.getParameterValues("editdob");
+				 
+				String[] cghsCode = request.getParameterValues("cghsCode");
+				
+				for (int i = 0; i < id.length; i++) {
+					Employee_Family employee_Family = employee_Family_Repo.findById(Integer.parseInt(id[i])).get();
+					
+					employee_Family.setPer_name(per_name[i]);
+					employee_Family.setRelation(relation[i]);
+					employee_Family.setDob(dob[i]);
+					employee_Family.setCghsCode(cghsCode[i]);
+					
+					MultipartFile photo = familycghsphoto[i];
+					if(!photo.isEmpty()) {
+						employee_Family.setCghsPhoto(photo.getBytes());
+					}
+					
+					employee_Family_Repo.save(employee_Family);
+					
+				}
+				
+				redirectAttributes.addFlashAttribute("msg", "Data is updated Successfully");
+				return "redirect:/";
+				
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				redirectAttributes.addFlashAttribute("msg", "Something went wrong");
+				return "redirect:/";
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				redirectAttributes.addFlashAttribute("msg", "Something went wrong");
+				return "redirect:/";
+			}
+			
+			
+		}else {
+			redirectAttributes.addFlashAttribute("msg", "No data found with given employee id");
+			return "redirect:/";
+		}
+		
+	}
+	
 }
 

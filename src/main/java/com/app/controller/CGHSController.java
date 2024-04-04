@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.app.entity.AppUser;
 import com.app.entity.CGHS;
@@ -29,6 +30,7 @@ import com.app.model.EmployeeCompleteDetailsModel;
 import com.app.repo.CGHSRepo;
 import com.app.repo.EmployeeRepo;
 import com.app.repo.Employee_Family_Repo;
+import com.app.service.CGHSService;
 
 @Controller
 public class CGHSController {
@@ -37,26 +39,34 @@ public class CGHSController {
 	@Autowired private HomeRestController homeRestController;
 	@Autowired private Employee_Family_Repo employee_Family_Repo;
 	@Autowired private EmployeeRepo employeeRepo;
+	@Autowired private CGHSService cGHSService;
 	
 	@RequestMapping("/cghsForm")
-	public String cghsForm(Model model,HttpSession session) {
+	public String cghsForm(Model model,HttpSession session,RedirectAttributes redirectAttributes) {
 		System.out.println("cghsForm");
-		model.addAttribute("cghs", new CGHS());
-		
-		AppUser user = (AppUser) session.getAttribute("user");
-		System.out.println("cghsForm=>user=>"+user.toString());
-		model.addAttribute("user", user);
-		
-		Optional<Employee> emp = employeeRepo.findById(String.valueOf(user.getId()));
-		if(emp.isPresent()) { model.addAttribute("emp", emp.get()); }
-		else { model.addAttribute("msg", "Employee Details or not founded"); }
-		
-		String photo = Base64.getEncoder().encodeToString(emp.get().getEmpPhoto());
-		model.addAttribute("photo", photo);
-		
-		List<Employee_Family> empFamily = employee_Family_Repo.getAllByEmpcode(String.valueOf(user.getId()));
-		System.out.println("empFamily=>"+empFamily.toString());
-		model.addAttribute("empFamily", empFamily);
+		try {
+			model.addAttribute("cghs", new CGHS());
+			
+			AppUser user = (AppUser) session.getAttribute("user");
+			System.out.println("cghsForm=>user=>"+user.toString());
+			model.addAttribute("user", user);
+			
+			Optional<Employee> emp = employeeRepo.findById(String.valueOf(user.getId()));
+			if(emp.isPresent()) { model.addAttribute("emp", emp.get()); }
+			else { model.addAttribute("msg", "Employee Details or not founded"); }
+			
+			String photo = Base64.getEncoder().encodeToString(emp.get().getEmpPhoto());
+			model.addAttribute("photo", photo);
+			
+			List<Employee_Family> empFamily = employee_Family_Repo.getAllByEmpcode(String.valueOf(user.getId()));
+			System.out.println("empFamily=>"+empFamily.toString());
+			model.addAttribute("empFamily", empFamily);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("msg", "Something went wrong while getting employee details");
+			return "redirect:/";
+		}
 		
 		return "cghs/cghsForm";
 	}
@@ -64,7 +74,7 @@ public class CGHSController {
 	
 	@RequestMapping("/saveCGHS")
 	public String saveCGHS(@ModelAttribute("cghs") CGHS cghs,Model model,HttpServletRequest request,
-			MultipartFile doc) {
+			MultipartFile doc, RedirectAttributes redirectAttributes) {
 		System.out.println("cghs===>"+cghs.toString());
 		System.out.println("type=>"+request.getParameterValues("typee"));
 		
@@ -95,8 +105,10 @@ public class CGHSController {
 			cghs.setcGHSBills(cGHSBillss);
 			cghs.setDocument(doc.getBytes());
 			CGHS savedCghs = cGHSRepo.save(cghs);
-			model.addAttribute("msg", "CGHS Details are saved Successfully with ID:"+savedCghs.getCghsId());
-			return "home";
+		//	model.addAttribute("msg", "CGHS Details are saved Successfully with ID:"+savedCghs.getCghsId());
+			
+			redirectAttributes.addAttribute("requestNo", savedCghs.getCghsId());
+			return "redirect:/cghsmrcfPrint";
 		}catch(Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "Something went wrong while saving data, Please try again");
@@ -108,20 +120,18 @@ public class CGHSController {
 	@RequestMapping("/cghsmrcfPrintform")
 	public String cghsmrcfPrintform(HttpSession session, Model model) {
 		
-		AppUser user = (AppUser) session.getAttribute("user");
-		System.out.println("cghsForm=>user=>"+user.toString());
-		model.addAttribute("user", user);
-		
-		Optional<Employee> emp = employeeRepo.findById(String.valueOf(user.getId()));
-		if(emp.isPresent()) { model.addAttribute("emp", emp.get()); }
-		else { model.addAttribute("msg", "Employee Details or not founded"); }
-		
-		String photo = Base64.getEncoder().encodeToString(emp.get().getEmpPhoto());
-		model.addAttribute("photo", photo);
-		
-		List<Employee_Family> empFamily = employee_Family_Repo.getAllByEmpcode(String.valueOf(user.getId()));
-		System.out.println("empFamily=>"+empFamily.toString());
-		model.addAttribute("empFamily", empFamily);
+		try {
+			AppUser user = (AppUser) session.getAttribute("user");
+			System.out.println("cghsForm=>user=>"+user.toString());
+			model.addAttribute("user", user);
+			
+			List<CGHS> list = cGHSService.getAllCghs();
+			model.addAttribute("list", list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			model.addAttribute("msg", "Something went wrong");
+		}
 		
 		return "cghs/cghsmrcfPrintform";
 	}
@@ -177,6 +187,7 @@ public class CGHSController {
 			Integer opdTotal = 0;
 			Integer indoorTotal = 0;
 			Integer testsTotal = 0;
+			Integer procedureTotal = 0;
 			
 			for(CGHSBills cGHSBills:bean.get().getcGHSBills()) {
 				if(cGHSBills.getType().equalsIgnoreCase("opd")) {
@@ -188,10 +199,14 @@ public class CGHSController {
 				if(cGHSBills.getType().equalsIgnoreCase("tests")) {
 					testsTotal = testsTotal + Integer.parseInt(cGHSBills.getAmount());
 				}
+				if(cGHSBills.getType().equalsIgnoreCase("procedure")) {
+					procedureTotal = procedureTotal + Integer.parseInt(cGHSBills.getAmount());
+				}
 			}
 			cGHSModel.setOpdTotal(opdTotal);
 			cGHSModel.setIndoorTotal(indoorTotal);
 			cGHSModel.setTestsTotal(testsTotal);
+			cGHSModel.setProcedureTotal(procedureTotal);
 			
 			Integer totAmoutClaimed = opdTotal + indoorTotal + testsTotal;
 			
@@ -201,7 +216,40 @@ public class CGHSController {
 		     
 		     cGHSModel.setDate(formattedDate);
 		     cGHSModel.setPlace(employee.getPlace());
-			
+		     
+		     //adding patient cghs photo
+		     if(bean.get().getPatientId().equals("self")) {
+		    	 Optional<Employee> emp = employeeRepo.findById(bean.get().getEmpCode());
+		    	 if(emp.isPresent()) {
+		    		 
+		    		 if(emp.get().getEmpCghsPhoto() == null) {
+		    			 cGHSModel.setStrDoc("");
+			    		 cGHSModel.setPatientRelation("self"); 
+		    		 }else {
+		    			 cGHSModel.setStrDoc(Base64.getEncoder().encodeToString(emp.get().getEmpCghsPhoto()));
+			    		 cGHSModel.setPatientRelation("self"); 
+		    		 }
+		    	 }else {
+		    		 cGHSModel.setStrDoc("");
+		    		 cGHSModel.setPatientRelation("self");
+		    	 }
+		     }else {
+		    	 Optional<Employee_Family> empfamily = employee_Family_Repo.findById(Integer.parseInt(bean.get().getPatientId()));
+		    	 if(empfamily.isPresent()) {
+		    		 
+		    		 if(empfamily.get().getCghsPhoto() == null) {
+		    			 cGHSModel.setStrDoc("");
+			    		 cGHSModel.setPatientRelation(empfamily.get().getRelation());
+		    		 }else {
+		    			 cGHSModel.setStrDoc(Base64.getEncoder().encodeToString(empfamily.get().getCghsPhoto()));
+			    		 cGHSModel.setPatientRelation(empfamily.get().getRelation());
+		    			
+		    		 }
+		    	 }else {
+		    		 cGHSModel.setStrDoc("");
+		    		 cGHSModel.setPatientRelation(empfamily.get().getRelation());
+		    	 }
+		     }
 			
 			model.addAttribute("bean", cGHSModel);
 			model.addAttribute("totAmoutClaimed", totAmoutClaimed);

@@ -167,10 +167,10 @@
 </head>
 
 <%
-String role= (String)session.getAttribute("role");
-System.out.println("role=>"+role);
-AppUser user= (AppUser)session.getAttribute("user");
-System.out.println("user=>"+user.toString());
+String role2= (String)session.getAttribute("role");
+System.out.println("role=>"+role2);
+AppUser user2= (AppUser)session.getAttribute("user");
+System.out.println("user=>"+user2.toString());
 %>
 <div id="menu_area" class="menu-area">
 	<div class="container">
@@ -185,12 +185,12 @@ System.out.println("user=>"+user.toString());
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-						<li><a href="/">Home</a></li>
+						<li><a href="./">Home</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Allowance/Bills </a>
 							
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<% if(role.equalsIgnoreCase("ROLE_USER")){ %>
+								<% if(role2.equalsIgnoreCase("ROLE_USER")){ %>
 								<li class="dropdown">
 									<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> CEA </a>
 									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -249,7 +249,7 @@ System.out.println("user=>"+user.toString());
 									</ul>
 								</li>
 								<% } %>
-								<% if(role.equalsIgnoreCase("ROLE_EMP")){ %>
+								<% if(role2.equalsIgnoreCase("ROLE_EMP")){ %>
 								<li><a href="cghsForm">CGHS MRCF Reibursement</a></li>
 								<li><a href="empCEAApplyForm">CEA Apply Form</a></li>
 								<li><a href="empGpfApplyForm">GPF Withdraw Apply Form</a></li>
@@ -257,7 +257,7 @@ System.out.println("user=>"+user.toString());
 								<% } %>
 							</ul>
 						</li>
-					 <% if(role.equalsIgnoreCase("ROLE_USER")){ %>
+					 <% if(role2.equalsIgnoreCase("ROLE_USER")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Approval Details</a>
 
@@ -290,7 +290,7 @@ System.out.println("user=>"+user.toString());
 							</ul>
 						</li>
 					 <% } %>
-					 <% if(role.equalsIgnoreCase("ROLE_USER")){ %>
+					 <% if(role2.equalsIgnoreCase("ROLE_USER")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sanction Order Generation</a>
 							
@@ -319,7 +319,7 @@ System.out.println("user=>"+user.toString());
 							</ul>
 						</li>
 						<% } %>
-						<% if(role.equalsIgnoreCase("ROLE_USER")){ %>
+						<% if(role2.equalsIgnoreCase("ROLE_USER")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notesheet Prints</a>
 							
@@ -345,7 +345,7 @@ System.out.println("user=>"+user.toString());
 							</ul>
 						</li>
 						<%} %>
-						<% if(role.equalsIgnoreCase("ROLE_USER")){ %>
+						<% if(role2.equalsIgnoreCase("ROLE_USER")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sanction Order Prints</a>
 							
@@ -371,23 +371,23 @@ System.out.println("user=>"+user.toString());
 							</ul>
 						</li>
 						<% } %>
-						<% if(role.equalsIgnoreCase("ROLE_EMP")){ %>
+						<% if(role2.equalsIgnoreCase("ROLE_EMP")){ %>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="#" id="navbarDropdown">Prints</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<li><a href="cghsmrcfPrintform">CGHS MRCF</a></li>
-								<li><a href="empCeaApplyPrintForm?code=<%=user.getId()%>">CEA APPLY PRINTS</a></li>
-								<li><a href="empGpfApplyPrintForm?code=<%=user.getId()%>">GPF Withdraw APPLY PRINTS</a></li>
-								<li><a href="empGpfAdvanceApplyPrintForm?code=<%=user.getId()%>">GPF Advance APPLY PRINTS</a></li>
+								<li><a href="empCeaApplyPrintForm?code=<%=user2.getId()%>">CEA APPLY PRINTS</a></li>
+								<li><a href="empGpfApplyPrintForm?code=<%=user2.getId()%>">GPF Withdraw APPLY PRINTS</a></li>
+								<li><a href="empGpfAdvanceApplyPrintForm?code=<%=user2.getId()%>">GPF Advance APPLY PRINTS</a></li>
 							</ul>
 						</li>
 						<% } %>
-						<% if(role.equalsIgnoreCase("ROLE_USER")){ %>
+						<% if(role2.equalsIgnoreCase("ROLE_USER")){ %>
 						<li style="width: 100px;"><a href="employee_insert">Employee</a></li>
 						<li style="width: 100px;"><a href="vendor_insert">Vendor</a></li>
 						<% } %>
 						
-						<li><span style="font-weight: bolder; color: blue;font-size: large;"><%= user.getFirstName() %></span></li>
+						<li><span style="color: blue;font-size: 20px;"><%= user2.getLastName() %></span></li>
 						<li><a href="logout" style="font-weight: bolder; color: red;">Logout</a></li>
 					</ul>
 				</div>

@@ -16,7 +16,7 @@ public interface AppUserRepo extends JpaRepository<AppUser, Long>{
 	
 	AppUser findByEmail(String email);
 
-	@Query(value = "select * from appusers where id not in('1','3586','2188')",nativeQuery = true)
+	@Query(value = "select * from appusers where id not in('1')",nativeQuery = true)
 	List<AppUser> getEmpDetails();
 	
 	@Transactional
